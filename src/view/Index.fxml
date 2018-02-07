@@ -12,6 +12,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IndexController">
    <children>
@@ -19,23 +20,22 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="新建档案" />
-                  <MenuItem mnemonicParsing="false" text="开启旧档" />
-                  <MenuItem mnemonicParsing="false" text="储存档案" />
-                  <MenuItem mnemonicParsing="false" text="另存新档" />
-                  <MenuItem mnemonicParsing="false" text="列印设定" />
-                  <MenuItem mnemonicParsing="false" text="列印" />
-                  <MenuItem mnemonicParsing="false" text="偏好设定" />
-                  <MenuItem fx:id="closeButton" mnemonicParsing="false" onAction="#closeButtonAction" text="关闭" />
+                  <MenuItem mnemonicParsing="false" text="New" />
+                  <MenuItem mnemonicParsing="false" text="Open File" />
+                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem mnemonicParsing="false" text="Save As" />
+                  <MenuItem mnemonicParsing="false" text="Print" />
+                  <MenuItem mnemonicParsing="false" text="Settings" />
+                  <MenuItem fx:id="closeButton" mnemonicParsing="false" onAction="#closeButtonAction" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="View">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Toolbar" />
-                  <MenuItem mnemonicParsing="false" text="Project Explorer" />
-                  <MenuItem mnemonicParsing="false" text="Hardware Status" />
-                  <MenuItem mnemonicParsing="false" text="Parameter Config" />
-                  <MenuItem mnemonicParsing="false" text="Data Table" />
+                  <CheckMenuItem mnemonicParsing="false" text="Toolbar" />
+                  <CheckMenuItem mnemonicParsing="false" text="Project Explorer" />
+                  <CheckMenuItem mnemonicParsing="false" text="Hardware Status" />
+                  <CheckMenuItem mnemonicParsing="false" text="Parameter Config" />
+                  <CheckMenuItem mnemonicParsing="false" text="Data Table" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Tool">
@@ -65,22 +65,22 @@
       <FlowPane hgap="1.0" prefHeight="500.0" prefWidth="1022.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
          	<Button mnemonicParsing="false" fx:id="buttonOfNewFile" prefHeight="32.0" prefWidth="32.0">
-         		<tooltip><Tooltip text="新建档案" /></tooltip>
+         		<tooltip><Tooltip text="New" /></tooltip>
          	</Button>
             <Button mnemonicParsing="false" fx:id="buttonOfOpenFile" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="开启旧档" /></tooltip>
+            	<tooltip><Tooltip text="Open" /></tooltip>
             </Button>
             <Button mnemonicParsing="false" fx:id="buttonOfSave" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="储存档案" /></tooltip>
+            	<tooltip><Tooltip text="Save" /></tooltip>
             </Button>
             <Button mnemonicParsing="false" fx:id="buttonOfSaveAs" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="另存新档" /></tooltip>
+            	<tooltip><Tooltip text="Save As" /></tooltip>
             </Button>
             <Button mnemonicParsing="false" fx:id="buttonOfPrint" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="列印" /></tooltip>
+            	<tooltip><Tooltip text="Print" /></tooltip>
             </Button>
             <Button mnemonicParsing="false" fx:id="buttonOfSettings" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="偏好设定" /></tooltip>
+            	<tooltip><Tooltip text="Settings" /></tooltip>
             </Button>
          </children>
       </FlowPane>
