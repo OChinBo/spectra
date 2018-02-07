@@ -13,14 +13,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.MenuItem?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IndexController">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IndexController">
    <children>
-      <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
                   <MenuItem mnemonicParsing="false" text="新建档案" />
-                  <MenuItem mnemonicParsing="false" text="开启" />
+                  <MenuItem mnemonicParsing="false" text="开启旧档" />
                   <MenuItem mnemonicParsing="false" text="储存档案" />
                   <MenuItem mnemonicParsing="false" text="另存新档" />
                   <MenuItem mnemonicParsing="false" text="列印设定" />
@@ -62,17 +62,29 @@
             </Menu>
          </menus>
       </MenuBar>
-      <FlowPane prefHeight="60.0" prefWidth="1022.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <FlowPane hgap="1.0" prefHeight="500.0" prefWidth="1022.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+         	<Button mnemonicParsing="false" fx:id="buttonOfNewFile" prefHeight="32.0" prefWidth="32.0">
+         		<tooltip><Tooltip text="新建档案" /></tooltip>
+         	</Button>
+            <Button mnemonicParsing="false" fx:id="buttonOfOpenFile" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip><Tooltip text="开启旧档" /></tooltip>
+            </Button>
+            <Button mnemonicParsing="false" fx:id="buttonOfSave" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip><Tooltip text="储存档案" /></tooltip>
+            </Button>
+            <Button mnemonicParsing="false" fx:id="buttonOfSaveAs" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip><Tooltip text="另存新档" /></tooltip>
+            </Button>
+            <Button mnemonicParsing="false" fx:id="buttonOfPrint" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip><Tooltip text="列印" /></tooltip>
+            </Button>
+            <Button mnemonicParsing="false" fx:id="buttonOfSettings" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip><Tooltip text="偏好设定" /></tooltip>
+            </Button>
          </children>
       </FlowPane>
-      <SplitPane dividerPositions="0.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+      <SplitPane dividerPositions="0.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
          <items>
             <AnchorPane SplitPane.resizableWithParent="false">
                <children>
