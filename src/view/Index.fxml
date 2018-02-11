@@ -13,20 +13,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.stage.FileChooser?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IndexController">
+<AnchorPane prefHeight="640.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IndexController">
    <children>
-      <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
                   <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" text="Open File" />
+                  <MenuItem fx:id="openFileMenubar" mnemonicParsing="false" onAction="#openFileAction" text="Open File" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Save As" />
+                  <MenuItem fx:id="saveAsMenubar" mnemonicParsing="false" onAction="#saveAsAction" text="Save As" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Print" />
                   <MenuItem mnemonicParsing="false" text="Settings" />
-                  <MenuItem fx:id="closeButton" mnemonicParsing="false" onAction="#closeButtonAction" text="Close" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="closeWindowsMenubar" mnemonicParsing="false" onAction="#closeWindowsAction" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="View">
@@ -62,29 +67,42 @@
             </Menu>
          </menus>
       </MenuBar>
-      <FlowPane hgap="1.0" prefHeight="500.0" prefWidth="1022.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
-         <children>
-         	<Button mnemonicParsing="false" fx:id="buttonOfNewFile" prefHeight="32.0" prefWidth="32.0">
-         		<tooltip><Tooltip text="New" /></tooltip>
+      <ToolBar prefHeight="42.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+        <items>
+         	<Button fx:id="buttonOfNewFile" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
+         		<tooltip>
+                  <Tooltip text="New" />
+               </tooltip>
          	</Button>
-            <Button mnemonicParsing="false" fx:id="buttonOfOpenFile" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="Open" /></tooltip>
+            <Button fx:id="buttonOfOpenFile" mnemonicParsing="false" onAction="#openFileAction" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip>
+                  <Tooltip text="Open" />
+               </tooltip>
             </Button>
-            <Button mnemonicParsing="false" fx:id="buttonOfSave" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="Save" /></tooltip>
+            <Button fx:id="buttonOfSave" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip>
+                  <Tooltip text="Save" />
+               </tooltip>
             </Button>
-            <Button mnemonicParsing="false" fx:id="buttonOfSaveAs" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="Save As" /></tooltip>
+            <Button fx:id="buttonOfSaveAs" mnemonicParsing="false" onAction="#saveAsAction" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip>
+                  <Tooltip text="Save As" />
+               </tooltip>
             </Button>
-            <Button mnemonicParsing="false" fx:id="buttonOfPrint" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="Print" /></tooltip>
+            <Button fx:id="buttonOfPrint" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip>
+                  <Tooltip text="Print" />
+               </tooltip>
             </Button>
-            <Button mnemonicParsing="false" fx:id="buttonOfSettings" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip><Tooltip text="Settings" /></tooltip>
+            <Separator orientation="VERTICAL" />
+            <Button fx:id="buttonOfSettings" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
+            	<tooltip>
+                  <Tooltip text="Settings" />
+               </tooltip>
             </Button>
-         </children>
-      </FlowPane>
-      <SplitPane dividerPositions="0.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
+        </items>
+      </ToolBar>
+      <SplitPane dividerPositions="0.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
          <items>
             <AnchorPane SplitPane.resizableWithParent="false">
                <children>
