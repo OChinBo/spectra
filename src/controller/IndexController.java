@@ -32,9 +32,9 @@ public class IndexController {
 	private Scene scene ;
 	private ArrayList<LineChart> linechartlist = new ArrayList<>() ;
 	
-	// @FXML
+	@FXML
 	// private javafx.scene.control.MenuItem closeButton;
-	private javafx.scene.control.TabPane tabpane ;
+	private javafx.scene.control.TabPane tabp ;
 
 	@FXML
 	private void closeWindowsAction() {
@@ -56,8 +56,9 @@ public class IndexController {
 		
 		Tab tab = new Tab() ;
 		tab.setId("tab");
+		tab.setText("test");
 		tab.setContent(linechart);
-		tabpane.getTabs().add(tab);
+		tabp.getTabs().add(tab);
 
 	}
 
@@ -121,6 +122,8 @@ public class IndexController {
 		}catch(IOException e){
 			e.printStackTrace();
 		} // end of try catch
+		
+		lineChart.getData().add(series);
 		return lineChart ;
 
 	} // end of readFileByLines()
