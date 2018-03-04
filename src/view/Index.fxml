@@ -15,6 +15,7 @@
 <?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.stage.FileChooser?>
+<?import javafx.scene.control.TabPane?>
 
 <AnchorPane prefHeight="640.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IndexController">
    <children>
@@ -133,7 +134,7 @@
                      <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TabPane prefHeight="368.0" prefWidth="748.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TabPane fx:id="tabp" prefHeight="368.0" prefWidth="748.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <tabs>
                                   <Tab text="Untitled Tab 1">
                                     <content>
