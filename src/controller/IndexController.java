@@ -55,8 +55,7 @@ public class IndexController {
 		LineChart<Number, Number> linechart = readFileByLines(sourceFile);
 		
 		Tab tab = new Tab() ;
-		tab.setId("tab");
-		tab.setText("test");
+		tab.setText(sourceFile.getName());
 		tab.setContent(linechart);
 		tabp.getTabs().add(tab);
 
@@ -127,34 +126,5 @@ public class IndexController {
 		return lineChart ;
 
 	} // end of readFileByLines()
-
-	private void setLineChart(){
-		
-		final NumberAxis xAxis = new NumberAxis();
-	    final NumberAxis yAxis = new NumberAxis();
-	    xAxis.setLabel("Number of Month");
-	    final LineChart<Number, Number> lineChart = new LineChart<Number, Number>(
-	        xAxis, yAxis);
-
-	    lineChart.setTitle("Line Chart");
-	    XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
-	    series.setName("My Data");
-	    // populating the series with data
-	    series.getData().add(new XYChart.Data<Number, Number>(1.111, 23));
-	    series.getData().add(new XYChart.Data<Number, Number>(2, 114));
-	    series.getData().add(new XYChart.Data<Number, Number>(3, 15));
-	    series.getData().add(new XYChart.Data<Number, Number>(4, 124));
-
-	    scene = new Scene(lineChart, 800, 600);
-	    lineChart.getData().add(series);
-
-//	    stage.setScene(scene);
-//	    stage.show();    
-	    
-	} // end of setLineChart()
-	
-	public Scene showLineChart(){
-		return scene ;
-	} // end of showLineChart()
 	
 }
