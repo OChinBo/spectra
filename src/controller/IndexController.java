@@ -82,6 +82,13 @@ public class IndexController {
 		writeFile(outputFile) ;
 
 	} // end of saveAsAction()
+	
+	@FXML
+	private void saveAction(ActionEvent ae) {
+		
+		writeFile(sourceFile) ;
+
+	} // end of saveAction()
 
 	private void readFileByLines(File file) {	
 		
@@ -145,7 +152,8 @@ public class IndexController {
 				for( int j = 0 ; j < series.getData().size() ; j++ ) {
 					
 					System.out.println( series.getData().get(j).getXValue() + ", " + series.getData().get(j).getYValue());
-					out.write(series.getData().get(j).getXValue() + ", " + series.getData().get(j).getYValue() + "\n");
+					out.write(series.getData().get(j).getXValue() + ", " + series.getData().get(j).getYValue());
+					out.newLine();
 					
 				} // end of for
 
