@@ -26,7 +26,7 @@
                   <MenuItem mnemonicParsing="false" text="New" />
                   <MenuItem fx:id="openFileMenubar" mnemonicParsing="false" onAction="#openFileAction" text="Open File" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem fx:id="saveMenubar" mnemonicParsing="false" onAction="#saveAction" text="Save" />
                   <MenuItem fx:id="saveAsMenubar" mnemonicParsing="false" onAction="#saveAsAction" text="Save As" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Print" />
@@ -80,7 +80,7 @@
                   <Tooltip text="Open" />
                </tooltip>
             </Button>
-            <Button fx:id="buttonOfSave" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
+            <Button fx:id="buttonOfSave" mnemonicParsing="false" onAction="#saveAction" prefHeight="32.0" prefWidth="32.0">
             	<tooltip>
                   <Tooltip text="Save" />
                </tooltip>
