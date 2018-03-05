@@ -98,11 +98,7 @@ public class IndexController {
 			BufferedReader  in = new BufferedReader(new FileReader(file));
 
 			// read a line once a time, until the end of the file which is null
-			int line = 1;
 			String tempString = null;
-
-			//跳過第一行文檔標頭
-			//System.out.println(in.readLine());
 			
 			while ( (tempString = in.readLine()) != null ) {
 				
@@ -116,7 +112,7 @@ public class IndexController {
 //					System.out.println(tmpString[0] + ", " + tmpString[1]);
 					tmpdata.setXY(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1]));
 					series.getData().add(new XYChart.Data<Number, Number>(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1])));
-					line++;
+
 					
 				} // end of if
 				
