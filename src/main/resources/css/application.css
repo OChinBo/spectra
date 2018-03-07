@@ -6,42 +6,42 @@
 
 /*  */
 #buttonOfNewFile {
-	-fx-background-image: url('file:image/newfile.png');
+	-fx-background-image: url('file:src/main/resources/images/newfile.png');
 	-fx-background-size: 30px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90%;
 }
 
 #buttonOfOpenFile {
-	-fx-background-image: url('file:image/openfile.png');
+	-fx-background-image: url('file:src/main/resources/images/openfile.png');
 	-fx-background-size: 30px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90%;
 }
 
 #buttonOfSave {
-	-fx-background-image: url('file:image/save.png');
+	-fx-background-image: url('file:src/main/resources/images/save.png');
 	-fx-background-size: 30px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90%;
 }
 
 #buttonOfSaveAs {
-	-fx-background-image: url('file:image/saveas.png');
+	-fx-background-image: url('file:src/main/resources/images/saveas.png');
 	-fx-background-size: 30px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90%;
 }
 
 #buttonOfPrint {
-	-fx-background-image: url('file:image/print.png');
+	-fx-background-image: url('file:src/main/resources/images/print.png');
 	-fx-background-size: 30px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90%;
 }
 
 #buttonOfSettings {
-	-fx-background-image: url('file:image/settings.png');
+	-fx-background-image: url('file:src/main/resources/images/settings.png');
 	-fx-background-size: 30px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90%;
