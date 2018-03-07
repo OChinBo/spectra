@@ -1,4 +1,4 @@
-package controller;
+package main.java.cn.edu.pku.controllers;
 
 public class linechartdata {
 

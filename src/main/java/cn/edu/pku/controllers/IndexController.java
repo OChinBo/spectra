@@ -1,4 +1,4 @@
-package controller;
+package main.java.cn.edu.pku.controllers;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -162,7 +162,7 @@ public class IndexController {
 			out.close();
 			
 		} catch (IOException e) {
-			// TODO è‡ªå‹•ç”¢ç”Ÿçš„ catch å€å¡Š
+			// TODO ?‡ª??•ç”¢??Ÿç?? catch ??å¡?
 			e.printStackTrace();
 		} // end of try catch
 		
