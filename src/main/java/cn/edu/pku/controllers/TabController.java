@@ -7,6 +7,11 @@ import javafx.fxml.Initializable;
 
 public class TabController implements Initializable {
 
+
+	private void addTab(){
+
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub

@@ -5,7 +5,7 @@ public class linechartdata {
 	private Double x ;
 	private Double y ;
 
-	linechartdata() {
+	public linechartdata() {
 		this.x = 0.0 ;
 		this.y = 0.0 ;
 	} // end of CONSTRUCTOR

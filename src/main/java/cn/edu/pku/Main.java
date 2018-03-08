@@ -6,9 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
 
-
 public class Main extends Application {
-
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -45,11 +43,6 @@ public class Main extends Application {
 			 * 			img1.jpg
 			 * 			img2.jpg
 			 *
-			 * */
-
-
-			/** Remind:
-			 *  current path = src/main/java/cn/edu/pku(WeAreHere)
 			 * */
 
 			final String __fxmlpath = "/view/Index.fxml";
