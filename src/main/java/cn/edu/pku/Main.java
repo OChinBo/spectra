@@ -14,9 +14,41 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 
-			/**
-			 * Remind:
-			 * current path = src/main/java/cn/edu/pku/WeAreHere
+			/** Project Structure Example:
+			 *
+			 * 	src/main/java
+			 * 		|
+			 * 		cn.edu.pku
+			 * 			|
+			 * 			controllers
+			 * 				|
+			 * 				Screen1controller.java
+			 * 				Screen2controller.java
+			 * 			service
+			 * 				|
+			 * 				Service1.java
+			 * 			dao(persist)
+			 * 				|
+			 * 				SaveProducts.java
+			 * 	src/main/resources
+			 * 		|
+			 * 		view
+			 * 			|
+			 * 			screen1.fxml
+			 * 			screen2.fxml
+			 * 		css
+			 * 			|
+			 * 			style.css
+			 * 		images
+			 * 			img1.jpg
+			 * 			img2.jpg
+			 *
+			 *
+			 * */
+
+
+			/** Remind:
+			 *  current path = src/main/java/cn/edu/pku(WeAreHere)
 			 * */
 
 			final String __fxmlpath = "../../../../resources/view/Index.fxml";
