@@ -1,4 +1,4 @@
-package main.java.cn.edu.pku.dao;
+package cn.edu.pku.dao;
 
 public class Dao {
 

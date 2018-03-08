@@ -1,4 +1,4 @@
-package main.java.cn.edu.pku;
+package cn.edu.pku;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -30,6 +30,8 @@ public class Main extends Application {
 			 * 			dao(persist)
 			 * 				|
 			 * 				SaveProducts.java
+			 * 			Main.java
+			 *
 			 * 	src/main/resources
 			 * 		|
 			 * 		view
@@ -43,7 +45,6 @@ public class Main extends Application {
 			 * 			img1.jpg
 			 * 			img2.jpg
 			 *
-			 *
 			 * */
 
 
@@ -51,8 +52,8 @@ public class Main extends Application {
 			 *  current path = src/main/java/cn/edu/pku(WeAreHere)
 			 * */
 
-			final String __fxmlpath = "../../../../resources/view/Index.fxml";
-			final String __csspath = "../../../../resources/css/application.css";
+			final String __fxmlpath = "/view/Index.fxml";
+			final String __csspath = "/css/application.css";
 			final String __iconpath = "src/main/resources/images/chicken.png";
 
 			// Load root scene
