@@ -1,7 +1,6 @@
 package cn.edu.pku.controllers;
 
 import cn.edu.pku.controllers.TabController;
-import cn.edu.pku.controllers.linechartdata;
 import cn.edu.pku.util.PropertiesUtils;
 
 import java.io.BufferedReader;
@@ -10,37 +9,30 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 public class IndexController {
+
+	@FXML
+	private javafx.scene.control.TabPane tabp;
 
 	private File sourceFile;
 	private File outputFile;
 	private LineChart<Number, Number> linechart;
 
-	@FXML
-	// private javafx.scene.control.MenuItem closeButton;
-	private javafx.scene.control.TabPane tabp;
 
 	@FXML
 	private void closeWindowsAction() {
-
 		// System.exit(0);
 		Platform.exit();
+	}
 
-	} // end of closeWindowsAction()
-
-	/***** MenuBar Buttons *****/
 	@FXML
 	private void openFileAction(ActionEvent ae) {
 
@@ -51,14 +43,18 @@ public class IndexController {
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Files", PropertiesUtils.readFormats()));
 		sourceFile = fileChooser.showOpenDialog(null);
 
-		readFileByLines(sourceFile);
 
-		Tab tab = new Tab();
+		XYChart.Series<Number, Number> series = readFileByLines(sourceFile);
+		TabController tab = new TabController(series);
+
 		tab.setText(sourceFile.getName());
-		tab.setContent(linechart);
 		tabp.getTabs().add(tab);
+	}
 
-	} // end of openFileAction()
+	@FXML
+	private void saveAction(ActionEvent ae) {
+		writeFile(sourceFile);
+	}
 
 	@FXML
 	private void saveAsAction(ActionEvent ae) {
@@ -73,25 +69,20 @@ public class IndexController {
 		fileChooser.getExtensionFilters().add(txtFilter);
 
 		outputFile = fileChooser.showSaveDialog(null);
-		writeFile(outputFile) ;
+		writeFile(outputFile);
+	}
 
-	} // end of saveAsAction()
 
-	@FXML
-	private void saveAction(ActionEvent ae) {
 
-		writeFile(sourceFile);
+	/**
+	 * è®€æª”å¾Œå›žå‚³Series
+	 * @param file
+	 * @return XYChart.Series<Number, Number>
+	 *
+	 */
+	private XYChart.Series<Number, Number> readFileByLines(File file) {
 
-	} // end of saveAction()
 
-	private void readFileByLines(File file) {
-
-		final NumberAxis xAxis = new NumberAxis();
-		final NumberAxis yAxis = new NumberAxis();
-
-		// final LineChart<Number, Number> lineChart = new LineChart<Number,
-		// Number>(xAxis, yAxis);
-		linechart = new LineChart<Number, Number>(xAxis, yAxis);
 		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 		series.setName("spectra Data");
 
@@ -99,7 +90,7 @@ public class IndexController {
 
 			BufferedReader in = new BufferedReader(new FileReader(file));
 
-			// read a line once a time, until the end of the file which is null
+			// Read a line once a time, until the end of the file which is null
 			String tempString = null;
 
 			while ((tempString = in.readLine()) != null) {
@@ -107,57 +98,38 @@ public class IndexController {
 				linechartdata tmpdata = new linechartdata();
 
 				if (!tempString.isEmpty() && Character.isDigit(tempString.charAt(0))) {
-
-					// show line number
+					// Show line number
 					String[] tmpString = tempString.split(",");
-					// System.out.println("line " + line + ": " + tempString);
-					// System.out.println(tmpString[0] + ", " + tmpString[1]);
 					tmpdata.setXY(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1]));
 					series.getData().add(new XYChart.Data<Number, Number>(Double.parseDouble(tmpString[0]),
 							Double.parseDouble(tmpString[1])));
-
 				}
-
-			} // end of while
+			}
 
 			in.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		} // end of try catch
+		}
 
-		linechart.getData().add(series);
-
-	} // end of readFileByLines()
+		return series;
+	}
 
 	private void writeFile(File file) {
-
 		try {
-
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
-
 			for (int i = 0; i < linechart.getData().size(); i++) {
-
 				XYChart.Series<Number, Number> series = linechart.getData().get(i);
-
 				for (int j = 0; j < series.getData().size(); j++) {
-
-					System.out
-							.println(series.getData().get(j).getXValue() + ", " + series.getData().get(j).getYValue());
+					System.out.println(series.getData().get(j).getXValue() + ", " + series.getData().get(j).getYValue());
 					out.write(series.getData().get(j).getXValue() + ", " + series.getData().get(j).getYValue());
 					out.newLine();
-
-				} // end of for
-
-			} // end of for
-
+				}
+			}
 			out.close();
-
 		} catch (IOException e) {
-			// TODO ?‡ª??•ç”¢??Ÿç?? catch ??å¡?
 			e.printStackTrace();
-		} // end of try catch
-
-	} // end of writeFile()
+		}
+	}
 
 }

@@ -1,4 +1,7 @@
 package cn.edu.pku;
+
+import cn.edu.pku.controllers.IndexController;
+import cn.edu.pku.controllers.TabController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -45,18 +48,19 @@ public class Main extends Application {
 			 *
 			 * */
 
-			final String __fxmlpath = "/view/Index.fxml";
+			// Resources Paths
+			final String __indexpath = "/view/Index.fxml";
 			final String __csspath = "/css/application.css";
-			final String __iconpath = "src/main/resources/images/chicken.png";
+			final String __iconpath = "/images/chicken.png";
 
 			// Load root scene
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(__fxmlpath));
-			Parent root = fxmlLoader.load();
+			FXMLLoader indexLoader = new FXMLLoader(getClass().getResource(__indexpath));
+			Parent root = indexLoader.load();
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource(__csspath).toExternalForm());
 
 			// Set icon and title
-			primaryStage.getIcons().add(new Image("file:" + __iconpath));
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(__iconpath)));
 			primaryStage.setTitle("PKU Raman Spectrum");
 			primaryStage.setScene(scene);
 			primaryStage.show();

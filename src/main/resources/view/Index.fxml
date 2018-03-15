@@ -130,49 +130,31 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <SplitPane dividerPositions="0.65" layoutX="87.0" layoutY="76.0" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <TabPane fx:id="tabp" prefHeight="368.0" prefWidth="748.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <tabs>
-                                  <Tab text="Untitled Tab 1">
-                                    <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                             <children>
-                                                <LineChart prefHeight="339.0" prefWidth="748.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <xAxis>
-                                                    <CategoryAxis side="BOTTOM" />
-                                                  </xAxis>
-                                                  <yAxis>
-                                                    <NumberAxis side="LEFT" />
-                                                  </yAxis>
-                                                </LineChart>
-                                             </children>
-                                          </AnchorPane>
-                                    </content>
-                                  </Tab>
-                                  <Tab text="Untitled Tab 2">
-                                    <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                    </content>
-                                  </Tab>
-                                </tabs>
-                              </TabPane>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <TableView layoutX="22.0" layoutY="-46.0" prefHeight="145.0" prefWidth="627.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <columns>
-                                    <TableColumn prefWidth="75.0" text="C1" />
-                                    <TableColumn prefWidth="75.0" text="C2" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                     </items>
-                  </SplitPane>
+                  <TabPane fx:id="tabp" prefHeight="573.0" prefWidth="748.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <tabs>
+                        <Tab text="Untitled Tab 1">
+                           <content>
+                              <AnchorPane prefHeight="525.0" prefWidth="748.0">
+                                 <children>
+                                    <LineChart prefHeight="329.0" prefWidth="748.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <xAxis>
+                                          <CategoryAxis side="BOTTOM" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis side="LEFT" />
+                                       </yAxis>
+                                    </LineChart>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Untitled Tab 2">
+                           <content>
+                              <AnchorPane />
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
                </children>
             </AnchorPane>
          </items>
