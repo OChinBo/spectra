@@ -17,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class TabController extends Tab implements Initializable {
 
-	
+
 	@FXML
 	private LineChart<Number, Number> lineChart;
 
@@ -36,9 +36,8 @@ public class TabController extends Tab implements Initializable {
 
 	// Constructor
     public TabController( XYChart.Series<Number, Number> series ) {
-    	System.out.println("incon:");
+
     	this.series = series;
-    	System.out.println("this series:" + this.series.getData());
 
     	// Set root, Tab.fxml is fx:root
 		FXMLLoader tabLoader = new FXMLLoader(getClass().getResource("/view/Tab.fxml"));
@@ -52,24 +51,17 @@ public class TabController extends Tab implements Initializable {
 			throw new RuntimeException(e);
 		}
 
-
 		//CSS
         //getStyleClass().add(getClass().getResource("/css/tab.css").toExternalForm());
-
-
-
-
     }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		System.out.println("Arg0:" + arg0);
-		System.out.println("Arg1:" + arg1);
 
 		lineChart.getData().add(series);
-		//tableView;
 
+		// Incomplete, I'll finish the TableView part later.
 		xColumn.setCellValueFactory(new PropertyValueFactory<>("xAxis"));
 		//tableView.setItems(series);
 	}

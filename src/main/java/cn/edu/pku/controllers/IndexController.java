@@ -14,6 +14,8 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
@@ -23,53 +25,98 @@ public class IndexController {
 	private javafx.scene.control.TabPane tabPane;
 
 	private File sourceFile;
+
 	private File outputFile;
+
+	private String defaultDirectory = ".";
+
 	private LineChart<Number, Number> linechart;
+
 
 
 	@FXML
 	private void closeWindowsAction() {
-		// System.exit(0);
 		Platform.exit();
 	}
 
 	@FXML
 	private void openFileAction(ActionEvent ae) {
 
+		Window window = ((Node) ae.getTarget()).getScene().getWindow();
+
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open File");
+		fileChooser.setInitialDirectory(new File(defaultDirectory));
 
 		// Assign selected file to local parameter
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Files", PropertiesUtils.readFormats()));
-		sourceFile = fileChooser.showOpenDialog(null);
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("files", PropertiesUtils.readFormats()));
+		sourceFile = fileChooser.showOpenDialog(window);
 
+		if(sourceFile != null){
+			// Update the latest directory as defaultDirectory
+			defaultDirectory = sourceFile.toString() + "/..";
 
-		XYChart.Series<Number, Number> series = readFileIntoSeries(sourceFile);
-		TabController tab = new TabController(series);
+			// Create TabController and then add Tab
+			XYChart.Series<Number, Number> series = readFileIntoSeries(sourceFile);
+			TabController tab = new TabController(series);
+			tab.setText(sourceFile.getName());
+			tabPane.getTabs().add(tab);
+		}
 
-		tab.setText(sourceFile.getName());
-		tabPane.getTabs().add(tab);
 	}
 
 	@FXML
 	private void saveAction(ActionEvent ae) {
 		writeFile(sourceFile);
+
+		/*
+		Window window = ((Node) ae.getTarget()).getScene().getWindow();
+
+		File file = new File(filename);
+		FileChooser fileChooser = new FileChooser();
+		File dest = fileChooser.showSaveDialog(window);
+		if (dest != null) {
+		    try {
+		        Files.copy(file.toPath(), dest.toPath());
+		    } catch (IOException ex) {
+		        // handle exception...
+		    }
+		}
+*/
 	}
 
 	@FXML
 	private void saveAsAction(ActionEvent ae) {
-		getSelectedTab();
+
+		Window window = ((Node) ae.getTarget()).getScene().getWindow();
+
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save As");
+		fileChooser.setInitialDirectory(new File(defaultDirectory));
+
+		// 暫時封印自動填入檔名,考慮到開啟多個檔時或許會衝突
+		/*
+		if(sourceFile != null){
+			fileChooser.setInitialFileName(sourceFile.getName());
+		}*/
+
 
 		// Set format of filter
+		FileChooser.ExtensionFilter allFilter = new FileChooser.ExtensionFilter("All", "*");
 		FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
 		FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(allFilter);
 		fileChooser.getExtensionFilters().add(csvFilter);
 		fileChooser.getExtensionFilters().add(txtFilter);
 
-		outputFile = fileChooser.showSaveDialog(null);
-		writeFile(outputFile);
+		outputFile = fileChooser.showSaveDialog(window);
+
+		if(outputFile != null){
+
+			// Update the latest directory as defaultDirectory
+			defaultDirectory = outputFile.toString() + "/..";
+
+			writeFile(outputFile);
+		}
+
 	}
 
 
@@ -132,8 +179,8 @@ public class IndexController {
 		}
 	}
 
-	private int getSelectedTab(){
-		System.out.print("Current tab index:" + tabPane.getSelectionModel().getSelectedIndex());
+	private int getSelectedTabIndex(){
+		System.out.println("Current tab index:" + tabPane.getSelectionModel().getSelectedIndex());
 		return tabPane.getSelectionModel().getSelectedIndex();
 	}
 
