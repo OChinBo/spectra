@@ -130,7 +130,7 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <TabPane fx:id="tabp" prefHeight="573.0" prefWidth="748.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane fx:id="tabPane" prefHeight="573.0" prefWidth="748.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
                         <Tab text="Untitled Tab 1">
                            <content>

@@ -20,7 +20,7 @@ import javafx.scene.chart.XYChart;
 public class IndexController {
 
 	@FXML
-	private javafx.scene.control.TabPane tabp;
+	private javafx.scene.control.TabPane tabPane;
 
 	private File sourceFile;
 	private File outputFile;
@@ -44,11 +44,11 @@ public class IndexController {
 		sourceFile = fileChooser.showOpenDialog(null);
 
 
-		XYChart.Series<Number, Number> series = readFileByLines(sourceFile);
+		XYChart.Series<Number, Number> series = readFileIntoSeries(sourceFile);
 		TabController tab = new TabController(series);
 
 		tab.setText(sourceFile.getName());
-		tabp.getTabs().add(tab);
+		tabPane.getTabs().add(tab);
 	}
 
 	@FXML
@@ -58,7 +58,7 @@ public class IndexController {
 
 	@FXML
 	private void saveAsAction(ActionEvent ae) {
-
+		getSelectedTab();
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save As");
 
@@ -80,7 +80,7 @@ public class IndexController {
 	 * @return XYChart.Series<Number, Number>
 	 *
 	 */
-	private XYChart.Series<Number, Number> readFileByLines(File file) {
+	private XYChart.Series<Number, Number> readFileIntoSeries(File file) {
 
 
 		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
@@ -101,7 +101,7 @@ public class IndexController {
 					// Show line number
 					String[] tmpString = tempString.split(",");
 					tmpdata.setXY(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1]));
-					series.getData().add(new XYChart.Data<Number, Number>(Double.parseDouble(tmpString[0]),
+					series.getData().add(new XYChart.Data<>(Double.parseDouble(tmpString[0]),
 							Double.parseDouble(tmpString[1])));
 				}
 			}
@@ -121,8 +121,8 @@ public class IndexController {
 			for (int i = 0; i < linechart.getData().size(); i++) {
 				XYChart.Series<Number, Number> series = linechart.getData().get(i);
 				for (int j = 0; j < series.getData().size(); j++) {
-					System.out.println(series.getData().get(j).getXValue() + ", " + series.getData().get(j).getYValue());
-					out.write(series.getData().get(j).getXValue() + ", " + series.getData().get(j).getYValue());
+					System.out.println(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
+					out.write(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
 					out.newLine();
 				}
 			}
@@ -130,6 +130,11 @@ public class IndexController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private int getSelectedTab(){
+		System.out.print("Current tab index:" + tabPane.getSelectionModel().getSelectedIndex());
+		return tabPane.getSelectionModel().getSelectedIndex();
 	}
 
 }
