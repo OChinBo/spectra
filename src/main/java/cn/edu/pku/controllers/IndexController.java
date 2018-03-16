@@ -18,6 +18,7 @@ import javafx.stage.Window;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Tab;
 
 public class IndexController {
 
@@ -163,25 +164,44 @@ public class IndexController {
 	}
 
 	private void writeFile(File file) {
+		
 		try {
+			
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
+			TabController tab = (TabController) tabPane.getSelectionModel().getSelectedItem() ;
+			linechart = tab.getLineChart() ;
+			
 			for (int i = 0; i < linechart.getData().size(); i++) {
+				
 				XYChart.Series<Number, Number> series = linechart.getData().get(i);
+				
 				for (int j = 0; j < series.getData().size(); j++) {
+					
 					System.out.println(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
 					out.write(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
 					out.newLine();
-				}
-			}
+					
+				} // end of for
+				
+			} // end of try
+			
 			out.close();
+			
 		} catch (IOException e) {
+			
 			e.printStackTrace();
-		}
-	}
+			
+		} // end of catch
+		
+	} // end of writeFile()
 
+	// 03/16 Hamilton, did use the function to implement the writeFile function
 	private int getSelectedTabIndex(){
+		
 		System.out.println("Current tab index:" + tabPane.getSelectionModel().getSelectedIndex());
+		TabController tab = (TabController) tabPane.getSelectionModel().getSelectedItem() ;
 		return tabPane.getSelectionModel().getSelectedIndex();
-	}
+		
+	} // end of gerSelectedTabIndex()
 
 }

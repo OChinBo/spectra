@@ -53,7 +53,8 @@ public class TabController extends Tab implements Initializable {
 
 		//CSS
         //getStyleClass().add(getClass().getResource("/css/tab.css").toExternalForm());
-    }
+
+    } // end of Constructor TabController()
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -64,7 +65,14 @@ public class TabController extends Tab implements Initializable {
 		// Incomplete, I'll finish the TableView part later.
 		xColumn.setCellValueFactory(new PropertyValueFactory<>("xAxis"));
 		//tableView.setItems(series);
-	}
+
+	} // end of initialize()
+
+	public LineChart<Number, Number> getLineChart() {
+
+		return lineChart ;
+
+	} // end of getLineChart()
 
 
 
