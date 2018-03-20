@@ -13,6 +13,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+
 		try {
 
 			/** Project Structure Example:
@@ -67,14 +68,14 @@ public class Main extends Application {
 
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
-	}
+		} // end of try catch
+
+	} // end of start()
 
 	public static void main(String[] args) {
+
 		launch(args);
-	}
 
-
-
+	} // end of main()
 
 }
