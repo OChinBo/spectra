@@ -22,14 +22,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class TabController extends Tab implements Initializable {
 
-
-	private static final String Double = null;
+	@FXML
+	private javafx.scene.control.TabPane tabPane ;
 
 	@FXML
 	private LineChart<Number, Number> lineChart;
 
 	@FXML
-	private TableView<Series> tableView;
+	private TableView<tableViewContent> tableView = new TableView<>();
 
 	@FXML
 	private TableColumn xColumn;
@@ -37,9 +37,7 @@ public class TabController extends Tab implements Initializable {
 	@FXML
 	private TableColumn yColumn;
 
-
 	private Series<Number, Number> series;
-
 
 	// Constructor
     public TabController( XYChart.Series<Number, Number> series ) {
@@ -50,7 +48,6 @@ public class TabController extends Tab implements Initializable {
 		FXMLLoader tabLoader = new FXMLLoader(getClass().getResource("/view/Tab.fxml"));
         tabLoader.setRoot(this);
         tabLoader.setController(this);
-
 
 		try {
 			tabLoader.load();
@@ -69,10 +66,12 @@ public class TabController extends Tab implements Initializable {
 
 		lineChart.getData().add(series);
 
-		// Incomplete, I'll finish the TableView part later.
-		xColumn.setCellValueFactory(new PropertyValueFactory("xAxis"));
-		yColumn.setCellValueFactory(new PropertyValueFactory("yAxis"));
-//		tableView.setItems(getTableContent());
+		// Complete, 03/26
+		// Fill data to tableview
+		// Get data from specific linechart
+		xColumn.setCellValueFactory(new PropertyValueFactory<tableViewContent,String>("x"));
+		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContent,String>("y"));
+		tableView.setItems(getTableContent());
 
 	} // end of initialize()
 
@@ -82,32 +81,35 @@ public class TabController extends Tab implements Initializable {
 
 	} // end of getLineChart()
 
-	public void setTableView( TableView<Series> tableview  ) {
+	public void setTableView( TableView<tableViewContent> tableview  ) {
 
 		this.tableView = tableview ;
 
 	} // end of setTableView()
 
+	/**
+	 *
+	 *1. Get data from THE linechart
+	 *2. Assign/Set data to THE tableview
+	 *@return ObservableList<tableViewContent>
+	 *
+	 * */
 	public ObservableList<tableViewContent> getTableContent() {
 
 		ObservableList<tableViewContent> tvdata = FXCollections.observableArrayList() ;
 		linechartdata tmplcd = new linechartdata() ;
-		Dao dao = new Dao() ;
-
-		// get TabPane from Dao
-		javafx.scene.control.TabPane tabPane = dao.getTabPane() ;
-		TabController tab = (TabController) tabPane.getSelectionModel().getSelectedItem() ;
-		LineChart<Number, Number> linechart = tab.getLineChart() ;
 
 		// get data from series linechart
-		for (int i = 0; i < linechart.getData().size(); i++) {
+		for (int i = 0; i < lineChart.getData().size(); i++) {
 
-			XYChart.Series<Number, Number> series = linechart.getData().get(i);
+			XYChart.Series<Number, Number> series = lineChart.getData().get(i);
 
 			for (int j = 0; j < series.getData().size(); j++) {
 
-				tableViewContent tmp = new tableViewContent(series.getData().get(j).getXValue().toString(),series.getData().get(j).getYValue().toString()) ;
-				tvdata.add(tmp);
+				// add data into tableViewContent
+				tableViewContent tmp = new tableViewContent(series.getData().get(j).getXValue().toString(),
+						                                    series.getData().get(j).getYValue().toString()) ;
+				tvdata.add(tmp); // add tableViewContent into ObservableList<>
 
 			} // end of for
 

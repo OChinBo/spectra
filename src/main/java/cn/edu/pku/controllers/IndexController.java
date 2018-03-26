@@ -29,7 +29,6 @@ public class IndexController {
 	private File sourceFile;
 	private File outputFile;
 	private String defaultDirectory = ".";
-//	private LineChart<Number, Number> linechart;
 
 	@FXML
 	private void closeWindowsAction() {
@@ -58,7 +57,7 @@ public class IndexController {
 			TabController tab = new TabController(series);
 			tab.setText(sourceFile.getName());
 			tabPane.getTabs().add(tab);
-			dao.setTabPane(tabPane);
+			dao.setTabPane(tabPane);  // set THE tabpane to dao package
 
 		} // end of if
 

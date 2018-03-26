@@ -3,8 +3,7 @@ package cn.edu.pku.dao;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- *
- * @author Hamilton Chang 2018/03/19
+ * tableview : Columns of X-Axis and Y-Axis
  */
 
 public class tableViewContent {
@@ -12,10 +11,10 @@ public class tableViewContent {
 	private SimpleStringProperty x;
     private SimpleStringProperty y;
 
-    public tableViewContent( String _x, String string ) {
+    public tableViewContent( String _x, String _y ) {
 
     	this.x = new SimpleStringProperty(_x) ;
-    	this.y = new SimpleStringProperty(string) ;
+    	this.y = new SimpleStringProperty(_y) ;
 
     } // end of Constructor
 
@@ -35,13 +34,13 @@ public class tableViewContent {
     // Setter
     public void setX( String _x ) {
 
-    	this.x = new SimpleStringProperty(_x) ;
+    	this.x.set(_x) ;
 
     } // end of setX()
 
     public void setY( String _y ) {
 
-    	this.y = new SimpleStringProperty(_y) ;
+    	this.y.set(_y) ;
 
     } // end of setY()
 
