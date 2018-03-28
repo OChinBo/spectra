@@ -5,8 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import cn.edu.pku.dao.Dao;
-import cn.edu.pku.dao.tableViewContent;
-import cn.edu.pku.controllers.linechartdata ;
+import cn.edu.pku.entity.tableViewContent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -97,7 +96,6 @@ public class TabController extends Tab implements Initializable {
 	public ObservableList<tableViewContent> getTableContent() {
 
 		ObservableList<tableViewContent> tvdata = FXCollections.observableArrayList() ;
-		linechartdata tmplcd = new linechartdata() ;
 
 		// get data from series linechart
 		for (int i = 0; i < lineChart.getData().size(); i++) {

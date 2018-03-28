@@ -81,21 +81,13 @@ public class IndexController {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialDirectory(new File(defaultDirectory));
 
-		// 暫時封印自動填入檔名,考慮到開啟多個檔時或許會衝突
-		/*
-		if(sourceFile != null){
-			fileChooser.setInitialFileName(sourceFile.getName());
-		}*/
-
 		// Set format of filter
 		FileChooser.ExtensionFilter allFilter = new FileChooser.ExtensionFilter("All", "*");
 		FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
 		FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-		// FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
 		fileChooser.getExtensionFilters().add(allFilter);
 		fileChooser.getExtensionFilters().add(csvFilter);
 		fileChooser.getExtensionFilters().add(txtFilter);
-		// fileChooser.getExtensionFilters().add(jpgFilter);
 
 		outputFile = fileChooser.showSaveDialog(window);
 

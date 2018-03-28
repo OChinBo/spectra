@@ -1,4 +1,4 @@
-package cn.edu.pku.dao;
+package cn.edu.pku.entity;
 
 import javafx.beans.property.SimpleStringProperty;
 

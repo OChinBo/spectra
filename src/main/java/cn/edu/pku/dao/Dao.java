@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import cn.edu.pku.controllers.TabController;
-import cn.edu.pku.controllers.linechartdata;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -46,13 +45,10 @@ public class Dao {
 			// stop read data from the file
 			while ((tempString = in.readLine()) != null) {
 
-				linechartdata tmpdata = new linechartdata();
-
 				if (!tempString.isEmpty() && Character.isDigit(tempString.charAt(0))) {
 
 					// separate X-Axis and Y-Axis with ','
 					String[] tmpString = tempString.split(",");
-					tmpdata.setXY(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1])); // add data into linechart data structure
 					series.getData().add(new XYChart.Data<>(Double.parseDouble(tmpString[0]),
 							                                Double.parseDouble(tmpString[1]))); // add data into series
 				} // end of if
