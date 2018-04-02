@@ -1,25 +1,20 @@
 package cn.edu.pku.controllers;
 
 import cn.edu.pku.dao.SpectrumDao;
+import cn.edu.pku.ui.AboutDialog;
 import cn.edu.pku.controllers.TabController;
 import cn.edu.pku.util.PropertiesUtils;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.Node;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Tab;
 
 public class IndexController {
 
@@ -29,6 +24,7 @@ public class IndexController {
 	private File sourceFile;
 	private File outputFile;
 	private String defaultDirectory = ".";
+	private Stage stage;
 
 	@FXML
 	private void closeWindowsAction() {
@@ -63,15 +59,11 @@ public class IndexController {
 
 	} // end of openFileAction()
 
-	// 存檔
 	@FXML
 	private void saveAction(ActionEvent ae) {
-
 		spectrumDao.writeFile(sourceFile);
+	}
 
-	} // end of saveAction()
-
-	// 另存新檔
 	@FXML
 	private void saveAsAction(ActionEvent ae) {
 
@@ -92,13 +84,17 @@ public class IndexController {
 		outputFile = fileChooser.showSaveDialog(window);
 
 		if(outputFile != null){
-
 			// Update the latest directory as defaultDirectory
 			defaultDirectory = outputFile.toString() + "/..";
 			spectrumDao.writeFile(outputFile);
+		}
 
-		} // end of if
+	}
 
-	} // end of saveAsAction()
+    @FXML
+    void about(ActionEvent event) {
+        AboutDialog aboutDialog = new AboutDialog(stage);
+        aboutDialog.showAbout();
+    }
 
 }

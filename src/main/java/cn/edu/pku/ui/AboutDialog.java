@@ -19,60 +19,60 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class AboutDialog {
-    final Stage stage = new Stage();
-    final Button closeButton = new Button();
-    final Hyperlink link = new Hyperlink();
+	final Stage stage = new Stage();
+	final Button closeButton = new Button();
+	final Hyperlink link = new Hyperlink();
 
-    public AboutDialog(Stage primaryStage){
-        prepareStage(primaryStage);
-        addListeners();
-        stage.setScene(prepareScene());
-    }
+	public AboutDialog(Stage primaryStage) {
+		prepareStage(primaryStage);
+		addListeners();
+		stage.setScene(prepareScene());
+	}
 
-    public void showAbout() {
-        stage.show();
-    }
+	public void showAbout() {
+		stage.show();
+	}
 
-    private void prepareStage(Stage primaryStage) {
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(primaryStage);
-    }
+	private void prepareStage(Stage primaryStage) {
+		stage.initStyle(StageStyle.TRANSPARENT);
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(primaryStage);
+	}
 
-    private Scene prepareScene() {
-        VBox stageBox = new VBox(10);
-        stageBox.setId("about");
-        stageBox.setPadding(new Insets(0, 0, 0, 10));
-        HBox closeBox = new HBox();
-        closeButton.setId("close");
-        closeBox.setAlignment(Pos.TOP_RIGHT);
-        closeBox.getChildren().add(closeButton);
-        Label name = new Label(PropertiesUtils.readDetails().get("name"));
-        name.setId("header1");
-        Label version = new Label(PropertiesUtils.readDetails().get("version"));
-        version.setId("version");
-        link.setText("Click here to visit us");
-        link.setId("link");
-        stageBox.getChildren().addAll(closeBox, name, version, link);
-        Scene scene = new Scene(stageBox, 400, 150);
-        scene.getStylesheets().add(
-                getClass().getResource(
-                        "/com/ita/style/MediaPlayer.css").toExternalForm());
-        return scene;
-    }
+	private Scene prepareScene() {
+		VBox stageBox = new VBox(10);
+		stageBox.setId("about");
+		stageBox.setPadding(new Insets(0, 0, 0, 10));
+		HBox closeBox = new HBox();
+		closeButton.setId("close");
+		closeBox.setAlignment(Pos.TOP_RIGHT);
+		closeBox.getChildren().add(closeButton);
+		Label name = new Label(PropertiesUtils.readDetails().get("name"));
+		name.setId("header1");
+		Label version = new Label(PropertiesUtils.readDetails().get("version"));
+		version.setId("version");
+		link.setText("Click here to visit us");
+		link.setId("link");
+		stageBox.getChildren().addAll(closeBox, name, version, link);
+		Scene scene = new Scene(stageBox, 400, 150);
 
-    private void addListeners() {
-        closeButton.setOnAction((e) -> stage.close());
+		scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
 
-        link.setOnAction((e) -> {
-            try {
-                Desktop.getDesktop().browse(new URI(PropertiesUtils.readDetails().get("link")));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (URISyntaxException e1) {
-                e1.printStackTrace();
-            }
-        });
-    }
+		return scene;
+	}
+
+	private void addListeners() {
+		closeButton.setOnAction((e) -> stage.close());
+
+		link.setOnAction((e) -> {
+			try {
+				Desktop.getDesktop().browse(new URI(PropertiesUtils.readDetails().get("link")));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (URISyntaxException e1) {
+				e1.printStackTrace();
+			}
+		});
+	}
 
 }

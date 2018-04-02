@@ -1,55 +1,86 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 .split-pane *.split-pane-divider {
-    -fx-padding: 0 1 0 1;
+    -fx-padding: 0.0 1.0 0.0 1.0;
 }
 
 /*  */
 #buttonOfNewFile {
 	-fx-background-image: url('../images/newfile.png');
-	-fx-background-size: 30px;
+	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
+    -fx-background-position: 90.0%;
 }
 
 #buttonOfOpenFile {
 	-fx-background-image: url('../images/openfile.png');
-	-fx-background-size: 30px;
+	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
+    -fx-background-position: 90.0%;
 }
 
 #buttonOfSave {
 	-fx-background-image: url('../images/save.png');
-	-fx-background-size: 30px;
+	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
+    -fx-background-position: 90.0%;
 }
 
 #buttonOfSaveAs {
 	-fx-background-image: url('../images/saveas.png');
-	-fx-background-size: 30px;
+	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
+    -fx-background-position: 90.0%;
 }
 
 #buttonOfPrint {
 	-fx-background-image: url('../images/print.png');
-	-fx-background-size: 30px;
+	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
+    -fx-background-position: 90.0%;
 }
 
 #buttonOfSettings {
 	-fx-background-image: url('../images/settings.png');
-	-fx-background-size: 30px;
+	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
+    -fx-background-position: 90.0%;
 }
 
 .button {
 	-fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 5, 4, 3;
+    -fx-background-insets: 0.0, 1.0, 2.0;
+    -fx-background-radius: 5.0, 4.0, 3.0;
+
+}
+
+#about{
+	-fx-background-color: linear-gradient(#2A5058, #61a2b1);
+	-fx-border-color: black;
+	-fx-border-width: 1.0px;
+}
+
+#close{
+	 -fx-background-color: transparent;
+	 -fx-background-radius: 0.0,0.0,0.0;
+	 -fx-graphic: url("../images/close-icon.gif");
+
+}
+
+#header1{
+	-fx-text-fill : rgb(0,0,0);
+	-fx-font-size: 18px;
+
+}
+
+#version{
+	-fx-text-fill : rgb(0,0,0);
+	-fx-font-size: 12px;
+    -fx-font-style: italic;
+}
+
+#link{
+	-fx-text-fill : rgb(0,0,160);
+	-fx-font-size: 16px;
 
 }
