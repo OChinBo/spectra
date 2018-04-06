@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import cn.edu.pku.dao.SpectrumDao;
+import cn.edu.pku.dao.FileDao;
 import cn.edu.pku.entity.tableViewContent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

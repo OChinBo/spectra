@@ -1,6 +1,6 @@
 package cn.edu.pku.controllers;
 
-import cn.edu.pku.dao.SpectrumDao;
+import cn.edu.pku.dao.FileDao;
 import cn.edu.pku.ui.AboutDialog;
 import cn.edu.pku.controllers.TabController;
 import cn.edu.pku.util.PropertiesUtils;
@@ -20,7 +20,7 @@ public class IndexController {
 
 	@FXML
 	private javafx.scene.control.TabPane tabPane;
-	private SpectrumDao spectrumDao = new SpectrumDao();
+	private FileDao fileDao;
 	private File sourceFile;
 	private File outputFile;
 	private String defaultDirectory = ".";
@@ -49,11 +49,13 @@ public class IndexController {
 			defaultDirectory = sourceFile.toString() + "/..";
 
 			// Create TabController and then add Tab
-			XYChart.Series<Number, Number> series = spectrumDao.readFileIntoSeries(sourceFile);
+
+			fileDao = new FileDao(sourceFile);
+			XYChart.Series<Number, Number> series = fileDao.read();
 			TabController tab = new TabController(series);
 			tab.setText(sourceFile.getName());
 			tabPane.getTabs().add(tab);
-			spectrumDao.setTabPane(tabPane);  // set THE tabpane to dao package
+			fileDao.setTabPane(tabPane);  // set THE tabpane to dao package
 
 		} // end of if
 
@@ -61,7 +63,7 @@ public class IndexController {
 
 	@FXML
 	private void saveAction(ActionEvent ae) {
-		spectrumDao.writeFile(sourceFile);
+		fileDao.write(sourceFile);
 	}
 
 	@FXML
@@ -86,7 +88,7 @@ public class IndexController {
 		if(outputFile != null){
 			// Update the latest directory as defaultDirectory
 			defaultDirectory = outputFile.toString() + "/..";
-			spectrumDao.writeFile(outputFile);
+			fileDao.write(outputFile);
 		}
 
 	}
