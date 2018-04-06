@@ -1,5 +1,5 @@
 package cn.edu.pku.service;
 
-public class SampleService {
+public interface FilterInterface {
 
 }
