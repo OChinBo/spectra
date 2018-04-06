@@ -24,10 +24,10 @@
             <Menu mnemonicParsing="false" text="File">
                <items>
                   <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem fx:id="openFileMenubar" mnemonicParsing="false" onAction="#openFileAction" text="Open File" />
+                  <MenuItem mnemonicParsing="false" onAction="#openFileAction" text="Open File" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="saveMenubar" mnemonicParsing="false" onAction="#saveAction" text="Save" />
-                  <MenuItem fx:id="saveAsMenubar" mnemonicParsing="false" onAction="#saveAsAction" text="Save As" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAction" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAsAction" text="Save As" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Print" />
                   <MenuItem mnemonicParsing="false" text="Settings" />

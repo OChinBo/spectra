@@ -32,4 +32,17 @@ public class PropertiesUtils {
 		}
 		return formats;
 	}
+
+	public static Map<String, String> readConfig() {
+		Map<String, String> map = new HashMap<String, String>();
+		try {
+			InputStream in = PropertiesUtils.class.getClassLoader().getResourceAsStream("config.properties");
+			Properties p = new Properties();
+			p.load(in);
+			map.put("debug", p.getProperty("debug"));
+		} catch (Exception e) {
+			 e.printStackTrace();
+		}
+		return map;
+	}
 }

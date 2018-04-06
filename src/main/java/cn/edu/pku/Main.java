@@ -51,18 +51,22 @@ public class Main extends Application {
 
 			// Resources Paths
 			final String __indexpath = "/view/Index.fxml";
-			final String __csspath = "/css/application.css";
 			final String __iconpath = "/images/chicken.png";
 
 			// Load root scene
 			FXMLLoader indexLoader = new FXMLLoader(getClass().getResource(__indexpath));
 			Parent root = indexLoader.load();
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource(__csspath).toExternalForm());
+
+			// Set CSS Files
+			String cssFile1 = this.getClass().getResource("/css/application.css").toExternalForm();
+			String cssFile2 = this.getClass().getResource("/css/tabpane.css").toExternalForm();
+			scene.getStylesheets().addAll(cssFile1,cssFile2);
+
 
 			// Set icon and title
 			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(__iconpath)));
-			primaryStage.setTitle("PKU Raman Spectrum");
+			primaryStage.setTitle("PKU Raman Spectrum Viewer");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 

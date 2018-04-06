@@ -1,5 +1,3 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-
 .split-pane *.split-pane-divider {
     -fx-padding: 0.0 1.0 0.0 1.0;
 }
