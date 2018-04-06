@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import cn.edu.pku.dao.FileDao;
-import cn.edu.pku.entity.tableViewContent;
+import cn.edu.pku.entity.tableViewContentEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,7 +28,7 @@ public class TabController extends Tab implements Initializable {
 	private LineChart<Number, Number> lineChart;
 
 	@FXML
-	private TableView<tableViewContent> tableView = new TableView<>();
+	private TableView<tableViewContentEntity> tableView = new TableView<>();
 
 	@FXML
 	private TableColumn xColumn;
@@ -68,8 +68,8 @@ public class TabController extends Tab implements Initializable {
 		// Complete, 03/26
 		// Fill data to tableview
 		// Get data from specific linechart
-		xColumn.setCellValueFactory(new PropertyValueFactory<tableViewContent,String>("x"));
-		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContent,String>("y"));
+		xColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity,String>("x"));
+		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity,String>("y"));
 		tableView.setItems(getTableContent());
 
 	} // end of initialize()
@@ -80,7 +80,7 @@ public class TabController extends Tab implements Initializable {
 
 	} // end of getLineChart()
 
-	public void setTableView( TableView<tableViewContent> tableview  ) {
+	public void setTableView( TableView<tableViewContentEntity> tableview  ) {
 
 		this.tableView = tableview ;
 
@@ -93,9 +93,9 @@ public class TabController extends Tab implements Initializable {
 	 *@return ObservableList<tableViewContent>
 	 *
 	 * */
-	public ObservableList<tableViewContent> getTableContent() {
+	public ObservableList<tableViewContentEntity> getTableContent() {
 
-		ObservableList<tableViewContent> tvdata = FXCollections.observableArrayList() ;
+		ObservableList<tableViewContentEntity> tvdata = FXCollections.observableArrayList() ;
 
 		// get data from series linechart
 		for (int i = 0; i < lineChart.getData().size(); i++) {
@@ -105,7 +105,7 @@ public class TabController extends Tab implements Initializable {
 			for (int j = 0; j < series.getData().size(); j++) {
 
 				// add data into tableViewContent
-				tableViewContent tmp = new tableViewContent(series.getData().get(j).getXValue().toString(),
+				tableViewContentEntity tmp = new tableViewContentEntity(series.getData().get(j).getXValue().toString(),
 						                                    series.getData().get(j).getYValue().toString()) ;
 				tvdata.add(tmp); // add tableViewContent into ObservableList<>
 

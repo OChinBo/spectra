@@ -6,12 +6,12 @@ import javafx.beans.property.SimpleStringProperty;
  * tableview : Columns of X-Axis and Y-Axis
  */
 
-public class tableViewContent {
+public class tableViewContentEntity {
 
 	private SimpleStringProperty x;
     private SimpleStringProperty y;
 
-    public tableViewContent( String _x, String _y ) {
+    public tableViewContentEntity( String _x, String _y ) {
 
     	this.x = new SimpleStringProperty(_x) ;
     	this.y = new SimpleStringProperty(_y) ;
