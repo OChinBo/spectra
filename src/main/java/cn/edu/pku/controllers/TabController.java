@@ -56,8 +56,7 @@ public class TabController extends Tab implements Initializable {
 
 		//CSS
         //getStyleClass().add(getClass().getResource("/css/tab.css").toExternalForm());
-
-    } // end of Constructor TabController()
+    }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -74,24 +73,12 @@ public class TabController extends Tab implements Initializable {
 
 	} // end of initialize()
 
-	public LineChart<Number, Number> getLineChart() {
 
-		return lineChart ;
-
-	} // end of getLineChart()
-
-	public void setTableView( TableView<tableViewContentEntity> tableview  ) {
-
-		this.tableView = tableview ;
-
-	} // end of setTableView()
 
 	/**
-	 *
 	 *1. Get data from THE linechart
 	 *2. Assign/Set data to THE tableview
 	 *@return ObservableList<tableViewContent>
-	 *
 	 * */
 	public ObservableList<tableViewContentEntity> getTableContent() {
 
@@ -107,14 +94,22 @@ public class TabController extends Tab implements Initializable {
 				// add data into tableViewContent
 				tableViewContentEntity tmp = new tableViewContentEntity(series.getData().get(j).getXValue().toString(),
 						                                    series.getData().get(j).getYValue().toString()) ;
-				tvdata.add(tmp); // add tableViewContent into ObservableList<>
+				// Add tableViewContent into ObservableList<>
+				tvdata.add(tmp);
 
-			} // end of for
+			}
 
-		} // end of for
+		}
 
         return tvdata;
+    }
 
-    } // end of getTableContent()
+	public LineChart<Number, Number> getLineChart() {
+		return lineChart ;
+	}
+
+	public void setTableView( TableView<tableViewContentEntity> tableview  ) {
+		this.tableView = tableview ;
+	}
 
 }

@@ -22,6 +22,7 @@ public class OpenFileUtils {
 		/** If you want to get formats from properties, just changed the annotation of the below line.*/
 		//fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("files", PropertiesUtils.readFormats()));
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All", "*"));
+
 		File sourceFile = fileChooser.showOpenDialog(window);
 
 		return sourceFile;

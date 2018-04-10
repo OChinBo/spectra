@@ -22,11 +22,15 @@ public class IndexController {
 
 	@FXML
 	private javafx.scene.control.TabPane tabPane;
+
 	private FileDao fileDao;
+
 	private File sourceFile;
-	private File outputFile;
+
 	private String defaultDirectory = ".";
+
 	private Stage stage;
+
 
 	@FXML
 	private void closeWindowsAction() {
@@ -55,7 +59,7 @@ public class IndexController {
 
 		} // end of if
 
-	} // end of openFileAction()
+	}
 
 	@FXML
 	private void saveAction(ActionEvent ae) {

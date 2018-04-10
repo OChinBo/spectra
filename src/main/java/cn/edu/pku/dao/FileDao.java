@@ -63,8 +63,7 @@ public class FileDao extends Dao<XYChart.Series<Number, Number>, File> {
 			for (int i = 0; i < linechart.getData().size(); i++) {
 				XYChart.Series<Number, Number> series = linechart.getData().get(i);
 				for (int j = 0; j < series.getData().size(); j++) {
-					// System.out.println(series.getData().get(j).getXValue() +
-					// "," + series.getData().get(j).getYValue());
+					// System.out.println(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
 					out.write(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
 					out.newLine();
 				}
