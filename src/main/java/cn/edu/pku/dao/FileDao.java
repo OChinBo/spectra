@@ -40,11 +40,9 @@ public class FileDao extends Dao<XYChart.Series<Number, Number>, File> {
 				if (!tempString.isEmpty() && Character.isDigit(tempString.charAt(0))) {
 					// separate X-Axis and Y-Axis with ','
 					String[] tmpString = tempString.split(",");
+					// Add data into series
 					series.getData().add(
-							new XYChart.Data<>(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1]))); // Add
-																														// data
-																														// into
-																														// series
+							new XYChart.Data<>(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1])));
 				}
 			}
 			in.close();

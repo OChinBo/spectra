@@ -3,6 +3,7 @@ package cn.edu.pku.controllers;
 import cn.edu.pku.dao.FileDao;
 import cn.edu.pku.ui.AboutDialog;
 import cn.edu.pku.controllers.TabController;
+import cn.edu.pku.util.OpenFileUtils;
 import cn.edu.pku.util.PropertiesUtils;
 
 import java.io.File;
@@ -37,12 +38,7 @@ public class IndexController {
 
 		Window window = ((Node) ae.getTarget()).getScene().getWindow();
 
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setInitialDirectory(new File(defaultDirectory));
-
-		// Assign selected file to local parameter
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("files", PropertiesUtils.readFormats()));
-		sourceFile = fileChooser.showOpenDialog(window);
+		sourceFile = OpenFileUtils.open(window, defaultDirectory);
 
 		if(sourceFile != null){
 
@@ -50,7 +46,6 @@ public class IndexController {
 			defaultDirectory = sourceFile.toString() + "/..";
 
 			// Create TabController and then add Tab
-
 			fileDao = new FileDao(sourceFile);
 			XYChart.Series<Number, Number> series = fileDao.read();
 			TabController tab = new TabController(series);

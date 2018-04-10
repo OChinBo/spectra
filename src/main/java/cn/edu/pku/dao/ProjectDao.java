@@ -1,15 +1,21 @@
 package cn.edu.pku.dao;
 
-public class ProjectDao extends Dao<Object, Object> {
+import cn.edu.pku.entity.ProjectEntity;
+
+public class ProjectDao extends Dao<ProjectEntity, ProjectEntity> {
 
 	@Override
-	public Object read() {
+	public ProjectEntity read() {
 		// TODO Auto-generated method stub
+
+//		FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+//		fileChooser.getExtensionFilters().add(allFilter);
+
 		return null;
 	}
 
 	@Override
-	public void write(Object data) {
+	public void write(ProjectEntity data) {
 		// TODO Auto-generated method stub
 
 	}
