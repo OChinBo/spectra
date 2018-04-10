@@ -8,7 +8,7 @@ public class PropertiesUtils {
 	public static Map<String, String> readDetails() {
 		Map<String, String> map = new HashMap<String, String>();
 		try {
-			InputStream in = PropertiesUtils.class.getClassLoader().getResourceAsStream("details.properties");
+			InputStream in = PropertiesUtils.class.getClassLoader().getResourceAsStream("config.properties");
 			Properties p = new Properties();
 			p.load(in);
 			map.put("name", p.getProperty("name"));
@@ -23,7 +23,7 @@ public class PropertiesUtils {
 	public static List<String> readFormats() {
 		List<String> formats = null;
 		try {
-			InputStream in = PropertiesUtils.class.getClassLoader().getResourceAsStream("details.properties");
+			InputStream in = PropertiesUtils.class.getClassLoader().getResourceAsStream("config.properties");
 			Properties p = new Properties();
 			p.load(in);
 			formats = Arrays.asList(p.getProperty("formats").split(","));
