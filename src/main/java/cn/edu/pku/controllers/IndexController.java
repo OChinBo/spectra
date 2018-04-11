@@ -17,8 +17,12 @@ import javafx.stage.Window;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.layout.VBox;
 
 public class IndexController {
+
+	@FXML
+	private javafx.scene.layout.VBox root;
 
 	@FXML
 	private javafx.scene.control.TabPane tabPane;
@@ -38,9 +42,9 @@ public class IndexController {
 	}
 
 	@FXML
-	private void openFileAction(ActionEvent ae) {
+	private void importAction(ActionEvent ae) {
 
-		Window window = ((Node) ae.getTarget()).getScene().getWindow();
+		Window window = (Stage)root.getScene().getWindow();
 
 		sourceFile = OpenFileUtils.open(window, defaultDirectory);
 

@@ -44,6 +44,7 @@ public class PropertiesUtils {
 			Properties p = new Properties();
 			p.load(in);
 			map.put("debug", p.getProperty("debug"));
+			map.put("encrypt", p.getProperty("encrypt"));
 		} catch (Exception e) {
 			 e.printStackTrace();
 		}

@@ -108,8 +108,16 @@ public class TabController extends Tab implements Initializable {
 		return lineChart ;
 	}
 
-	public void setTableView( TableView<tableViewContentEntity> tableview  ) {
-		this.tableView = tableview ;
+	public void setLineChart(LineChart<Number, Number> lineChart) {
+		this.lineChart = lineChart ;
+	}
+
+	public TableView<tableViewContentEntity> getTableView() {
+		return tableView ;
+	}
+
+	public void setTableView(TableView<tableViewContentEntity> tableView) {
+		this.tableView = tableView ;
 	}
 
 }

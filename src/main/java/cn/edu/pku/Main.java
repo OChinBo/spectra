@@ -1,7 +1,5 @@
 package cn.edu.pku;
 
-import cn.edu.pku.controllers.IndexController;
-import cn.edu.pku.controllers.TabController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Parent;

@@ -21,22 +21,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.edu.pku.controllers.IndexController">
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.edu.pku.controllers.IndexController">
    <children>
       <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" onAction="#openFileAction" text="Open File" />
+                  <MenuItem mnemonicParsing="false" onAction="#importAction" text="Open Project" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#saveAction" text="Save" />
-                  <MenuItem mnemonicParsing="false" onAction="#saveAsAction" text="Save As" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAction" text="Save Project" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAsAction" text="Save Project As" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Print" />
+                  <MenuItem mnemonicParsing="false" onAction="#importAction" text="Import" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAsAction" text="Export" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Settings" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="closeWindowsMenubar" mnemonicParsing="false" onAction="#closeWindowsAction" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#closeWindowsAction" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="View">
@@ -48,7 +49,7 @@
                   <CheckMenuItem mnemonicParsing="false" text="Data Table" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Tool">
+            <Menu mnemonicParsing="false" text="Filter">
                <items>
                   <Menu mnemonicParsing="false" text="平滑">
                      <items>
@@ -79,24 +80,19 @@
                   <Tooltip text="New" />
                </tooltip>
          	</Button>
-            <Button fx:id="buttonOfOpenFile" mnemonicParsing="false" onAction="#openFileAction" prefHeight="32.0" prefWidth="32.0">
+            <Button fx:id="buttonOfOpenFile" mnemonicParsing="false" onAction="#importAction" prefHeight="32.0" prefWidth="32.0">
             	<tooltip>
-                  <Tooltip text="Open" />
+                  <Tooltip text="Open Project" />
                </tooltip>
             </Button>
             <Button fx:id="buttonOfSave" mnemonicParsing="false" onAction="#saveAction" prefHeight="32.0" prefWidth="32.0">
             	<tooltip>
-                  <Tooltip text="Save" />
+                  <Tooltip text="Save Project" />
                </tooltip>
             </Button>
             <Button fx:id="buttonOfSaveAs" mnemonicParsing="false" onAction="#saveAsAction" prefHeight="32.0" prefWidth="32.0">
             	<tooltip>
-                  <Tooltip text="Save As" />
-               </tooltip>
-            </Button>
-            <Button fx:id="buttonOfPrint" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
-            	<tooltip>
-                  <Tooltip text="Print" />
+                  <Tooltip text="Save Project As" />
                </tooltip>
             </Button>
             <Separator orientation="VERTICAL" />

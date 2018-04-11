@@ -17,10 +17,11 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class SaveController extends VBox implements Initializable {
+public class SaveController extends SplitPane implements Initializable {
 
 	@FXML
 	private LineChart<Number, Number> lineChartRange ;
