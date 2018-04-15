@@ -2,10 +2,12 @@ package cn.edu.pku.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +19,7 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,12 +35,15 @@ public class SaveController extends SplitPane implements Initializable {
 	@FXML
 	private Slider SliderEnd ;
 	@FXML
-	private Spinner<Integer> SpinnerBegin ;
+	private Spinner<Double> SpinnerBegin ;
 	@FXML
-	private Spinner<Integer> SpinnerEnd ;
+	private Spinner<Double> SpinnerEnd ;
 
 	private Series<Number, Number> series;
 	private int size ;
+	private int beginIndex ;
+	private int endIndex ;
+	private ArrayList<Double> xAxisSpinner ;
 	final Stage stage = new Stage() ;
 
 	// Constructor
@@ -68,14 +74,6 @@ public class SaveController extends SplitPane implements Initializable {
 
 	}
 
-	void print( XYChart.Series<Number, Number> series ) {
-
-		for (int j = 0; j < series.getData().size(); j++) {
-			System.out.println( j+1 + ". " + series.getData().get(j).getXValue() +"," + series.getData().get(j).getYValue());
-		}
-
-    }
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -83,15 +81,112 @@ public class SaveController extends SplitPane implements Initializable {
 		lineChartRange.getData().add(cloneSeries(this.series)) ;
 		lineChartPreview.getData().add(cloneSeries(this.series)) ;
 
+		SliderBegin.setMax(this.size-1);
+		SliderEnd.setMax(this.size-1);
+		SliderEnd.setValue(this.size-1);
+
+		beginIndex = 0 ;
+		endIndex   = this.size - 1 ;
+
+		setSpinnerArray() ;
+
 		// SpinnerBegin.setEditable(true);
 		// SpinnerEnd.setEditable(true);
 
-		// SpinnerValueFactory<Integer> factoryBegin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, this.size-1, 0);
-		SpinnerValueFactory<Integer> factoryBegin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
+		SpinnerValueFactory<Double> factoryBegin = new SpinnerValueFactory.DoubleSpinnerValueFactory(xAxisSpinner.get(0),
+																									 xAxisSpinner.get(xAxisSpinner.size()-1),
+																									 xAxisSpinner.get(0)){
+
+			@Override
+		    public void decrement(int steps) {
+
+				Double current = this.getValue();
+		        int idx = xAxisSpinner.indexOf(current);
+
+				if ( idx == 0 ) {
+					; // DO NOTHING
+				}
+
+				else {
+
+					int newIdx = (xAxisSpinner.size() + idx - steps) % xAxisSpinner.size();
+			        beginIndex = newIdx ;
+			        Double newLang = xAxisSpinner.get(newIdx);
+			        this.setValue(newLang);
+
+				}
+
+		    }
+
+		    @Override
+		    public void increment(int steps) {
+
+		    	Double current = this.getValue();
+		        int idx = xAxisSpinner.indexOf(current);
+
+		    	if ( idx == xAxisSpinner.size()-1 ) {
+		    		; // DO NOTHING
+		    	}
+
+		    	else {
+		    		int newIdx = (idx + steps) % xAxisSpinner.size();
+		    		beginIndex = newIdx ;
+			        Double newLang = xAxisSpinner.get(newIdx);
+			        this.setValue(newLang);
+		    	}
+
+		    }
+
+		};
+
 		SpinnerBegin.setValueFactory(factoryBegin);
 
-		// SpinnerValueFactory<Integer> factoryEnd = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, this.size-1, this.size-1);
-		SpinnerValueFactory<Integer> factoryEnd = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 100);
+		SpinnerValueFactory<Double> factoryEnd = new SpinnerValueFactory.DoubleSpinnerValueFactory(xAxisSpinner.get(0),
+				 																				   xAxisSpinner.get(xAxisSpinner.size()-1),
+				 																				   xAxisSpinner.get(xAxisSpinner.size()-1)){
+
+			@Override
+		    public void decrement(int steps) {
+
+				Double current = this.getValue();
+		        int idx = xAxisSpinner.indexOf(current);
+
+				if ( idx == 0 ) {
+					; // DO NOTHING
+				}
+
+				else {
+
+					int newIdx = (xAxisSpinner.size() + idx - steps) % xAxisSpinner.size();
+			        endIndex = newIdx ;
+			        Double newLang = xAxisSpinner.get(newIdx);
+			        this.setValue(newLang);
+
+				}
+
+		    }
+
+		    @Override
+		    public void increment(int steps) {
+
+		    	Double current = this.getValue();
+		        int idx = xAxisSpinner.indexOf(current);
+
+		    	if ( idx == xAxisSpinner.size()-1 ) {
+		    		; // DO NOTHING
+		    	}
+
+		    	else {
+		    		int newIdx = (idx + steps) % xAxisSpinner.size();
+			        endIndex = newIdx ;
+			        Double newLang = xAxisSpinner.get(newIdx);
+			        this.setValue(newLang);
+		    	}
+
+		    }
+
+		};
+
 		SpinnerEnd.setValueFactory(factoryEnd);
 
 	}
@@ -102,9 +197,11 @@ public class SaveController extends SplitPane implements Initializable {
 
             switch (event.getCode()) {
                 case UP:
+                	beginIndex = beginIndex + 1 ;
                 	SpinnerBegin.increment(1);
                     break;
                 case DOWN:
+                	beginIndex = beginIndex - 1 ;
                 	SpinnerBegin.decrement(1);
                     break;
             }
@@ -114,18 +211,21 @@ public class SaveController extends SplitPane implements Initializable {
 		SpinnerBegin.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
 
 			if( !"".equals(newValue) ) {
-				SliderBegin.setValue(Integer.parseInt(newValue));
+				SliderBegin.setValue(beginIndex);
 			}
 
 	    });
 
 		SpinnerEnd.getEditor().setOnKeyPressed(event -> {
 
+
             switch (event.getCode()) {
                 case UP:
+                	endIndex = endIndex + 1 ;
                 	SpinnerEnd.increment(1);
                     break;
                 case DOWN:
+                	endIndex = endIndex - 1 ;
                 	SpinnerEnd.decrement(1);
                     break;
             }
@@ -135,7 +235,7 @@ public class SaveController extends SplitPane implements Initializable {
 		SpinnerEnd.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
 
 			if ( !"".equals(newValue) ) {
-				SliderEnd.setValue(Integer.parseInt(newValue));
+				SliderEnd.setValue(endIndex);
 			}
 
 	    });
@@ -147,10 +247,18 @@ public class SaveController extends SplitPane implements Initializable {
 		            Number oldValue, Number newValue) {
 
 		    	Double begin = SliderBegin.getValue() ;
-		    	SpinnerBegin.getValueFactory().setValue(begin.intValue());
+		    	Double end   = SliderEnd.getValue() ;
 
-		    	begin = SliderBegin.getValue()/100 * size ;
-				Double end   = SliderEnd.getValue()/100 * size -1 ;
+		    	beginIndex = begin.intValue() ;
+
+		    	if ( begin > end ) {
+		    		end      = begin + 1 ;
+		    		endIndex = end.intValue() ;
+		    		SliderEnd.setValue(end);
+		    		SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(endIndex));
+		    	}
+
+		    	SpinnerBegin.getValueFactory().setValue(xAxisSpinner.get(beginIndex));
 				setPreview(begin, end) ;
 		    }
 		});
@@ -161,11 +269,19 @@ public class SaveController extends SplitPane implements Initializable {
 		    public void changed(ObservableValue<? extends Number> observable,
 		            Number oldValue, Number newValue) {
 
-		    	Double end = SliderEnd.getValue() ;
-		    	SpinnerEnd.getValueFactory().setValue(end.intValue());
+		    	Double begin = SliderBegin.getValue() ;
+		    	Double end   = SliderEnd.getValue() ;
 
-		    	Double begin = SliderBegin.getValue()/100 * size ;
-				end   = SliderEnd.getValue()/100 * size -1 ;
+		    	endIndex = end.intValue() ;
+
+		    	if ( begin > end ) {
+		    		begin      = end - 1 ;
+		    		beginIndex = begin.intValue() ;
+		    		SliderBegin.setValue(begin);
+		    		SpinnerBegin.getValueFactory().setValue(xAxisSpinner.get(beginIndex));
+		    	}
+
+		    	SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(endIndex));
 				setPreview(begin, end) ;
 		    }
 		});
@@ -212,6 +328,18 @@ public class SaveController extends SplitPane implements Initializable {
 											source.getData().get(i).getYValue())) ;
 
 		return destination ;
+
+	}
+
+	private void setSpinnerArray(){
+
+		xAxisSpinner = new ArrayList<>() ;
+
+		for( int i = 0 ; i < size ; i++ ) {
+
+			xAxisSpinner.add(Double.parseDouble(series.getData().get(i).getXValue().toString())) ;
+
+		}
 
 	}
 
