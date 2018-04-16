@@ -15,7 +15,7 @@ import cn.edu.pku.util.PropertiesUtils;
 
 
 /** WARNING: THIS CLASS IS NOT FINISHED YET */
-public class ProjectDao extends Dao<ProjectEntity, ProjectEntity> {
+public class ProjectDao extends Dao<ProjectEntity, ProjectEntity, ProjectEntity> {
 
 	File data = null;
 
@@ -24,8 +24,6 @@ public class ProjectDao extends Dao<ProjectEntity, ProjectEntity> {
 		this.data = data;
 	}
 
-
-
 	@Override
 	public ProjectEntity read() {
 
@@ -33,6 +31,7 @@ public class ProjectDao extends Dao<ProjectEntity, ProjectEntity> {
 		ProjectEntity project = new ProjectEntity();
 
 		try {
+
 			BufferedReader in = new BufferedReader(new FileReader(data));
 			String inputStr = in.toString();
 
@@ -57,6 +56,11 @@ public class ProjectDao extends Dao<ProjectEntity, ProjectEntity> {
 
 		System.out.println(data.toJson());
 
+	}
+
+	@Override
+	public void write(ProjectEntity data, ProjectEntity lc) {
+		// TODO Auto-generated method stub
 
 	}
 

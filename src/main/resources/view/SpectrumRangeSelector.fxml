@@ -118,12 +118,12 @@
             </LineChart>
             <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" prefWidth="70.0" text="Save">
+                  <Button fx:id="btnSave" onAction="#savefileAsAction" mnemonicParsing="false" prefWidth="70.0" text="Save">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefWidth="70.0" text="Cancel" />
+                  <Button fx:id="btnClose" onAction="#closewindowAsAction" mnemonicParsing="false" prefWidth="70.0" text="Cancel" />
                </children>
                <VBox.margin>
                   <Insets />

@@ -13,10 +13,11 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 
-public class FileDao extends Dao<XYChart.Series<Number, Number>, File> {
+public class FileDao extends Dao<XYChart.Series<Number, Number>, File, LineChart<Number, Number>> {
 
 	@FXML
 	private javafx.scene.control.TabPane tabPane;
+	private LineChart<Number, Number> linechart ;
 
 	File data = null;
 
@@ -54,6 +55,7 @@ public class FileDao extends Dao<XYChart.Series<Number, Number>, File> {
 
 	@Override
 	public void write(File data) {
+		// TODO Auto-generated method stub
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(data));
 			// 03/16, get the specific linechart from specific tab
@@ -74,6 +76,31 @@ public class FileDao extends Dao<XYChart.Series<Number, Number>, File> {
 		}
 	}
 
+	@Override
+	public void write(File data, LineChart<Number, Number> lc) {
+		// TODO Auto-generated method stub
+
+		try {
+
+			BufferedWriter out = new BufferedWriter(new FileWriter(data));
+
+			for (int i = 0; i < lc.getData().size(); i++) {
+
+				XYChart.Series<Number, Number> series = lc.getData().get(i);
+				for (int j = 0; j < series.getData().size(); j++) {
+					out.write(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
+					out.newLine();
+				}
+
+			}
+
+			out.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public void setTabPane(javafx.scene.control.TabPane tabPane) {
 		this.tabPane = tabPane;

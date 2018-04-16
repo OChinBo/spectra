@@ -1,13 +1,15 @@
 package cn.edu.pku.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import cn.edu.pku.dao.FileDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,10 +21,10 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class SaveController extends SplitPane implements Initializable {
 
@@ -204,6 +206,8 @@ public class SaveController extends SplitPane implements Initializable {
                 	beginIndex = beginIndex - 1 ;
                 	SpinnerBegin.decrement(1);
                     break;
+				default:
+					break;
             }
 
         });
@@ -228,6 +232,8 @@ public class SaveController extends SplitPane implements Initializable {
                 	endIndex = endIndex - 1 ;
                 	SpinnerEnd.decrement(1);
                     break;
+				default:
+					break;
             }
 
         });
@@ -286,6 +292,37 @@ public class SaveController extends SplitPane implements Initializable {
 		    }
 		});
 
+	}
+
+	@FXML
+	private void savefileAsAction(ActionEvent ae) {
+
+		// 得到當前視窗
+		Window window = stage.getScene().getWindow();
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialDirectory(new File("."));
+
+		// Set format of filter
+		FileChooser.ExtensionFilter allFilter = new FileChooser.ExtensionFilter("All", "*");
+		FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+		FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(allFilter);
+		fileChooser.getExtensionFilters().add(csvFilter);
+		fileChooser.getExtensionFilters().add(txtFilter);
+
+		File outputFile = fileChooser.showSaveDialog(window);
+
+		if(outputFile != null){
+			FileDao fileDao = new FileDao(outputFile) ;
+			fileDao.write(outputFile, lineChartPreview);
+		}
+
+	}
+
+	@FXML
+	private void closewindowAsAction(ActionEvent ae) {
+		stage.close();
 	}
 
 	private void setPreview( Double dbegin, Double dend ) {
