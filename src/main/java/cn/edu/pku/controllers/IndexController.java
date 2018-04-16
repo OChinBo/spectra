@@ -4,20 +4,16 @@ import cn.edu.pku.dao.FileDao;
 import cn.edu.pku.ui.AboutDialog;
 import cn.edu.pku.controllers.TabController;
 import cn.edu.pku.util.OpenFileUtils;
-import cn.edu.pku.util.PropertiesUtils;
 
 import java.io.File;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.VBox;
 
 public class IndexController {
 
@@ -78,28 +74,6 @@ public class IndexController {
 
 		SaveController oSaveController = new SaveController(linechart.getData().get(0)) ;
 		oSaveController.primaryProcess();
-
-		// 得到當前視窗
-//		Window window = ((Node) ae.getTarget()).getScene().getWindow();
-//
-//		FileChooser fileChooser = new FileChooser();
-//		fileChooser.setInitialDirectory(new File(defaultDirectory));
-//
-//		// Set format of filter
-//		FileChooser.ExtensionFilter allFilter = new FileChooser.ExtensionFilter("All", "*");
-//		FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
-//		FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-//		fileChooser.getExtensionFilters().add(allFilter);
-//		fileChooser.getExtensionFilters().add(csvFilter);
-//		fileChooser.getExtensionFilters().add(txtFilter);
-//
-//		outputFile = fileChooser.showSaveDialog(window);
-//
-//		if(outputFile != null){
-//			// Update the latest directory as defaultDirectory
-//			defaultDirectory = outputFile.toString() + "/..";
-//			fileDao.write(outputFile);
-//		}
 
 	}
 

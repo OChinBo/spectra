@@ -42,21 +42,17 @@ public class SaveController extends SplitPane implements Initializable {
 	private Spinner<Double> SpinnerEnd ;
 
 	private Series<Number, Number> series;
-	private int size ;
-	private int beginIndex ;
-	private int endIndex ;
-	private ArrayList<Double> xAxisSpinner ;
+	private int size ;       // data size of linechart
+	private int beginIndex ; // begin index slider and spinner, in order to get the x-axis data from xAxisSpinenr
+	private int endIndex ;   // end index slider and spinner, in order to get the x-axis data from xAxisSpinenr
+	private ArrayList<Double> xAxisSpinner ; // store the x-axis data from linechart(series)
 	final Stage stage = new Stage() ;
 
 	// Constructor
 	public SaveController( XYChart.Series<Number, Number> series ) {
 
 		this.series = series ;
-		this.size = this.series.getData().size();
-		// Double max = Double.parseDouble(this.series.getData().get(this.series.getData().size()-1).getXValue().toString());
-		// Double min = Double.parseDouble(this.series.getData().get(0).getXValue().toString());
-		// xAxisSize = max.intValue() - min.intValue() ;
-		// print(this.series) ;
+		this.size = this.series.getData().size(); // set data size
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SpectrumRangeSelector.fxml"));
 		loader.setController(this);
@@ -80,17 +76,19 @@ public class SaveController extends SplitPane implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 
-		lineChartRange.getData().add(cloneSeries(this.series)) ;
-		lineChartPreview.getData().add(cloneSeries(this.series)) ;
+		lineChartRange.getData().add(cloneSeries(this.series)) ;   // show original linechart
+		lineChartPreview.getData().add(cloneSeries(this.series)) ; // user-selected linechart
 
+		// set slider range and initial value
 		SliderBegin.setMax(this.size-1);
 		SliderEnd.setMax(this.size-1);
 		SliderEnd.setValue(this.size-1);
 
+		// index of linechart's x-axis
 		beginIndex = 0 ;
 		endIndex   = this.size - 1 ;
 
-		setSpinnerArray() ;
+		setSpinnerArray() ; // set an array for spinner
 
 		// SpinnerBegin.setEditable(true);
 		// SpinnerEnd.setEditable(true);
@@ -103,17 +101,20 @@ public class SaveController extends SplitPane implements Initializable {
 		    public void decrement(int steps) {
 
 				Double current = this.getValue();
-		        int idx = xAxisSpinner.indexOf(current);
+		        int index = xAxisSpinner.indexOf(current);
 
-				if ( idx == 0 ) {
+		        // prevent the out of range
+		        // such as, the index of slider is 0 then it can not decrement anymore
+				if ( index == 0 ) {
 					; // DO NOTHING
 				}
 
 				else {
 
-					int newIdx = (xAxisSpinner.size() + idx - steps) % xAxisSpinner.size();
-			        beginIndex = newIdx ;
-			        Double newLang = xAxisSpinner.get(newIdx);
+					// calculate the next x-axis of linechart point
+					int newIndex = (xAxisSpinner.size() + index - steps) % xAxisSpinner.size();
+			        beginIndex = newIndex ;
+			        Double newLang = xAxisSpinner.get(newIndex);
 			        this.setValue(newLang);
 
 				}
@@ -124,17 +125,22 @@ public class SaveController extends SplitPane implements Initializable {
 		    public void increment(int steps) {
 
 		    	Double current = this.getValue();
-		        int idx = xAxisSpinner.indexOf(current);
+		        int index = xAxisSpinner.indexOf(current);
 
-		    	if ( idx == xAxisSpinner.size()-1 ) {
+		        // prevent the out of range
+		        // such as, the index of slider is the last then it can not increment anymore
+		    	if ( index == xAxisSpinner.size()-1 ) {
 		    		; // DO NOTHING
 		    	}
 
 		    	else {
-		    		int newIdx = (idx + steps) % xAxisSpinner.size();
-		    		beginIndex = newIdx ;
-			        Double newLang = xAxisSpinner.get(newIdx);
+
+		    		// calculate the next x-axis of linechart point
+		    		int newIndex = (index + steps) % xAxisSpinner.size();
+		    		beginIndex = newIndex ;
+			        Double newLang = xAxisSpinner.get(newIndex);
 			        this.setValue(newLang);
+
 		    	}
 
 		    }
@@ -150,18 +156,21 @@ public class SaveController extends SplitPane implements Initializable {
 			@Override
 		    public void decrement(int steps) {
 
+				// prevent the out of range
+		        // such as, the index of slider is the last then it can not increment anymore
 				Double current = this.getValue();
-		        int idx = xAxisSpinner.indexOf(current);
+		        int index = xAxisSpinner.indexOf(current);
 
-				if ( idx == 0 ) {
+				if ( index == 0 ) {
 					; // DO NOTHING
 				}
 
 				else {
 
-					int newIdx = (xAxisSpinner.size() + idx - steps) % xAxisSpinner.size();
-			        endIndex = newIdx ;
-			        Double newLang = xAxisSpinner.get(newIdx);
+					// calculate the next x-axis of linechart point
+					int newIndex = (xAxisSpinner.size() + index - steps) % xAxisSpinner.size();
+			        endIndex = newIndex ;
+			        Double newLang = xAxisSpinner.get(newIndex);
 			        this.setValue(newLang);
 
 				}
@@ -172,17 +181,22 @@ public class SaveController extends SplitPane implements Initializable {
 		    public void increment(int steps) {
 
 		    	Double current = this.getValue();
-		        int idx = xAxisSpinner.indexOf(current);
+		        int index = xAxisSpinner.indexOf(current);
 
-		    	if ( idx == xAxisSpinner.size()-1 ) {
+		        // prevent the out of range
+		        // such as, the index of slider is the last then it can not increment anymore
+		    	if ( index == xAxisSpinner.size()-1 ) {
 		    		; // DO NOTHING
 		    	}
 
 		    	else {
-		    		int newIdx = (idx + steps) % xAxisSpinner.size();
-			        endIndex = newIdx ;
-			        Double newLang = xAxisSpinner.get(newIdx);
+
+		    		// calculate the next x-axis of linechart point
+		    		int newIndex = (index + steps) % xAxisSpinner.size();
+			        endIndex = newIndex ;
+			        Double newLang = xAxisSpinner.get(newIndex);
 			        this.setValue(newLang);
+
 		    	}
 
 		    }
@@ -195,6 +209,7 @@ public class SaveController extends SplitPane implements Initializable {
 
 	public void primaryProcess() {
 
+		// Click up button of Begin Spinner
 		SpinnerBegin.getEditor().setOnKeyPressed(event -> {
 
             switch (event.getCode()) {
@@ -212,6 +227,7 @@ public class SaveController extends SplitPane implements Initializable {
 
         });
 
+		// Listen for Begin Spinner Text(Value) Change
 		SpinnerBegin.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
 
 			if( !"".equals(newValue) ) {
@@ -220,8 +236,8 @@ public class SaveController extends SplitPane implements Initializable {
 
 	    });
 
+		// Click up button of End Spinner
 		SpinnerEnd.getEditor().setOnKeyPressed(event -> {
-
 
             switch (event.getCode()) {
                 case UP:
@@ -238,6 +254,7 @@ public class SaveController extends SplitPane implements Initializable {
 
         });
 
+		// Listen for End Spinner Text(Value) Change
 		SpinnerEnd.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
 
 			if ( !"".equals(newValue) ) {
@@ -257,6 +274,9 @@ public class SaveController extends SplitPane implements Initializable {
 
 		    	beginIndex = begin.intValue() ;
 
+		    	// check begin value is bigger than end value
+		    	// in order to prevent the situation like end value is smaller than begin value
+		    	// so always make sure the end value is bigger than begin value
 		    	if ( begin > end ) {
 		    		end      = begin + 1 ;
 		    		endIndex = end.intValue() ;
@@ -265,7 +285,7 @@ public class SaveController extends SplitPane implements Initializable {
 		    	}
 
 		    	SpinnerBegin.getValueFactory().setValue(xAxisSpinner.get(beginIndex));
-				setPreview(begin, end) ;
+				setPreview(begin, end) ; // set preview linechart(user-selected linechart)
 		    }
 		});
 
@@ -280,6 +300,9 @@ public class SaveController extends SplitPane implements Initializable {
 
 		    	endIndex = end.intValue() ;
 
+		    	// check begin value is bigger than end value
+		    	// in order to prevent the situation like end value is smaller than begin value
+		    	// so always make sure the end value is bigger than begin value
 		    	if ( begin > end ) {
 		    		begin      = end - 1 ;
 		    		beginIndex = begin.intValue() ;
@@ -288,7 +311,7 @@ public class SaveController extends SplitPane implements Initializable {
 		    	}
 
 		    	SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(endIndex));
-				setPreview(begin, end) ;
+				setPreview(begin, end) ; // set preview linechart(user-selected linechart)
 		    }
 		});
 
@@ -297,7 +320,7 @@ public class SaveController extends SplitPane implements Initializable {
 	@FXML
 	private void savefileAsAction(ActionEvent ae) {
 
-		// 得到當前視窗
+		// get current window
 		Window window = stage.getScene().getWindow();
 
 		FileChooser fileChooser = new FileChooser();
@@ -325,35 +348,38 @@ public class SaveController extends SplitPane implements Initializable {
 		stage.close();
 	}
 
+	/**
+	 * set Preview LineChart
+	 * @param dbegin
+	 * @param dend
+	 */
 	private void setPreview( Double dbegin, Double dend ) {
 
+		// clear data of Preview linechart
 		lineChartPreview.getData().clear();
 
 		int begin = dbegin.intValue() ;
 		int end   = dend.intValue() ;
 
-		if ( begin <= end ) {
+		XYChart.Series<Number, Number> tmpseries = new XYChart.Series<Number, Number>() ;
 
-			XYChart.Series<Number, Number> tmpseries = new XYChart.Series<Number, Number>() ;
+		for ( int i = begin ; i < end ; i++ ) {
 
-			for ( int i = begin ; i < end ; i++ ) {
-
-				tmpseries.getData().add( new XYChart.Data<>(
-											this.series.getData().get(i).getXValue(),
-											this.series.getData().get(i).getYValue()) );
-
-			}
-
-			lineChartPreview.getData().add(tmpseries) ;
+			tmpseries.getData().add( new XYChart.Data<>(
+										this.series.getData().get(i).getXValue(),
+										this.series.getData().get(i).getYValue()) );
 
 		}
 
-		else {
-			; // DO NOTHING
-		}
+		lineChartPreview.getData().add(tmpseries) ;
 
 	}
 
+	/**
+	 * clone series, in order not to change the original series
+	 * @param source
+	 * @return XYChart.Series<Number, Number>
+	 */
 	private XYChart.Series<Number, Number> cloneSeries(XYChart.Series<Number, Number> source) {
 
 		XYChart.Series<Number, Number> destination = new XYChart.Series<Number, Number>() ;
@@ -367,6 +393,7 @@ public class SaveController extends SplitPane implements Initializable {
 		return destination ;
 
 	}
+
 
 	private void setSpinnerArray(){
 
