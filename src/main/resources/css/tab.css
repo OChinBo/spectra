@@ -8,3 +8,9 @@
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
+
+/* LineChart */
+.chart-series-line {
+    -fx-stroke-width: 2px;
+    -fx-effect: null;
+}

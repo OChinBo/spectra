@@ -1,6 +1,5 @@
 package cn.edu.pku.dao;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,9 +9,7 @@ import org.json.*;
 
 import cn.edu.pku.entity.ProjectEntity;
 import cn.edu.pku.util.CryptUtils;
-import cn.edu.pku.util.OpenFileUtils;
 import cn.edu.pku.util.PropertiesUtils;
-
 
 /** WARNING: THIS CLASS IS NOT FINISHED YET */
 public class ProjectDao extends Dao<ProjectEntity, ProjectEntity, ProjectEntity> {
@@ -36,7 +33,7 @@ public class ProjectDao extends Dao<ProjectEntity, ProjectEntity, ProjectEntity>
 			String inputStr = in.toString();
 
 			// Check config from properties
-			if(PropertiesUtils.readConfig().get("encrypt").equals("true")){
+			if (PropertiesUtils.readConfig().get("encrypt").equals("true")) {
 				inputStr = CryptUtils.Decrypt(inputStr);
 			}
 			jsonObj = new JSONObject(CryptUtils.Decrypt(inputStr));
@@ -46,8 +43,6 @@ public class ProjectDao extends Dao<ProjectEntity, ProjectEntity, ProjectEntity>
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-
 		return project;
 	}
 

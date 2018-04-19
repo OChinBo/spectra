@@ -11,9 +11,11 @@ public class ProjectEntity {
 
 	private TableView<tableViewContentEntity> tableView;
 
+	// Other parameters...
 
-	// Maybe we can only return parameters, data could be ignore?
+
 	public String toString(){
+		//TODO Maybe we can only return parameters, data could be ignore?
 		return "LineChart: " + this.lineChart + ", TableView: " + this.tableView;
 	}
 

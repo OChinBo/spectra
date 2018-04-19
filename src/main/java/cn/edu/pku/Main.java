@@ -58,7 +58,7 @@ public class Main extends Application {
 
 			// Set CSS Files
 			String cssFile1 = this.getClass().getResource("/css/application.css").toExternalForm();
-			String cssFile2 = this.getClass().getResource("/css/tabpane.css").toExternalForm();
+			String cssFile2 = this.getClass().getResource("/css/tab.css").toExternalForm();
 			scene.getStylesheets().addAll(cssFile1,cssFile2);
 
 

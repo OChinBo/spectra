@@ -44,8 +44,10 @@ public class TabController extends Tab implements Initializable {
 
     	// Set root, Tab.fxml is fx:root
 		FXMLLoader tabLoader = new FXMLLoader(getClass().getResource("/view/Tab.fxml"));
+		this.getStyleClass().add(getClass().getResource("/css/tab.css").toExternalForm());
         tabLoader.setRoot(this);
         tabLoader.setController(this);
+
 
 		try {
 			tabLoader.load();
@@ -53,8 +55,7 @@ public class TabController extends Tab implements Initializable {
 			throw new RuntimeException(e);
 		}
 
-		//CSS
-        //getStyleClass().add(getClass().getResource("/css/tab.css").toExternalForm());
+
     }
 
 	@Override
