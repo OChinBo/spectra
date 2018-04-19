@@ -88,8 +88,8 @@ public class SaveController extends SplitPane implements Initializable {
 
 		lineChartRange.getData().add(cloneSeries(this.series)); // show original linechart
 		lineChartPreview.getData().add(cloneSeries(this.series)); // user-selected linechart
-		
-		// Set linechart 
+
+		// Set linechart
 		//lineChartRange.setTitle(arg0);
 
 		// Set linechart display
@@ -97,6 +97,8 @@ public class SaveController extends SplitPane implements Initializable {
 		lineChartRange.setCreateSymbols(false);
 		lineChartPreview.setAnimated(false);
 		lineChartPreview.setCreateSymbols(false);
+		lineChartRange.setLegendVisible(false);
+		lineChartPreview.setLegendVisible(false);
 
 		// Set slider range and initial value
 		SliderBegin.setMax(this.size - 1);

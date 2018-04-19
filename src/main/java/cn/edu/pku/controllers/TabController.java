@@ -63,6 +63,7 @@ public class TabController extends Tab implements Initializable {
 		// TODO Auto-generated method stub
 
 		lineChart.getData().add(series);
+		lineChart.setLegendVisible(false);
 
 		// Complete, 03/26
 		// Fill data to tableview
