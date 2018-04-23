@@ -24,13 +24,9 @@ public class IndexController {
 	private javafx.scene.control.TabPane tabPane;
 
 	private FileDao fileDao;
-
 	private File sourceFile;
-
 	private String defaultDirectory = ".";
-
 	private Stage stage;
-
 
 	@FXML
 	private void closeWindowsAction() {
@@ -83,15 +79,15 @@ public class IndexController {
         aboutDialog.showAbout();
     }
 
-    void print( LineChart<Number, Number> linechart ) {
-
-    	for (int i = 0; i < linechart.getData().size(); i++) {
-			XYChart.Series<Number, Number> series = linechart.getData().get(i);
-			for (int j = 0; j < series.getData().size(); j++) {
-				 System.out.println( j+1 + ". " + series.getData().get(j).getXValue() +"," + series.getData().get(j).getYValue());
-			}
-		}
-
-    }
+//    void print( LineChart<Number, Number> linechart ) {
+//
+//    	for (int i = 0; i < linechart.getData().size(); i++) {
+//			XYChart.Series<Number, Number> series = linechart.getData().get(i);
+//			for (int j = 0; j < series.getData().size(); j++) {
+//				 System.out.println( j+1 + ". " + series.getData().get(j).getXValue() +"," + series.getData().get(j).getYValue());
+//			}
+//		}
+//
+//    }
 
 }
