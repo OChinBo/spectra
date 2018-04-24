@@ -40,7 +40,8 @@ public class FileDao extends Dao<XYChart.Series<Number, Number>, File, LineChart
 			while ((tempString = in.readLine()) != null) {
 				if (!tempString.isEmpty() && Character.isDigit(tempString.charAt(0))) {
 					// separate X-Axis and Y-Axis with ','
-					String[] tmpString = tempString.split(",");
+					// String[] tmpString = tempString.split(","); // fake data from Internet
+					String[] tmpString = tempString.split("\t"); // 04/24 data structure test
 					// Add data into series
 					series.getData().add(
 							new XYChart.Data<>(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1])));

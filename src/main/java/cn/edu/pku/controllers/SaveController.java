@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Slider;
@@ -111,11 +112,18 @@ public class SaveController extends SplitPane implements Initializable {
 
 		setSpinnerArray(); // set an array for spinner
 
+//		for(int i = 0 ; i < xAxisSpinner.size() ; i++){
+//
+//			System.out.println(i+1 + ": " + xAxisSpinner.get(i));
+//
+//		}
+
 		// SpinnerBegin.setEditable(true);
 		// SpinnerEnd.setEditable(true);
 
 		SpinnerValueFactory<Double> factoryBegin = new SpinnerValueFactory.DoubleSpinnerValueFactory(
-				xAxisSpinner.get(0), xAxisSpinner.get(xAxisSpinner.size() - 1), xAxisSpinner.get(0)) {
+				xAxisSpinner.get(0), xAxisSpinner.get(xAxisSpinner.size() - 1), xAxisSpinner.get(0))
+		{
 
 			@Override
 			public void decrement(int steps) {
@@ -171,7 +179,8 @@ public class SaveController extends SplitPane implements Initializable {
 		SpinnerBegin.setValueFactory(factoryBegin);
 
 		SpinnerValueFactory<Double> factoryEnd = new SpinnerValueFactory.DoubleSpinnerValueFactory(xAxisSpinner.get(0),
-				xAxisSpinner.get(xAxisSpinner.size() - 1), xAxisSpinner.get(xAxisSpinner.size() - 1)) {
+				xAxisSpinner.get(xAxisSpinner.size() - 1), xAxisSpinner.get(xAxisSpinner.size() - 1))
+		{
 
 			@Override
 			public void decrement(int steps) {
@@ -395,7 +404,10 @@ public class SaveController extends SplitPane implements Initializable {
 
 		}
 
+		final NumberAxis xAxis = (NumberAxis) lineChartPreview.getXAxis();
+
 		lineChartPreview.getData().add(tmpseries);
+		xAxis.setLowerBound(Double.parseDouble(this.series.getData().get(begin).getXValue().toString()));
 
 	}
 
@@ -422,7 +434,16 @@ public class SaveController extends SplitPane implements Initializable {
 
 		xAxisSpinner = new ArrayList<>();
 
+		/* fake data structure from Internet
 		for (int i = 0; i < size; i++) {
+
+			xAxisSpinner.add(Double.parseDouble(series.getData().get(i).getXValue().toString()));
+
+		}
+		*/
+
+		// 04/24 true data structure test
+		for (int i = size-1 ; i > -1 ; i--) {
 
 			xAxisSpinner.add(Double.parseDouble(series.getData().get(i).getXValue().toString()));
 
