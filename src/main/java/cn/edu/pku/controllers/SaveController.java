@@ -112,12 +112,6 @@ public class SaveController extends SplitPane implements Initializable {
 
 		setSpinnerArray(); // set an array for spinner
 
-//		for(int i = 0 ; i < xAxisSpinner.size() ; i++){
-//
-//			System.out.println(i+1 + ": " + xAxisSpinner.get(i));
-//
-//		}
-
 		// SpinnerBegin.setEditable(true);
 		// SpinnerEnd.setEditable(true);
 
@@ -434,16 +428,7 @@ public class SaveController extends SplitPane implements Initializable {
 
 		xAxisSpinner = new ArrayList<>();
 
-		/* fake data structure from Internet
 		for (int i = 0; i < size; i++) {
-
-			xAxisSpinner.add(Double.parseDouble(series.getData().get(i).getXValue().toString()));
-
-		}
-		*/
-
-		// 04/24 true data structure test
-		for (int i = size-1 ; i > -1 ; i--) {
 
 			xAxisSpinner.add(Double.parseDouble(series.getData().get(i).getXValue().toString()));
 

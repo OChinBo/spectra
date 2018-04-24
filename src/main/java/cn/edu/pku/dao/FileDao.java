@@ -6,18 +6,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Comparator;
 
 import cn.edu.pku.controllers.TabController;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
 
 public class FileDao extends Dao<XYChart.Series<Number, Number>, File, LineChart<Number, Number>> {
 
 	@FXML
 	private javafx.scene.control.TabPane tabPane;
-	private LineChart<Number, Number> linechart;
 
 	File data = null;
 
@@ -39,14 +38,20 @@ public class FileDao extends Dao<XYChart.Series<Number, Number>, File, LineChart
 			// Read a line once a time, until the end of the file which is null
 			while ((tempString = in.readLine()) != null) {
 				if (!tempString.isEmpty() && Character.isDigit(tempString.charAt(0))) {
+					// fake data from Internet
 					// separate X-Axis and Y-Axis with ','
-					// String[] tmpString = tempString.split(","); // fake data from Internet
-					String[] tmpString = tempString.split("\t"); // 04/24 data structure test
+					// String[] tmpString = tempString.split(",");
+
+					// 04/24 data structure test
+					// separate X-Axis and Y-Axis with '\t'(tab)
+					String[] tmpString = tempString.split("\t");
 					// Add data into series
 					series.getData().add(
 							new XYChart.Data<>(Double.parseDouble(tmpString[0]), Double.parseDouble(tmpString[1])));
 				}
 			}
+
+			series.getData().sort(Comparator.comparingDouble(d -> d.getXValue().doubleValue()));
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -66,9 +71,11 @@ public class FileDao extends Dao<XYChart.Series<Number, Number>, File, LineChart
 			for (int i = 0; i < linechart.getData().size(); i++) {
 				XYChart.Series<Number, Number> series = linechart.getData().get(i);
 				for (int j = 0; j < series.getData().size(); j++) {
-					// System.out.println(series.getData().get(j).getXValue() +
-					// "," + series.getData().get(j).getYValue());
-					out.write(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
+					// original data structure
+					// out.write(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
+
+					// 04/24 true data structure
+					out.write(series.getData().get(j).getXValue() + "\t" + series.getData().get(j).getYValue());
 					out.newLine();
 				}
 			}
@@ -90,7 +97,11 @@ public class FileDao extends Dao<XYChart.Series<Number, Number>, File, LineChart
 
 				XYChart.Series<Number, Number> series = lc.getData().get(i);
 				for (int j = 0; j < series.getData().size(); j++) {
-					out.write(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
+					// original data structure
+					// out.write(series.getData().get(j).getXValue() + "," + series.getData().get(j).getYValue());
+
+					// 04/24 true data structure
+					out.write(series.getData().get(j).getXValue() + "\t" + series.getData().get(j).getYValue());
 					out.newLine();
 				}
 
