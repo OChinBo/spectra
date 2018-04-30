@@ -23,6 +23,7 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.SpinnerValueFactory.ListSpinnerValueFactory;
 import javafx.scene.control.SplitPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -94,8 +95,8 @@ public class SaveController extends SplitPane implements Initializable {
 		// TODO Auto-generated method stub
 
 		// Initialize
-		spinnerBeginTrigger = false ;
-		spinnerEndTrigger   = false ;
+		spinnerBeginTrigger = false;
+		spinnerEndTrigger   = false;
 
 		lineChartRange.getData().add(cloneSeries(this.series)); // show original linechart
 		lineChartPreview.getData().add(cloneSeries(this.series)); // user-selected linechart
@@ -123,8 +124,9 @@ public class SaveController extends SplitPane implements Initializable {
 
 		setSpinnerArray(); // set an array for spinner
 
-//		SpinnerBegin.setEditable(true);
-//		SpinnerEnd.setEditable(true);
+		// Set spinner's textField editable
+		SpinnerBegin.setEditable(true);
+		SpinnerEnd.setEditable(true);
 
 		SpinnerValueFactory<Double> factoryBegin = new SpinnerValueFactory.DoubleSpinnerValueFactory(
 				xAxisSpinner.get(0), xAxisSpinner.get(xAxisSpinner.size() - 1), xAxisSpinner.get(0))
@@ -245,51 +247,113 @@ public class SaveController extends SplitPane implements Initializable {
 
 	public void primaryProcess() {
 
-//		// Click up button of Begin Spinner
-//		SpinnerBegin.getEditor().setOnKeyPressed(event -> {
-//
-//			switch (event.getCode()) {
-//				case UP:
-//					spinnerBeginTrigger = true ;
-//					beginIndex = beginIndex + 1;
-//					System.out.println("up");
-//					SpinnerBegin.increment(1);
-//					break;
-//				case DOWN:
-//					spinnerBeginTrigger = true ;
-//					beginIndex = beginIndex - 1;
-//					System.out.println("down");
-//					SpinnerBegin.decrement(1);
-//					break;
-//				default:
-//					break;
-//			}
-//
-//		});
+		// Click up button of Begin Spinner
+		SpinnerBegin.getEditor().setOnKeyPressed(event -> {
+			switch (event.getCode()) {
+				case UP:
+					//spinnerBeginTrigger = true ;
+					beginIndex = beginIndex + 1;
+					System.out.println("up");
+					SpinnerBegin.increment(1);
+					break;
+				case DOWN:
+					//spinnerBeginTrigger = true ;
+					beginIndex = beginIndex - 1;
+					System.out.println("down");
+					SpinnerBegin.decrement(1);
+					break;
+				default:
+					break;
+			}
+		});
 
-//		SpinnerBegin.valueProperty().addListener(listener -> {
-//			beginIndex = findTheMinClosedValue(xAxisSpinner, Double.parseDouble(SpinnerBegin.getEditor().getText()), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
-//			SliderBegin.setValue(beginIndex);
-//		});9
+		// Click up button of End Spinner
+		SpinnerEnd.getEditor().setOnKeyPressed(event -> {
+			switch (event.getCode()) {
+				case UP:
+					//spinnerEndTrigger = true ;
+					endIndex = endIndex + 1;
+					SpinnerEnd.increment(1);
+					System.out.println("up");
+					break;
+				case DOWN:
+					//spinnerEndTrigger = true ;
+					endIndex = endIndex - 1;
+					SpinnerEnd.decrement(1);
+					System.out.println("down");
+					break;
+				default:
+					break;
+			}
+		});
 
-//		SpinnerBegin.getEditor().setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent arg0) {
-//				// TODO Auto-generated method stub
-//				beginIndex = findTheMinClosedValue(xAxisSpinner, Double.parseDouble(SpinnerBegin.getEditor().getText()), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
-//				SliderBegin.setValue(beginIndex);
-//			}
-//
-//		});
+
+
+
+		/* For example
+		spinner.getEditor().setOnAction(new EventHandler<ActionEvent>() {
+
+	           @Override
+	           public void handle(ActionEvent event) {
+	               String text = SpinnerEnd.getEditor().getText();
+	               SpinnerValueFactory.ListSpinnerValueFactory<Double>//
+	               valueFactory = (ListSpinnerValueFactory<Double>) SpinnerEnd.getValueFactory();
+
+
+	               StringConverter<Double> converter = valueFactory.getConverter();
+	               Double enterValue = converter.fromString(text);
+
+	               // If the list does not contains 'enterValue'.
+	               if (!valueFactory.getItems().contains(enterValue)) {
+	                   // Add new item to list
+	                   valueFactory.getItems().add(enterValue);
+	                   // Set to current
+	                   valueFactory.setValue(enterValue);
+	               } else {
+	                   // Set to current
+	                   valueFactory.setValue(enterValue);
+	               }
+
+	           }
+	       });*/
+
+
+		// Get Spinner's text input and set to closest point
+		SpinnerBegin.getEditor().setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				String text = SpinnerBegin.getEditor().getText();
+				Double dText = Double.parseDouble(text);
+
+				beginIndex = findClosestValue(xAxisSpinner, Double.parseDouble(SpinnerBegin.getEditor().getText()), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
+				SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(beginIndex));
+				SliderBegin.setValue(beginIndex);
+			}
+		});
+
+		// Get Spinner's text input and set to closest point
+		SpinnerEnd.getEditor().setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				String text = SpinnerEnd.getEditor().getText();
+				Double dText = Double.parseDouble(text);
+
+				endIndex = findClosestValue(xAxisSpinner, Double.parseDouble(SpinnerEnd.getEditor().getText()), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1);
+				SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(endIndex));
+				SliderEnd.setValue(endIndex);
+			}
+		});
+
+
 
 		// Listen for Begin Spinner Text(Value) Change
-		SpinnerBegin.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-//
-//			if (spinnerBeginTrigger) {
-//
-//				spinnerBeginTrigger = false ;
-//
+		/* SpinnerBegin.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+			if (spinnerBeginTrigger) {
+
+				spinnerBeginTrigger = false ;
+
 				if (newValue.equals("")) {
 					; // DO NOTHING
 				}
@@ -297,41 +361,27 @@ public class SaveController extends SplitPane implements Initializable {
 				else { // !newValue.equals("")
 					SliderBegin.setValue(beginIndex);
 				}
-//
-//			}
-//
-//			else {
-//
-//				// spinnerBeginTrigger = true ;
-//				beginIndex = findTheMinClosedValue(xAxisSpinner, Double.parseDouble(newValue), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
-//				SliderBegin.setValue(beginIndex);
-//
-//			}
-//
-		});
 
-//		// Click up button of End Spinner
-//		SpinnerEnd.getEditor().setOnKeyPressed(event -> {
-//
-//			switch (event.getCode()) {
-//				case UP:
-//					spinnerEndTrigger = true ;
-//					endIndex = endIndex + 1;
-//					SpinnerEnd.increment(1);
-//					System.out.println("up");
-//					break;
-//				case DOWN:
-//					spinnerEndTrigger = true ;
-//					endIndex = endIndex - 1;
-//					SpinnerEnd.decrement(1);
-//					System.out.println("down");
-//					break;
-//				default:
-//					break;
-//			}
-//
+			}
+
+			else {
+
+				// spinnerBeginTrigger = true ;
+				beginIndex = findTheMinClosedValue(xAxisSpinner, Double.parseDouble(newValue), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
+				SliderBegin.setValue(beginIndex);
+
+			}
+		}); */
+
+
+
+
+
+		// Listener for Spinners
+//		SpinnerBegin.valueProperty().addListener(listener -> {
+//			beginIndex = findTheMinClosedValue(xAxisSpinner, Double.parseDouble(SpinnerBegin.getEditor().getText()), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
+//			SliderBegin.setValue(beginIndex);
 //		});
-
 //		SpinnerEnd.valueProperty().addListener(listener -> {
 //			endIndex = findTheMinClosedValue(xAxisSpinner, Double.parseDouble(SpinnerEnd.getEditor().getText()), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
 //			SliderEnd.setValue(endIndex);
@@ -344,36 +394,31 @@ public class SaveController extends SplitPane implements Initializable {
 		*/
 
 		// Listen for End Spinner Text(Value) Change
-		SpinnerEnd.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+		/*SpinnerEnd.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+			doCommit(SpinnerEnd) ;
+			if (spinnerEndTrigger) {
 
-//			doCommit(SpinnerEnd) ;
+				spinnerEndTrigger = false ;
 
-//
-//			if (spinnerEndTrigger) {
-//
-//				spinnerEndTrigger = false ;
-//
-//				System.out.println("text change");
-//
+				System.out.println("text change");
+
 				if (newValue.equals("")) {
 					; // DO NOTHING
-				}
-
-				else { // !newValue.equals("")
+				} else { // !newValue.equals("")
 					SliderEnd.setValue(endIndex);
 				}
-//
-//			}
-//
-//			else {
-//
-//				// spinnerEndTrigger = true ;
-//				endIndex = findTheMinClosedValue(xAxisSpinner, Double.parseDouble(newValue), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
-//				SliderEnd.setValue(endIndex);
-//
-//			}
-//
-		});
+
+			}
+
+			else {
+
+				// spinnerEndTrigger = true ;
+				endIndex = findTheMinClosedValue(xAxisSpinner, Double.parseDouble(newValue), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
+				SliderEnd.setValue(endIndex);
+
+			}
+
+		});*/
 
 		// Listen for Slider Begin value changes
 		SliderBegin.valueProperty().addListener(new ChangeListener<Number>() {
@@ -503,10 +548,8 @@ public class SaveController extends SplitPane implements Initializable {
 		XYChart.Series<Number, Number> tmpseries = new XYChart.Series<Number, Number>();
 
 		for (int i = begin; i < end; i++) {
-
 			tmpseries.getData().add(new XYChart.Data<>(this.series.getData().get(i).getXValue(),
 					this.series.getData().get(i).getYValue()));
-
 		}
 
 		final NumberAxis xAxis = (NumberAxis) lineChartPreview.getXAxis();
@@ -536,21 +579,16 @@ public class SaveController extends SplitPane implements Initializable {
 	}
 
 	private void setSpinnerArray() {
-
 		xAxisSpinner = new ArrayList<>();
-
 		for (int i = 0; i < size; i++) {
-
 			xAxisSpinner.add(Double.parseDouble(series.getData().get(i).getXValue().toString()));
-
 		}
-
 	}
 
-	private int findTheMinClosedValue(ArrayList<Double> xAxis, Double target, int pivotIndex, Double lastDifference, int lastDIndex){
+	private int findClosestValue(ArrayList<Double> xAxis, Double target, int pivotIndex, Double lastDifference, int lastDIndex){
 
 		// count the difference between current value and target value
-		Double difference = Math.abs(target-xAxis.get(pivotIndex));
+		Double difference = Math.abs(target - xAxis.get(pivotIndex));
 
 		// base case
 		if ( difference > lastDifference ) {
@@ -565,12 +603,12 @@ public class SaveController extends SplitPane implements Initializable {
 
 		else if ( xAxis.get(pivotIndex) < xAxis.get(lastDIndex) ) {
 			System.out.println("less than");
-			return findTheMinClosedValue(xAxis, target, pivotIndex/2, difference, xAxis.indexOf(xAxis.get(pivotIndex))) ;
+			return findClosestValue(xAxis, target, pivotIndex/2, difference, xAxis.indexOf(xAxis.get(pivotIndex))) ;
 		}
 
 		else {
 			System.out.println("more than");
-			return findTheMinClosedValue(xAxis, target, (pivotIndex+xAxis.size())/2, difference, xAxis.indexOf(xAxis.get(pivotIndex))) ;
+			return findClosestValue(xAxis, target, (pivotIndex+xAxis.size())/2, difference, xAxis.indexOf(xAxis.get(pivotIndex))) ;
 		}
 
 	}
