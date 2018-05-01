@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import cn.edu.pku.dao.FileDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
@@ -60,8 +63,8 @@ public class SaveController extends SplitPane implements Initializable {
 	private int endIndex; // End index slider and spinner, in order to get the
 						  // x-axis data from xAxisSpinner
 
-	private ArrayList<Double> xAxisSpinner; // Store the x-axis data from
-											// linechart(series)
+	private ArrayList<Double> xAxisDataArrayList; // Store the x-axis data from
+													// linechart(series)
 
 	private boolean spinnerBeginTrigger ;
 	private boolean spinnerEndTrigger ;
@@ -71,7 +74,6 @@ public class SaveController extends SplitPane implements Initializable {
 
 	// Constructor
 	public SaveController(XYChart.Series<Number, Number> series) {
-
 		this.series = series;
 		this.size = this.series.getData().size(); // set data size
 
@@ -101,6 +103,7 @@ public class SaveController extends SplitPane implements Initializable {
 		lineChartRange.getData().add(cloneSeries(this.series)); // show original linechart
 		lineChartPreview.getData().add(cloneSeries(this.series)); // user-selected linechart
 
+
 		// Set linechart
 		//lineChartRange.setTitle(arg0);
 
@@ -122,73 +125,55 @@ public class SaveController extends SplitPane implements Initializable {
 		beginIndex = 0;
 		endIndex = this.size - 1;
 
-		setSpinnerArray(); // set an array for spinner
+		// Set an array for spinner
+		setSpinnerArray();
 
 		// Set spinner's textField editable
 		SpinnerBegin.setEditable(true);
 		SpinnerEnd.setEditable(true);
 
 		SpinnerValueFactory<Double> factoryBegin = new SpinnerValueFactory.DoubleSpinnerValueFactory(
-				xAxisSpinner.get(0), xAxisSpinner.get(xAxisSpinner.size() - 1), xAxisSpinner.get(0))
+				xAxisDataArrayList.get(0), xAxisDataArrayList.get(xAxisDataArrayList.size() - 1), xAxisDataArrayList.get(0))
 		{
-
 			@Override
 			public void decrement(int steps) {
-
 				Double current = this.getValue();
-				int index = xAxisSpinner.indexOf(current);
+				int index = xAxisDataArrayList.indexOf(current);
 
 				// prevent the out of range
 				// such as, the index of slider is 0 then it can not decrement
 				// anymore
-				if (index == 0) {
-					; // DO NOTHING
-				}
-
-				else {
-
+				if (index != 0) {
 					// calculate the next x-axis of linechart point
-					int newIndex = (xAxisSpinner.size() + index - steps) % xAxisSpinner.size();
+					int newIndex = (xAxisDataArrayList.size() + index - steps) % xAxisDataArrayList.size();
 					beginIndex = newIndex;
-					Double newLang = xAxisSpinner.get(newIndex);
+					Double newLang = xAxisDataArrayList.get(newIndex);
 					this.setValue(newLang);
-
 				}
-
 			}
 
 			@Override
 			public void increment(int steps) {
-
 				Double current = this.getValue();
-				int index = xAxisSpinner.indexOf(current);
+				int index = xAxisDataArrayList.indexOf(current);
 
 				// prevent the out of range such as, the index of slider is the
 				// last then it can not increment anymore
-				if (index == xAxisSpinner.size() - 1) {
-					; // DO NOTHING
-				}
-
-				else {
-
+				if (index != xAxisDataArrayList.size() - 1) {
 					// calculate the next x-axis of linechart point
-					int newIndex = (index + steps) % xAxisSpinner.size();
+					int newIndex = (index + steps) % xAxisDataArrayList.size();
 					beginIndex = newIndex;
-					Double newLang = xAxisSpinner.get(newIndex);
+					Double newLang = xAxisDataArrayList.get(newIndex);
 					this.setValue(newLang);
-
 				}
-
 			}
-
 		};
 
 		SpinnerBegin.setValueFactory(factoryBegin);
 
-		SpinnerValueFactory<Double> factoryEnd = new SpinnerValueFactory.DoubleSpinnerValueFactory(xAxisSpinner.get(0),
-				xAxisSpinner.get(xAxisSpinner.size() - 1), xAxisSpinner.get(xAxisSpinner.size() - 1))
+		SpinnerValueFactory<Double> factoryEnd = new SpinnerValueFactory.DoubleSpinnerValueFactory(xAxisDataArrayList.get(0),
+				xAxisDataArrayList.get(xAxisDataArrayList.size() - 1), xAxisDataArrayList.get(xAxisDataArrayList.size() - 1))
 		{
-
 			@Override
 			public void decrement(int steps) {
 
@@ -196,57 +181,38 @@ public class SaveController extends SplitPane implements Initializable {
 				// the index of slider is the last then it can not
 				// decrement anymore.
 				Double current = this.getValue();
-				int index = xAxisSpinner.indexOf(current);
+				int index = xAxisDataArrayList.indexOf(current);
 
-				if (index == 0) {
-					; // DO NOTHING
-				}
-
-				else {
-
+				if (index != 0) {
 					// calculate the next x-axis of linechart point
-					int newIndex = (xAxisSpinner.size() + index - steps) % xAxisSpinner.size();
+					int newIndex = (xAxisDataArrayList.size() + index - steps) % xAxisDataArrayList.size();
 					endIndex = newIndex;
-					Double newLang = xAxisSpinner.get(newIndex);
+					Double newLang = xAxisDataArrayList.get(newIndex);
 					this.setValue(newLang);
-
 				}
-
 			}
 
 			@Override
 			public void increment(int steps) {
-
 				Double current = this.getValue();
-				int index = xAxisSpinner.indexOf(current);
+				int index = xAxisDataArrayList.indexOf(current);
 
-				// Prevent the out of range such as,
-				// the index of slider is the last then it can not increment
+				// Prevent the out of range.
+				// Such as the index of slider is the last then it can not increment
 				// anymore.
-				if (index == xAxisSpinner.size() - 1) {
-					; // DO NOTHING
-				}
-
-				else {
-
+				if (index != xAxisDataArrayList.size() - 1) {
 					// calculate the next x-axis of linechart point
-					int newIndex = (index + steps) % xAxisSpinner.size();
+					int newIndex = (index + steps) % xAxisDataArrayList.size();
 					endIndex = newIndex;
-					Double newLang = xAxisSpinner.get(newIndex);
+					Double newLang = xAxisDataArrayList.get(newIndex);
 					this.setValue(newLang);
-
 				}
-
 			}
-
 		};
-
 		SpinnerEnd.setValueFactory(factoryEnd);
-
 	}
 
 	public void primaryProcess() {
-
 		// Click up button of Begin Spinner
 		SpinnerBegin.getEditor().setOnKeyPressed(event -> {
 			switch (event.getCode()) {
@@ -299,7 +265,6 @@ public class SaveController extends SplitPane implements Initializable {
 	               SpinnerValueFactory.ListSpinnerValueFactory<Double>//
 	               valueFactory = (ListSpinnerValueFactory<Double>) SpinnerEnd.getValueFactory();
 
-
 	               StringConverter<Double> converter = valueFactory.getConverter();
 	               Double enterValue = converter.fromString(text);
 
@@ -326,8 +291,8 @@ public class SaveController extends SplitPane implements Initializable {
 				String text = SpinnerBegin.getEditor().getText();
 				Double dText = Double.parseDouble(text);
 
-				beginIndex = findClosestValue(xAxisSpinner, Double.parseDouble(SpinnerBegin.getEditor().getText()), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1) ;
-				SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(beginIndex));
+				beginIndex = findClosestValue(xAxisDataArrayList, Double.parseDouble(SpinnerBegin.getEditor().getText()), xAxisDataArrayList.size()/2, MAXIUM, xAxisDataArrayList.size()-1) ;
+				SpinnerEnd.getValueFactory().setValue(xAxisDataArrayList.get(beginIndex));
 				SliderBegin.setValue(beginIndex);
 			}
 		});
@@ -340,8 +305,8 @@ public class SaveController extends SplitPane implements Initializable {
 				String text = SpinnerEnd.getEditor().getText();
 				Double dText = Double.parseDouble(text);
 
-				endIndex = findClosestValue(xAxisSpinner, Double.parseDouble(SpinnerEnd.getEditor().getText()), xAxisSpinner.size()/2, MAXIUM, xAxisSpinner.size()-1);
-				SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(endIndex));
+				endIndex = findClosestValue(xAxisDataArrayList, Double.parseDouble(SpinnerEnd.getEditor().getText()), xAxisDataArrayList.size()/2, MAXIUM, xAxisDataArrayList.size()-1);
+				SpinnerEnd.getValueFactory().setValue(xAxisDataArrayList.get(endIndex));
 				SliderEnd.setValue(endIndex);
 			}
 		});
@@ -439,13 +404,13 @@ public class SaveController extends SplitPane implements Initializable {
 					endIndex = end.intValue();
 					SliderEnd.setValue(end);
 					spinnerEndTrigger = true ;
-					SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(endIndex));
+					SpinnerEnd.getValueFactory().setValue(xAxisDataArrayList.get(endIndex));
 				}
 
 				spinnerBeginTrigger = true ;
-				SpinnerBegin.getValueFactory().setValue(xAxisSpinner.get(beginIndex));
-				setPreview(begin, end); // set preview linechart(user-selected
-										// linechart)
+				SpinnerBegin.getValueFactory().setValue(xAxisDataArrayList.get(beginIndex));
+
+				setPreview(begin, end);
 			}
 		});
 
@@ -468,13 +433,13 @@ public class SaveController extends SplitPane implements Initializable {
 					beginIndex = begin.intValue();
 					SliderBegin.setValue(begin);
 					spinnerBeginTrigger = true ;
-					SpinnerBegin.getValueFactory().setValue(xAxisSpinner.get(beginIndex));
+					SpinnerBegin.getValueFactory().setValue(xAxisDataArrayList.get(beginIndex));
 				}
 
 				spinnerEndTrigger = true ;
-				SpinnerEnd.getValueFactory().setValue(xAxisSpinner.get(endIndex));
-				setPreview(begin, end); // set preview linechart(user-selected
-										// linechart)
+				SpinnerEnd.getValueFactory().setValue(xAxisDataArrayList.get(endIndex));
+
+				setPreview(begin, end);
 			}
 		});
 
@@ -546,7 +511,6 @@ public class SaveController extends SplitPane implements Initializable {
 		int end = dend.intValue();
 
 		XYChart.Series<Number, Number> tmpseries = new XYChart.Series<Number, Number>();
-
 		for (int i = begin; i < end; i++) {
 			tmpseries.getData().add(new XYChart.Data<>(this.series.getData().get(i).getXValue(),
 					this.series.getData().get(i).getYValue()));
@@ -556,6 +520,9 @@ public class SaveController extends SplitPane implements Initializable {
 
 		lineChartPreview.getData().add(tmpseries);
 		xAxis.setLowerBound(Double.parseDouble(this.series.getData().get(begin).getXValue().toString()));
+
+//		xAxis.setLowerBound(dbegin);
+//		xAxis.setUpperBound(dend);
 
 	}
 
@@ -568,7 +535,6 @@ public class SaveController extends SplitPane implements Initializable {
 	private XYChart.Series<Number, Number> cloneSeries(XYChart.Series<Number, Number> source) {
 
 		XYChart.Series<Number, Number> destination = new XYChart.Series<Number, Number>();
-		// destination.setName("Spetra");
 
 		for (int i = 0; i < source.getData().size(); i++)
 			destination.getData()
@@ -579,9 +545,9 @@ public class SaveController extends SplitPane implements Initializable {
 	}
 
 	private void setSpinnerArray() {
-		xAxisSpinner = new ArrayList<>();
+		xAxisDataArrayList = new ArrayList<>();
 		for (int i = 0; i < size; i++) {
-			xAxisSpinner.add(Double.parseDouble(series.getData().get(i).getXValue().toString()));
+			xAxisDataArrayList.add(Double.parseDouble(series.getData().get(i).getXValue().toString()));
 		}
 	}
 
@@ -589,25 +555,28 @@ public class SaveController extends SplitPane implements Initializable {
 
 		// count the difference between current value and target value
 		Double difference = Math.abs(target - xAxis.get(pivotIndex));
-
+		System.out.println("--------------------------------");
+		System.out.println("target:" + target);
+		System.out.println("pivotIndex:" + pivotIndex);
+		System.out.println("lastDifference:" + lastDifference);
+		System.out.println("lastDIndex:" + lastDIndex);
+		System.out.println("Difference:" + difference);
+		System.out.println("--------------------------------");
 		// base case
 		if ( difference > lastDifference ) {
-			System.out.println("equal difference");
+			//System.out.println("equal difference " + xAxis.get(pivotIndex));
 			return lastDIndex;
 		}
-
 		else if ( xAxis.get(pivotIndex) == xAxis.get(lastDIndex) ) {
-			System.out.println("equal value");
+			//System.out.println("equal value " + xAxis.get(pivotIndex));
 			return lastDIndex ;
 		}
-
 		else if ( xAxis.get(pivotIndex) < xAxis.get(lastDIndex) ) {
-			System.out.println("less than");
+			//System.out.println("less than");
 			return findClosestValue(xAxis, target, pivotIndex/2, difference, xAxis.indexOf(xAxis.get(pivotIndex))) ;
 		}
-
 		else {
-			System.out.println("more than");
+			//System.out.println("more than");
 			return findClosestValue(xAxis, target, (pivotIndex+xAxis.size())/2, difference, xAxis.indexOf(xAxis.get(pivotIndex))) ;
 		}
 
