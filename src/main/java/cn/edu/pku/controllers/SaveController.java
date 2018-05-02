@@ -477,9 +477,12 @@ public class SaveController extends SplitPane implements Initializable {
 		lineChartPreview.getData().add(tmpseries);
 		final NumberAxis xAxis = (NumberAxis) lineChartPreview.getXAxis();
 
-		//xAxis.setLowerBound(Double.parseDouble(this.series.getData().get(begin).getXValue().toString()));
-		xAxis.setLowerBound(tmpseries.getData().get(0).getXValue().doubleValue());
-		xAxis.setUpperBound(tmpseries.getData().get(end-begin-1).getXValue().doubleValue());
+		// Prevent out of bound exception
+		if(end != begin) {
+			xAxis.setLowerBound(tmpseries.getData().get(0).getXValue().doubleValue());
+			xAxis.setUpperBound(tmpseries.getData().get(end-begin-1).getXValue().doubleValue());
+		}
+
 
 	}
 
