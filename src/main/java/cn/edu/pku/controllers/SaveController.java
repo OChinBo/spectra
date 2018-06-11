@@ -133,8 +133,8 @@ public class SaveController extends SplitPane implements Initializable {
 		}
 
 		// Set spinner's textField editable
-		SpinnerBegin.setEditable(true);
-		SpinnerEnd.setEditable(true);
+		// SpinnerBegin.setEditable(true);
+		// SpinnerEnd.setEditable(true);
 
 		// Initialize factories of begin and end
 		SpinnerValueFactory<Double> factoryBegin = new SpinnerValueFactory.DoubleSpinnerValueFactory(
@@ -261,8 +261,27 @@ public class SaveController extends SplitPane implements Initializable {
 			}
 		});
 
+		SpinnerBegin.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
 
+			if (newValue.equals("")) {
+				; // DO NOTHING
+			} else {
+				SliderBegin.setValue(beginIndex);
+			}
 
+		});
+
+		SpinnerEnd.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+
+			if (newValue.equals("")) {
+				; // DO NOTHING
+			} else {
+				SliderEnd.setValue(endIndex);
+			}
+
+		});
+
+		/*
 		// Get Spinner's text input and set to closest point
 		SpinnerBegin.getEditor().setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -286,9 +305,7 @@ public class SaveController extends SplitPane implements Initializable {
 				SliderEnd.setValue(endIndex);
 			}
 		});
-
-
-
+        */
 		/** Listener for Spinner Text*/
 		/*
 		SpinnerBegin.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
@@ -350,6 +367,7 @@ public class SaveController extends SplitPane implements Initializable {
 				int end = (int) SliderEnd.getValue();
 
 				//beginIndex = begin.intValue();
+				beginIndex = begin ;
 
 				// check begin value is bigger than end value
 				// in order to prevent the situation like end value is smaller
@@ -357,7 +375,8 @@ public class SaveController extends SplitPane implements Initializable {
 				// so always make sure the end value is bigger than begin value
 				if (begin > end) {
 					end = begin + 1;
-					//endIndex = end.intValue();
+					// endIndex = end.intValue();
+					endIndex = end ;
 					SliderEnd.setValue(end);
 					spinnerEndTrigger = true ;
 					SpinnerEnd.getValueFactory().setValue(xAxisDataArrayList.get(end));
@@ -377,6 +396,7 @@ public class SaveController extends SplitPane implements Initializable {
 				int end = (int) SliderEnd.getValue();
 
 				//endIndex = end.intValue();
+				endIndex = end ;
 
 				// check begin value is bigger than end value
 				// in order to prevent the situation like end value is smaller
@@ -385,6 +405,7 @@ public class SaveController extends SplitPane implements Initializable {
 				if (begin > end) {
 					begin = end - 1;
 					//beginIndex = begin.intValue();
+					beginIndex = begin ;
 					SliderBegin.setValue(begin);
 					spinnerBeginTrigger = true ;
 					SpinnerBegin.getValueFactory().setValue(xAxisDataArrayList.get(begin));
