@@ -156,7 +156,13 @@ public class ZoomableLineChart extends Application {
 		xAxis.setUpperBound(xAxis.getLowerBound() + zoomRect.getWidth() / xAxisScale);
 		yAxis.setLowerBound(yAxis.getLowerBound() + yOffset / yAxisScale);
 		yAxis.setUpperBound(yAxis.getLowerBound() - zoomRect.getHeight() / yAxisScale);
-		System.out.println(yAxis.getLowerBound() + " " + yAxis.getUpperBound());
+		System.out.println("zoomTopLeft:" + zoomTopLeft + " zoomBottomRight:" + zoomBottomRight);
+		System.out.println("yAxis:" + yAxis + " xAxis:" + xAxis);
+		System.out.println("xOffset:" + xOffset + " yOffset:" + yOffset);
+		System.out.println("xAxisScale:" + xAxisScale + " yAxisScale:" + yAxisScale);
+		System.out.println("xAxisLowerBound:" + (xAxis.getLowerBound() + xOffset / xAxisScale) + " xAxisUpperBound:" + (xAxis.getLowerBound() + zoomRect.getWidth() / xAxisScale));
+		System.out.println("yAxisLowerBound:" + (yAxis.getLowerBound() + yOffset / yAxisScale) + " yAxisUpperBound:" + (yAxis.getLowerBound() - zoomRect.getHeight() / yAxisScale));
+
 		zoomRect.setWidth(0);
 		zoomRect.setHeight(0);
 	}

@@ -1,53 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.stage.FileChooser?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.stage.FileChooser?>
 
-<fx:root fx:id="tab" type="Tab" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1">
-	<SplitPane dividerPositions="0.65" orientation="VERTICAL"
-		prefHeight="600.0" prefWidth="800.0">
-		<items>
-			<AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="200.0">
-				<children>
-					<LineChart fx:id="lineChart" prefHeight="400.0"
-						prefWidth="500.0" AnchorPane.bottomAnchor="0.0"
-						AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-						AnchorPane.topAnchor="0.0">
-						<xAxis>
-							<NumberAxis side="BOTTOM" />
-						</xAxis>
-						<yAxis>
-							<NumberAxis side="LEFT" />
-						</yAxis>
-					</LineChart>
-				</children>
-			</AnchorPane>
-			<AnchorPane prefHeight="159.0" prefWidth="243.0">
-				<children>
-					<TableView fx:id="tableView" prefHeight="200.0"
-						prefWidth="243.0" AnchorPane.bottomAnchor="0.0"
-						AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-						AnchorPane.topAnchor="0.0">
-						<columns>
-							<TableColumn fx:id="xColumn" prefWidth="75.0" text="xAxis" />
-							<TableColumn fx:id="yColumn" prefWidth="75.0" text="yAxis" />
-						</columns>
-					</TableView>
-				</children>
-			</AnchorPane>
-		</items>
-	</SplitPane>
-
+<fx:root type="Tab" fx:id="tab" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <SplitPane dividerPositions="0.8076923076923077" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0">
+    <items>
+      <AnchorPane fx:id="anchorPane" minHeight="386.0" prefHeight="386.0" prefWidth="798.0">
+        <children>
+          <LineChart fx:id="lineChart" pickOnBounds="false" prefHeight="420.0" prefWidth="798.0" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="19.0">
+            <xAxis>
+              <NumberAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+              <NumberAxis side="LEFT" />
+            </yAxis>
+          </LineChart>
+          <HBox fx:id="hbox" alignment="CENTER" layoutX="1.0" layoutY="425.0" prefHeight="55.0" prefWidth="798.0">
+            <children>
+              <Button fx:id="buttonZoom" alignment="CENTER" mnemonicParsing="false" text="ZOOM" HBox.hgrow="ALWAYS" />
+              <Button fx:id="buttonReset" mnemonicParsing="false" text="Reset" />
+            </children>
+          </HBox>
+        </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="159.0" prefWidth="243.0">
+        <children>
+          <TableView fx:id="tableView" prefHeight="200.0" prefWidth="243.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columns>
+              <TableColumn prefWidth="75.0" text="xAxis" fx:id="xColumn" />
+              <TableColumn prefWidth="75.0" text="yAxis" fx:id="yColumn" />
+            </columns>
+          </TableView>
+        </children>
+      </AnchorPane>
+    </items>
+  </SplitPane>
 </fx:root>
