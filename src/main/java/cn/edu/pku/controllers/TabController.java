@@ -3,7 +3,7 @@ package cn.edu.pku.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.lang.Object ;
+import java.lang.Object;
 
 import cn.edu.pku.entity.tableViewContentEntity;
 import javafx.beans.binding.BooleanBinding;
@@ -31,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -43,22 +44,22 @@ import javafx.stage.Stage;
 public class TabController extends Tab implements Initializable {
 
 	@FXML
-	private AnchorPane anchorPane ;
+	private AnchorPane anchorPane;
 
 	@FXML
-	private TabPane tabPane ;
+	private TabPane tabPane;
 
 	@FXML
 	private LineChart<Number, Number> lineChart;
 
 	@FXML
-	private HBox hbox ;
+	private HBox hbox;
 
 	@FXML
-	private Button buttonZoom ;
+	private Button buttonZoom;
 
 	@FXML
-	private Button buttonReset ;
+	private Button buttonReset;
 
 	@FXML
 	private TableView<tableViewContentEntity> tableView = new TableView<>();
@@ -70,21 +71,23 @@ public class TabController extends Tab implements Initializable {
 	private TableColumn yColumn;
 
 	private Series<Number, Number> series;
-	private Double xAxisLowerBound ;
-	private Double xAxisUpperBound ;
-	private Double yAxisLowerBound ;
-	private Double yAxisUpperBound ;
+	private Double xAxisLowerBound;
+	private Double xAxisUpperBound;
+	private Double yAxisLowerBound;
+	private Double yAxisUpperBound;
+
+	final Rectangle zoomRect = new Rectangle();
 
 	// Constructor
-    public TabController( XYChart.Series<Number, Number> series ) {
+	public TabController(XYChart.Series<Number, Number> series) {
 
-    	this.series = series;
+		this.series = series;
 
-    	// Set root, Tab.fxml is fx:root
+		// Set root, Tab.fxml is fx:root
 		FXMLLoader tabLoader = new FXMLLoader(getClass().getResource("/view/Tab.fxml"));
 		this.getStyleClass().add(getClass().getResource("/css/tab.css").toExternalForm());
-        tabLoader.setRoot(this);
-        tabLoader.setController(this);
+		tabLoader.setRoot(this);
+		tabLoader.setController(this);
 
 		try {
 			tabLoader.load();
@@ -92,45 +95,45 @@ public class TabController extends Tab implements Initializable {
 			throw new RuntimeException(e);
 		}
 
-    }
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 
-//		final NumberAxis xAxisx = new NumberAxis(0,1000,0.5);
-//		final NumberAxis yAxisy = new NumberAxis(0,1000,0.5);
-//		lineChart = new LineChart<>(xAxisx, yAxisy);
+		// final NumberAxis xAxisx = new NumberAxis(0,1000,0.5);
+		// final NumberAxis yAxisy = new NumberAxis(0,1000,0.5);
+		// lineChart = new LineChart<>(xAxisx, yAxisy);
 		lineChart.getData().add(series);
 		lineChart.setLegendVisible(false);
 
 		// ChartZoomManager tmp;
 
-		NumberAxis xAxis = (NumberAxis) lineChart.getXAxis() ;
-		NumberAxis yAxis = (NumberAxis) lineChart.getYAxis() ;
-//		xAxis.setUpperBound(3000);
-//		xAxis.setLowerBound(0);
-//		yAxis.setUpperBound(2000);
-//		yAxis.setLowerBound(-2000);
+		NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
+		NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
+		// xAxis.setUpperBound(3000);
+		// xAxis.setLowerBound(0);
+		// yAxis.setUpperBound(2000);
+		// yAxis.setLowerBound(-2000);
 		xAxisLowerBound = xAxis.getLowerBound();
 		xAxisUpperBound = xAxis.getUpperBound();
 		yAxisLowerBound = yAxis.getLowerBound();
 		yAxisUpperBound = yAxis.getUpperBound();
+
 		System.out.println("xAxisLowerBound:" + xAxisLowerBound + "xAxisUpperBound:" + xAxisUpperBound);
 		System.out.println("yAxisLowerBound:" + yAxisLowerBound + "yAxisUpperBound:" + yAxisUpperBound);
 
 		// Complete, 03/26
 		// Fill data to tableview
 		// Get data from specific linechart
-		xColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity,String>("x"));
-		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity,String>("y"));
+		xColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity, String>("x"));
+		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity, String>("y"));
 		tableView.setItems(getTableContent());
 
 		// 04/23 zoom test
-		final Rectangle zoomRect = new Rectangle();
 		zoomRect.setManaged(false);
 		zoomRect.setFill(Color.LIGHTSEAGREEN.deriveColor(0, 1, 1, 0.5));
-		anchorPane.getChildren().add(zoomRect) ;
+		anchorPane.getChildren().add(zoomRect);
 
 		setUpZooming(zoomRect, lineChart);
 		// 04/23 zoom test
@@ -139,19 +142,19 @@ public class TabController extends Tab implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				doZoom(zoomRect, lineChart);
-//				zoomWindow() ;
+				// zoomWindow() ;
 			}
 		});
 
 		buttonReset.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-//				final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
-//				xAxis.setLowerBound(xAxisLowerBound);
-//				xAxis.setUpperBound(xAxisUpperBound);
-//				final NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
-//				yAxis.setLowerBound(yAxisLowerBound);
-//				yAxis.setUpperBound(yAxisUpperBound);
+				// final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
+				// xAxis.setLowerBound(xAxisLowerBound);
+				// xAxis.setUpperBound(xAxisUpperBound);
+				// final NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
+				// yAxis.setLowerBound(yAxisLowerBound);
+				// yAxis.setUpperBound(yAxisUpperBound);
 
 				zoomRect.setWidth(0);
 				zoomRect.setHeight(0);
@@ -159,7 +162,7 @@ public class TabController extends Tab implements Initializable {
 		});
 
 		final BooleanBinding disableControls = zoomRect.widthProperty().lessThan(5)
-												.or(zoomRect.heightProperty().lessThan(5));
+				.or(zoomRect.heightProperty().lessThan(5));
 		buttonZoom.disableProperty().bind(disableControls);
 
 	} // end of initialize()
@@ -167,9 +170,10 @@ public class TabController extends Tab implements Initializable {
 	private LineChart<Number, Number> createChart() {
 		final NumberAxis xAxis = createAxis();
 		final NumberAxis yAxis = createAxis();
-//		final LineChart<Number, Number> chart = new LineChart<>(xAxis, yAxis);
-//		chart.setAnimated(false);
-//		chart.setCreateSymbols(false);
+		// final LineChart<Number, Number> chart = new LineChart<>(xAxis,
+		// yAxis);
+		// chart.setAnimated(false);
+		// chart.setCreateSymbols(false);
 		LineChart<Number, Number> chart = new LineChart<>(new NumberAxis(), new NumberAxis());
 		chart.getData().add(this.series);
 		return chart;
@@ -177,21 +181,21 @@ public class TabController extends Tab implements Initializable {
 
 	private NumberAxis createAxis() {
 		final NumberAxis xAxis = new NumberAxis();
-//		final NumberAxis xAxis = new NumberAxis(0,1000,0.5);
-//		xAxis.setAutoRanging(false);
-//		xAxis.setLowerBound(-1000);
-//		xAxis.setUpperBound(2000);
+		// final NumberAxis xAxis = new NumberAxis(0,1000,0.5);
+		// xAxis.setAutoRanging(false);
+		// xAxis.setLowerBound(-1000);
+		// xAxis.setUpperBound(2000);
 		return xAxis;
 	}
 
 	/**
-	 *1. Get data from THE linechart
-	 *2. return THE data
-	 *@return ObservableList<tableViewContent>
-	 * */
+	 * 1. Get data from THE linechart 2. return THE data
+	 *
+	 * @return ObservableList<tableViewContent>
+	 */
 	public ObservableList<tableViewContentEntity> getTableContent() {
 
-		ObservableList<tableViewContentEntity> tvdata = FXCollections.observableArrayList() ;
+		ObservableList<tableViewContentEntity> tvdata = FXCollections.observableArrayList();
 
 		// get data from series linechart
 		for (int i = 0; i < lineChart.getData().size(); i++) {
@@ -202,7 +206,7 @@ public class TabController extends Tab implements Initializable {
 
 				// add data into tableViewContent
 				tableViewContentEntity tmp = new tableViewContentEntity(series.getData().get(j).getXValue().toString(),
-						                                    series.getData().get(j).getYValue().toString()) ;
+						series.getData().get(j).getYValue().toString());
 				// Add tableViewContent into ObservableList<>
 				tvdata.add(tmp);
 
@@ -210,11 +214,12 @@ public class TabController extends Tab implements Initializable {
 
 		}
 
-        return tvdata;
-    }
+		return tvdata;
+	}
 
 	/**
 	 * 04/23 zoom test
+	 *
 	 * @param rect
 	 * @param zoomingNode
 	 */
@@ -222,30 +227,63 @@ public class TabController extends Tab implements Initializable {
 
 		final ObjectProperty<Point2D> mouseAnchor = new SimpleObjectProperty<>();
 
-		zoomingNode.setOnMousePressed(new EventHandler<MouseEvent>() {
-
+		// Reset when right-button clicked
+		zoomingNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				mouseAnchor.set(new Point2D(event.getX(), event.getY()));
-				rect.setWidth(0);
-				rect.setHeight(0);
-			}
+				MouseButton button = event.getButton();
+				if (button == MouseButton.SECONDARY) {
+					final NumberAxis xAxis = (NumberAxis) getLineChart().getXAxis();
+					xAxis.setLowerBound(0);
+					xAxis.setUpperBound(1000);
+					final NumberAxis yAxis = (NumberAxis) getLineChart().getYAxis();
+					yAxis.setLowerBound(0);
+					yAxis.setUpperBound(1000);
 
+					zoomRect.setWidth(0);
+					zoomRect.setHeight(0);
+
+				}
+			}
+		});
+
+		zoomingNode.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				MouseButton button = event.getButton();
+				if(button==MouseButton.PRIMARY){
+					mouseAnchor.set(new Point2D(event.getX(), event.getY()));
+					rect.setWidth(0);
+					rect.setHeight(0);
+				}
+			}
 		});
 
 		zoomingNode.setOnMouseDragged(new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent event) {
+				MouseButton button = event.getButton();
+				if(button==MouseButton.PRIMARY){
+					double x = event.getX();
+					double y = event.getY();
+					rect.setX(Math.min(x, mouseAnchor.get().getX()));
+					rect.setY(Math.min(y, mouseAnchor.get().getY()));
+					rect.setWidth(Math.abs(x - mouseAnchor.get().getX()));
+					rect.setHeight(Math.abs(y - mouseAnchor.get().getY()));
+				}
+			}
+		});
 
-				double x = event.getX();
-				double y = event.getY();
+		// doZoom when left-button released
+		zoomingNode.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				MouseButton button = event.getButton();
 
-				rect.setX(Math.min(x, mouseAnchor.get().getX()));
-				rect.setY(Math.min(y, mouseAnchor.get().getY()));
-				rect.setWidth(Math.abs(x - mouseAnchor.get().getX()));
-				rect.setHeight(Math.abs(y - mouseAnchor.get().getY()));
-
+				if(button==MouseButton.PRIMARY){
+					// doZoom(rect, linechart);
+					// zoomWindow();
+				}
 			}
 
 		});
@@ -273,10 +311,10 @@ public class TabController extends Tab implements Initializable {
 		zoomRect.setHeight(0);
 	}
 
-	private void zoomWindow(){
-		Stage zoomStage = new Stage() ;
+	private void zoomWindow() {
+		Stage zoomStage = new Stage();
 		final LineChart<Number, Number> chart = null;
-		chart.getData().add(cloneSeries(series)) ;
+		chart.getData().add(cloneSeries(series));
 
 		final StackPane chartContainer = new StackPane();
 		chartContainer.getChildren().add(chart);
@@ -347,19 +385,19 @@ public class TabController extends Tab implements Initializable {
 	}
 
 	public LineChart<Number, Number> getLineChart() {
-		return lineChart ;
+		return lineChart;
 	}
 
 	public void setLineChart(LineChart<Number, Number> lineChart) {
-		this.lineChart = lineChart ;
+		this.lineChart = lineChart;
 	}
 
 	public TableView<tableViewContentEntity> getTableView() {
-		return tableView ;
+		return tableView;
 	}
 
 	public void setTableView(TableView<tableViewContentEntity> tableView) {
-		this.tableView = tableView ;
+		this.tableView = tableView;
 	}
 
 }
