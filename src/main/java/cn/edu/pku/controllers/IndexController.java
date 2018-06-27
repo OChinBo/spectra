@@ -23,6 +23,9 @@ public class IndexController {
 	@FXML
 	private javafx.scene.control.TabPane tabPane;
 
+	@FXML
+	private javafx.scene.layout.AnchorPane filterPane;
+
 	private FileDao fileDao;
 	private File sourceFile;
 	private String defaultDirectory = ".";
@@ -79,6 +82,9 @@ public class IndexController {
         aboutDialog.showAbout();
     }
 
+    void refreshFilterPane(){
+    	FilterController.refresh(filterPane);
+    }
     /*
      * @FXML
      * Add button listener : add filter
