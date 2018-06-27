@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.lang.Object;
 
 import cn.edu.pku.entity.tableViewContentEntity;
+import cn.edu.pku.service.BasicFilter;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -129,6 +130,17 @@ public class TabController extends Tab implements Initializable {
 		xColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity, String>("x"));
 		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity, String>("y"));
 		tableView.setItems(getTableContent());
+
+		BasicFilter filter = new BasicFilter(series) ;
+		filter.FillData();
+		// filter.PrintInput();
+
+		Series<Number, Number> org = this.series ;
+		this.series = filter.Smoothing_MovingAvg(1000);
+//		lineChart.getData().clear();
+//		lineChart.getData().add(series);
+//		filter.PrintOutput();
+//		tableView.setItems(getTableContent());
 
 		// 04/23 zoom test
 		zoomRect.setManaged(false);
