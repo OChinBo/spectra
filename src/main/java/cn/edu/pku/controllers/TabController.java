@@ -2,6 +2,7 @@ package cn.edu.pku.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.lang.Object;
 
@@ -78,11 +79,13 @@ public class TabController extends Tab implements Initializable {
 	private Double yAxisUpperBound;
 
 	final Rectangle zoomRect = new Rectangle();
+	public ArrayList<BasicFilter> filterList = null ;
 
 	// Constructor
 	public TabController(XYChart.Series<Number, Number> series) {
 
 		this.series = series;
+		this.filterList = new ArrayList<BasicFilter>() ;
 
 		// Set root, Tab.fxml is fx:root
 		FXMLLoader tabLoader = new FXMLLoader(getClass().getResource("/view/Tab.fxml"));

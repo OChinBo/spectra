@@ -8,15 +8,19 @@ import javafx.scene.chart.XYChart.Series;
 
 public class BasicFilter {
 
+	public int parameter1 ;
+	public int parameter2 ;
 	public Type type ;
 	private Series<Number, Number> series;
 	private ArrayList<tableViewContentEntity> input = null ;
 	private ArrayList<tableViewContentEntity> output = null ;
 
 	public BasicFilter(XYChart.Series<Number, Number> series){
+		this.parameter1 = 0 ;
+		this.parameter2 = 0 ;
 		this.series = cloneSeries(series) ;
-		input  = new ArrayList<tableViewContentEntity>() ;
-		output = new ArrayList<tableViewContentEntity>() ;
+		this.input  = new ArrayList<tableViewContentEntity>() ;
+		this.output = new ArrayList<tableViewContentEntity>() ;
 	}
 
 	public void FillData() {

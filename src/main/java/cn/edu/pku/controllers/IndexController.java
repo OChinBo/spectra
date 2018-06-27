@@ -79,6 +79,47 @@ public class IndexController {
         aboutDialog.showAbout();
     }
 
+    /*
+     * @FXML
+     * Add button listener : add filter
+     * *** Make sure connect to the correct tab(linechart)
+     * 1. Show all filters we have already implemented
+     * 2. Choose what filter user want to add
+     * 3. Add THE CHOSEN FILTER into filter list, its type and its default parameters
+     *
+     * DETAILS
+     * 1.
+     * 2.
+     * 3. Get filter list from THE tabcontroller
+     *    Check the list is empty or not
+     *    	if the list contains items, then list them and show the status(type of filters and parameters and values of filters)
+     *    	if not do nothing
+     *    then add the filter type and the parameters into the filter list
+     *    check the filter list to call each filter to calculate
+     */
+
+    /*
+     * @FXML
+     * filter parameters listener : set parameters' values
+     * 1. Set parameters
+     * 2. re-calculate output, which is restart the filters of the linechart by order
+     *
+     * DETAILS
+     * 1. Choose the right filter in the filter list to set its parameters' value
+     * 2. Re-calculate and order by filter list
+     * */
+
+    /*
+     * @FXML
+     * Delete button listener : delete filter
+     * 1. Choose the filter which the user what to delete
+     * 2. re-calculate output, which is restart the filters of the linechart by order
+     *
+     * DETAILS
+     * 1. Choose the right filter to deleter from the filter list
+     * 2. Re-calculate and order by filter list
+     */
+
 //    void print( LineChart<Number, Number> linechart ) {
 //
 //    	for (int i = 0; i < linechart.getData().size(); i++) {
