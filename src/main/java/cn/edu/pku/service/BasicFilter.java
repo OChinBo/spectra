@@ -8,6 +8,7 @@ import javafx.scene.chart.XYChart.Series;
 
 public class BasicFilter {
 
+	public Type type ;
 	private Series<Number, Number> series;
 	private ArrayList<tableViewContentEntity> input = null ;
 	private ArrayList<tableViewContentEntity> output = null ;
@@ -32,7 +33,7 @@ public class BasicFilter {
 
 	}
 
-	public Series<Number, Number> Smoothing_MovingAvg(int points){
+	public Series<Number, Number> Smoothing_SMA(int points){
 
 		Series<Number, Number> outputseries = new XYChart.Series<Number, Number>();
 		Double x = 0.0 ;
@@ -48,17 +49,30 @@ public class BasicFilter {
 			x = x/points ;
 			y = y/points ;
 
-//			System.out.println("============================");
-//			System.out.println(x0 + ", " + x1 + ", " + x2);
-//			System.out.println(y0 + ", " + y1 + ", " + y2);
-//			System.out.println(x + ", " + y);
-//			System.out.println("============================");
-
-			tableViewContentEntity tmp = new tableViewContentEntity(Double.toString(x), Double.toString(y)) ;
+//			tableViewContentEntity tmp = new tableViewContentEntity(Double.toString(x), Double.toString(y)) ;
 
 			outputseries.getData().add(new XYChart.Data<>(x,y));
 
-			output.add(tmp) ;
+//			output.add(tmp) ;
+
+		}
+
+		return outputseries ;
+
+	}
+
+	public Series<Number, Number> Difference() {
+
+		Series<Number, Number> outputseries = new XYChart.Series<Number, Number>();
+		Double x = 0.0 ;
+		Double y = 0.0 ;
+
+		for ( int i = 0 ; i < input.size()-1 ; i++ ) {
+
+			x = x + (Double.parseDouble(input.get(i+1).getX()) - Double.parseDouble(input.get(i).getX()));
+			y = y + (Double.parseDouble(input.get(i+1).getY()) - Double.parseDouble(input.get(i).getX()));
+
+			outputseries.getData().add(new XYChart.Data<>(x,y));
 
 		}
 

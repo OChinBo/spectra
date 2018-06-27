@@ -131,16 +131,26 @@ public class TabController extends Tab implements Initializable {
 		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity, String>("y"));
 		tableView.setItems(getTableContent());
 
+		// Set filter
+		// Store original data
 		BasicFilter filter = new BasicFilter(series) ;
 		filter.FillData();
 		// filter.PrintInput();
-
 		Series<Number, Number> org = this.series ;
-		this.series = filter.Smoothing_MovingAvg(1000);
+
+		// smoothing moving average
+//		this.series = filter.Smoothing_MovingAvg(100);
 //		lineChart.getData().clear();
 //		lineChart.getData().add(series);
 //		filter.PrintOutput();
 //		tableView.setItems(getTableContent());
+
+		// different
+		this.series = filter.Difference();
+		lineChart.getData().clear();
+		lineChart.getData().add(series);
+		filter.PrintOutput();
+		tableView.setItems(getTableContent());
 
 		// 04/23 zoom test
 		zoomRect.setManaged(false);
