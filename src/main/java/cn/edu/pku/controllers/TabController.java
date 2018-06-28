@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import java.lang.Object;
 
 import cn.edu.pku.entity.tableViewContentEntity;
-import cn.edu.pku.service.BasicFilter;
+import cn.edu.pku.service.*;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -79,13 +79,15 @@ public class TabController extends Tab implements Initializable {
 	private Double yAxisUpperBound;
 
 	final Rectangle zoomRect = new Rectangle();
-	public ArrayList<BasicFilter> filterList = null ;
+
+	public ArrayList<BasicFilter> filterList;
 
 	// Constructor
 	public TabController(XYChart.Series<Number, Number> series) {
 
 		this.series = series;
-		this.filterList = new ArrayList<BasicFilter>() ;
+
+		this.filterList = new ArrayList<BasicFilter>();
 
 		// Set root, Tab.fxml is fx:root
 		FXMLLoader tabLoader = new FXMLLoader(getClass().getResource("/view/Tab.fxml"));
@@ -136,23 +138,25 @@ public class TabController extends Tab implements Initializable {
 
 		// Set filter
 		// Store original data
-		BasicFilter filter = new BasicFilter(series) ;
-		filter.FillData();
+		//BasicFilter filter = new BasicFilter(series) ;
+
+		DifferenceFilter filter = new DifferenceFilter(series);
+		filter.fillData();
 		// filter.PrintInput();
 		Series<Number, Number> org = this.series ;
 
 		// smoothing moving average
-//		this.series = filter.Smoothing_MovingAvg(100);
+//		this.series = filter.smoothing_MovingAvg(100);
 //		lineChart.getData().clear();
 //		lineChart.getData().add(series);
-//		filter.PrintOutput();
+//		filter.printOutput();
 //		tableView.setItems(getTableContent());
 
 		// different
-		this.series = filter.Difference();
+		this.series = filter.launch();
 		lineChart.getData().clear();
 		lineChart.getData().add(series);
-		filter.PrintOutput();
+		filter.printOutput();
 		tableView.setItems(getTableContent());
 
 		// 04/23 zoom test
@@ -407,6 +411,18 @@ public class TabController extends Tab implements Initializable {
 
 		return destination;
 
+	}
+
+	public ArrayList<BasicFilter> getFilterList(){
+		return this.filterList;
+	}
+
+	public void addFilter(BasicFilter filter){
+		this.filterList.add(filter);
+	}
+
+	public void removeFilter(int index){
+		this.filterList.remove(index);
 	}
 
 	public LineChart<Number, Number> getLineChart() {

@@ -6,30 +6,43 @@ import cn.edu.pku.controllers.TabController;
 import cn.edu.pku.util.OpenFileUtils;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 
-public class IndexController {
+public class IndexController implements Initializable {
 
 	@FXML
 	private javafx.scene.layout.VBox root;
 
 	@FXML
-	private javafx.scene.control.TabPane tabPane;
+	private static javafx.scene.control.TabPane tabPane;
 
 	@FXML
-	private javafx.scene.layout.AnchorPane filterPane;
+	static javafx.scene.layout.AnchorPane filterPane;
 
 	private FileDao fileDao;
 	private File sourceFile;
 	private String defaultDirectory = ".";
 	private Stage stage;
+
+	FilterController filterController;
 
 	@FXML
 	private void closeWindowsAction() {
@@ -68,7 +81,8 @@ public class IndexController {
 	@FXML
 	private void saveAsAction(ActionEvent ae) {
 
-		TabController tab = (TabController) tabPane.getSelectionModel().getSelectedItem();
+		// Get selected tab
+		TabController tab = getCurrentTab();
 		LineChart<Number, Number> linechart = tab.getLineChart();
 
 		SaveController oSaveController = new SaveController(linechart.getData().get(0)) ;
@@ -82,16 +96,38 @@ public class IndexController {
         aboutDialog.showAbout();
     }
 
-    void refreshFilterPane(){
-    	FilterController.refresh(filterPane);
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+
+		this.filterPane = new AnchorPane();
+		this.tabPane = new TabPane();
+		this.filterController = new FilterController();
+
+
+
+
+
+		tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+			refreshFilterPane();
+		});
+	}
+
+	void refreshFilterPane(){
+    	filterController.refresh();
     }
+
+    static TabController getCurrentTab(){
+    	return (TabController) tabPane.getSelectionModel().getSelectedItem();
+    }
+
+
     /*
      * @FXML
      * Add button listener : add filter
      * *** Make sure connect to the correct tab(linechart)
      * 1. Show all filters we have already implemented
-     * 2. Choose what filter user want to add
-     * 3. Add THE CHOSEN FILTER into filter list, its type and its default parameters
+     * 2. Choose what filter that user wants to add
+     * 3. Add THE CHOOSEN FILTER into filter list, its type and its default parameters
      *
      * DETAILS
      * 1.
@@ -126,15 +162,14 @@ public class IndexController {
      * 2. Re-calculate and order by filter list
      */
 
-//    void print( LineChart<Number, Number> linechart ) {
-//
-//    	for (int i = 0; i < linechart.getData().size(); i++) {
-//			XYChart.Series<Number, Number> series = linechart.getData().get(i);
-//			for (int j = 0; j < series.getData().size(); j++) {
-//				 System.out.println( j+1 + ". " + series.getData().get(j).getXValue() +"," + series.getData().get(j).getYValue());
-//			}
-//		}
-//
-//    }
-
+    /*
+    void print( LineChart<Number, Number> linechart ) {
+    	for (int i = 0; i < linechart.getData().size(); i++) {
+			XYChart.Series<Number, Number> series = linechart.getData().get(i);
+			for (int j = 0; j < series.getData().size(); j++) {
+				 System.out.println( j+1 + ". " + series.getData().get(j).getXValue() +"," + series.getData().get(j).getYValue());
+			}
+		}
+    }
+     */
 }
