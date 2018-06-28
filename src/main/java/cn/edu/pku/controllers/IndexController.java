@@ -106,13 +106,14 @@ public class IndexController implements Initializable {
 		Button addButton = new Button("ADD");
 		addButton.setOnAction((e) -> {
 			FilterSelector fs = new FilterSelector(stage);
+			fs.setTabPane(tabPane);
 			fs.show();
 		});
 		filterBox.getChildren().add(addButton);
 
 
 
-		//refreshFilterPane();
+		//refreshFilterBox();
 
 		tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
 			refreshFilterBox();

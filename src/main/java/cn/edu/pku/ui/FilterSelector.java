@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -112,6 +113,10 @@ public class FilterSelector {
     TabController getCurrentTab(){
     	System.out.println("Tab:"+ (TabController) tabPane.getSelectionModel().getSelectedItem());
     	return (TabController) tabPane.getSelectionModel().getSelectedItem();
+    }
+
+    public void setTabPane(TabPane tabPane){
+    	this.tabPane = tabPane;
     }
 
 }
