@@ -1,7 +1,9 @@
 package cn.edu.pku.controllers;
 
 import cn.edu.pku.dao.FileDao;
+import cn.edu.pku.service.BasicFilter;
 import cn.edu.pku.ui.AboutDialog;
+import cn.edu.pku.ui.FilterSelector;
 import cn.edu.pku.controllers.TabController;
 import cn.edu.pku.util.OpenFileUtils;
 
@@ -21,10 +23,12 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 public class IndexController implements Initializable {
 
@@ -32,17 +36,15 @@ public class IndexController implements Initializable {
 	private javafx.scene.layout.VBox root;
 
 	@FXML
-	private static javafx.scene.control.TabPane tabPane;
+	private javafx.scene.control.TabPane tabPane;
 
 	@FXML
-	static javafx.scene.layout.AnchorPane filterPane;
+	private javafx.scene.layout.VBox filterBox;
 
 	private FileDao fileDao;
 	private File sourceFile;
 	private String defaultDirectory = ".";
 	private Stage stage;
-
-	FilterController filterController;
 
 	@FXML
 	private void closeWindowsAction() {
@@ -96,49 +98,39 @@ public class IndexController implements Initializable {
         aboutDialog.showAbout();
     }
 
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		this.filterPane = new AnchorPane();
-		this.tabPane = new TabPane();
-		this.filterController = new FilterController();
+
+		Button addButton = new Button("ADD");
+		addButton.setOnAction((e) -> {
+			FilterSelector fs = new FilterSelector(stage);
+			fs.show();
+		});
+		filterBox.getChildren().add(addButton);
 
 
 
-
+		//refreshFilterPane();
 
 		tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
-			refreshFilterPane();
+			refreshFilterBox();
 		});
 	}
 
-	void refreshFilterPane(){
-    	filterController.refresh();
+	void refreshFilterBox(){
+		System.out.println("RefreshFilterPane");
+		//filterController.refresh();
+    	//System.out.println("IndexFilterBox:" + filterBox.getChildren());
     }
 
-    static TabController getCurrentTab(){
+    TabController getCurrentTab(){
+    	System.out.println("Tab:"+ (TabController) tabPane.getSelectionModel().getSelectedItem());
     	return (TabController) tabPane.getSelectionModel().getSelectedItem();
     }
 
 
-    /*
-     * @FXML
-     * Add button listener : add filter
-     * *** Make sure connect to the correct tab(linechart)
-     * 1. Show all filters we have already implemented
-     * 2. Choose what filter that user wants to add
-     * 3. Add THE CHOOSEN FILTER into filter list, its type and its default parameters
-     *
-     * DETAILS
-     * 1.
-     * 2.
-     * 3. Get filter list from THE tabcontroller
-     *    Check the list is empty or not
-     *    	if the list contains items, then list them and show the status(type of filters and parameters and values of filters)
-     *    	if not do nothing
-     *    then add the filter type and the parameters into the filter list
-     *    check the filter list to call each filter to calculate
-     */
 
     /*
      * @FXML
@@ -150,17 +142,6 @@ public class IndexController implements Initializable {
      * 1. Choose the right filter in the filter list to set its parameters' value
      * 2. Re-calculate and order by filter list
      * */
-
-    /*
-     * @FXML
-     * Delete button listener : delete filter
-     * 1. Choose the filter which the user what to delete
-     * 2. re-calculate output, which is restart the filters of the linechart by order
-     *
-     * DETAILS
-     * 1. Choose the right filter to deleter from the filter list
-     * 2. Re-calculate and order by filter list
-     */
 
     /*
     void print( LineChart<Number, Number> linechart ) {

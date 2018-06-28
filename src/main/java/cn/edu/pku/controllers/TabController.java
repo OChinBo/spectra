@@ -441,4 +441,8 @@ public class TabController extends Tab implements Initializable {
 		this.tableView = tableView;
 	}
 
+	public Series<Number, Number> getSeries(){
+		return series;
+	}
+
 }
