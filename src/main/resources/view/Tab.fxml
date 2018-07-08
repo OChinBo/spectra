@@ -15,37 +15,86 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.stage.FileChooser?>
 
-<fx:root type="Tab" fx:id="tab" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
-  <SplitPane dividerPositions="0.8076923076923077" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0">
-    <items>
-      <AnchorPane fx:id="anchorPane" minHeight="386.0" prefHeight="386.0" prefWidth="798.0">
-        <children>
-          <LineChart fx:id="lineChart" pickOnBounds="false" prefHeight="420.0" prefWidth="798.0" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="19.0">
-            <xAxis>
-              <NumberAxis side="BOTTOM" />
-            </xAxis>
-            <yAxis>
-              <NumberAxis side="LEFT" />
-            </yAxis>
-          </LineChart>
-          <HBox fx:id="hbox" alignment="CENTER" layoutX="1.0" layoutY="425.0" prefHeight="55.0" prefWidth="798.0">
-            <children>
-              <Button fx:id="buttonZoom" alignment="CENTER" mnemonicParsing="false" text="ZOOM" HBox.hgrow="ALWAYS" />
-              <Button fx:id="buttonReset" mnemonicParsing="false" text="Reset" />
-            </children>
-          </HBox>
-        </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="159.0" prefWidth="243.0">
-        <children>
-          <TableView fx:id="tableView" prefHeight="200.0" prefWidth="243.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <columns>
-              <TableColumn prefWidth="75.0" text="xAxis" fx:id="xColumn" />
-              <TableColumn prefWidth="75.0" text="yAxis" fx:id="yColumn" />
-            </columns>
-          </TableView>
-        </children>
-      </AnchorPane>
-    </items>
-  </SplitPane>
+<fx:root type="Tab" fx:id="tab" xmlns:fx="http://javafx.com/fxml/1"
+	xmlns="http://javafx.com/javafx/2.2">
+
+	<SplitPane dividerPositions="0.2" VBox.vgrow="ALWAYS">
+		<items>
+			<AnchorPane SplitPane.resizableWithParent="false">
+				<children>
+					<Accordion AnchorPane.bottomAnchor="0.0"
+						AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+						AnchorPane.topAnchor="0.0">
+						<panes>
+							<TitledPane animated="true" text="滤镜">
+								<content>
+									<VBox fx:id="filterBox" prefHeight="200.0" prefWidth="100.0" />
+								</content>
+							</TitledPane>
+							<TitledPane animated="true" text="硬件控制">
+								<content>
+									<VBox prefHeight="200.0" prefWidth="100.0" />
+								</content>
+							</TitledPane>
+							<TitledPane animated="true" text="其他">
+								<content>
+									<VBox prefHeight="200.0" prefWidth="100.0" />
+								</content>
+							</TitledPane>
+						</panes>
+					</Accordion>
+				</children>
+			</AnchorPane>
+			<AnchorPane>
+				<SplitPane dividerPositions="0.8076923076923077"
+					orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0">
+					<items>
+						<AnchorPane fx:id="anchorPane" minHeight="386.0"
+							prefHeight="386.0" prefWidth="798.0">
+							<children>
+								<LineChart fx:id="lineChart" pickOnBounds="false"
+									prefHeight="420.0" prefWidth="798.0" AnchorPane.bottomAnchor="41.0"
+									AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0"
+									AnchorPane.topAnchor="19.0">
+									<xAxis>
+										<NumberAxis side="BOTTOM" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis side="LEFT" />
+									</yAxis>
+								</LineChart>
+								<HBox fx:id="hbox" alignment="CENTER" layoutX="1.0"
+									layoutY="425.0" prefHeight="55.0" prefWidth="798.0">
+									<children>
+										<Button fx:id="buttonZoom" alignment="CENTER"
+											mnemonicParsing="false" text="ZOOM" HBox.hgrow="ALWAYS" />
+										<Button fx:id="buttonReset" mnemonicParsing="false"
+											text="Reset" />
+									</children>
+								</HBox>
+							</children>
+						</AnchorPane>
+						<AnchorPane prefHeight="159.0" prefWidth="243.0">
+							<children>
+								<TableView fx:id="tableView" prefHeight="200.0"
+									prefWidth="243.0" AnchorPane.bottomAnchor="0.0"
+									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+									AnchorPane.topAnchor="0.0">
+									<columns>
+										<TableColumn prefWidth="75.0" text="xAxis" fx:id="xColumn" />
+										<TableColumn prefWidth="75.0" text="yAxis" fx:id="yColumn" />
+									</columns>
+								</TableView>
+							</children>
+						</AnchorPane>
+					</items>
+				</SplitPane>
+			</AnchorPane>
+		</items>
+	</SplitPane>
+
+
+
+
+
 </fx:root>

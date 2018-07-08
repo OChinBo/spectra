@@ -167,6 +167,8 @@ public class TabController extends Tab implements Initializable {
 		setUpZooming(zoomRect, lineChart);
 		// 04/23 zoom test
 
+
+
 		buttonZoom.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -190,9 +192,11 @@ public class TabController extends Tab implements Initializable {
 			}
 		});
 
+
 		final BooleanBinding disableControls = zoomRect.widthProperty().lessThan(5)
 				.or(zoomRect.heightProperty().lessThan(5));
 		buttonZoom.disableProperty().bind(disableControls);
+
 
 	} // end of initialize()
 

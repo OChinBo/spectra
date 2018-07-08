@@ -102,7 +102,7 @@ public class IndexController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-
+		/*
 		Button addButton = new Button("ADD");
 		addButton.setOnAction((e) -> {
 			FilterSelector fs = new FilterSelector(stage);
@@ -110,7 +110,7 @@ public class IndexController implements Initializable {
 			fs.show();
 		});
 		filterBox.getChildren().add(addButton);
-
+		*/
 
 
 		//refreshFilterBox();

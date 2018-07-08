@@ -103,40 +103,7 @@
             </Button>
         </items>
       </ToolBar>
-      <SplitPane dividerPositions="0.2" VBox.vgrow="ALWAYS">
-         <items>
-            <AnchorPane SplitPane.resizableWithParent="false">
-               <children>
-                  <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <panes>
-                      <TitledPane animated="true" text="滤镜">
-                           <content>
-                              <VBox fx:id="filterBox" prefHeight="200.0" prefWidth="100.0" />
-                           </content>
-                      </TitledPane>
-                      <TitledPane animated="true" text="硬件控制">
-                           <content>
-                              <VBox prefHeight="200.0" prefWidth="100.0" />
-                           </content>
-                      </TitledPane>
-                      <TitledPane animated="true" text="其他">
-                           <content>
-                              <VBox prefHeight="200.0" prefWidth="100.0" />
-                           </content>
-                      </TitledPane>
-                    </panes>
-                  </Accordion>
-               </children>
-            </AnchorPane>
-            <AnchorPane>
-               <children>
-                  <TabPane fx:id="tabPane" prefHeight="573.0" prefWidth="748.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
-         </items>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </SplitPane>
+
+      <TabPane fx:id="tabPane" prefHeight="573.0" prefWidth="748.0" tabClosingPolicy="ALL_TABS" />
    </children>
 </VBox>
