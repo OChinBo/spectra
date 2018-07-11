@@ -8,6 +8,7 @@ import java.lang.Object;
 
 import cn.edu.pku.entity.tableViewContentEntity;
 import cn.edu.pku.service.*;
+import cn.edu.pku.ui.FilterSelector;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -39,6 +40,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -56,6 +58,9 @@ public class TabController extends Tab implements Initializable {
 
 	@FXML
 	private HBox hbox;
+
+	@FXML
+	private VBox filterBox;
 
 	@FXML
 	private Button buttonZoom;
@@ -78,16 +83,18 @@ public class TabController extends Tab implements Initializable {
 	private Double yAxisLowerBound;
 	private Double yAxisUpperBound;
 
+	private Stage stage;
+
 	final Rectangle zoomRect = new Rectangle();
 
 	public ArrayList<BasicFilter> filterList;
 
 	// Constructor
-	public TabController(XYChart.Series<Number, Number> series) {
+	public TabController(XYChart.Series<Number, Number> series, TabPane tabPane) {
 
 		this.series = series;
-
 		this.filterList = new ArrayList<BasicFilter>();
+		this.tabPane = tabPane;
 
 		// Set root, Tab.fxml is fx:root
 		FXMLLoader tabLoader = new FXMLLoader(getClass().getResource("/view/Tab.fxml"));
@@ -105,11 +112,20 @@ public class TabController extends Tab implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+
+		Button addButton = new Button("ADD");
+		addButton.setOnAction((e) -> {
+			System.out.println("TabController Tab:"+tabPane);
+			FilterSelector fs = new FilterSelector(stage);
+			fs.setTabPane(tabPane);
+			fs.show();
+		});
+		filterBox.getChildren().add(addButton);
 
 		// final NumberAxis xAxisx = new NumberAxis(0,1000,0.5);
 		// final NumberAxis yAxisy = new NumberAxis(0,1000,0.5);
 		// lineChart = new LineChart<>(xAxisx, yAxisy);
+
 		lineChart.getData().add(series);
 		lineChart.setLegendVisible(false);
 
@@ -117,10 +133,12 @@ public class TabController extends Tab implements Initializable {
 
 		NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
 		NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
+
 		// xAxis.setUpperBound(3000);
 		// xAxis.setLowerBound(0);
 		// yAxis.setUpperBound(2000);
 		// yAxis.setLowerBound(-2000);
+
 		xAxisLowerBound = xAxis.getLowerBound();
 		xAxisUpperBound = xAxis.getUpperBound();
 		yAxisLowerBound = yAxis.getLowerBound();
@@ -136,16 +154,18 @@ public class TabController extends Tab implements Initializable {
 		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity, String>("y"));
 		tableView.setItems(getTableContent());
 
+
+
+
 		// Set filter
 		// Store original data
-		//BasicFilter filter = new BasicFilter(series) ;
+		Series<Number, Number> org = this.series ;
 
 		DifferenceFilter filter = new DifferenceFilter(series);
 		filter.fillData();
-		// filter.PrintInput();
-		Series<Number, Number> org = this.series ;
 
-		// smoothing moving average
+
+		// Smoothing moving average
 //		this.series = filter.smoothing_MovingAvg(100);
 //		lineChart.getData().clear();
 //		lineChart.getData().add(series);
@@ -153,11 +173,13 @@ public class TabController extends Tab implements Initializable {
 //		tableView.setItems(getTableContent());
 
 		// different
-		this.series = filter.launch();
-		lineChart.getData().clear();
-		lineChart.getData().add(series);
-		filter.printOutput();
-		tableView.setItems(getTableContent());
+//		this.series = filter.launch();
+//		lineChart.getData().clear();
+//		lineChart.getData().add(series);
+//		tableView.setItems(getTableContent());
+
+
+
 
 		// 04/23 zoom test
 		zoomRect.setManaged(false);
@@ -166,7 +188,6 @@ public class TabController extends Tab implements Initializable {
 
 		setUpZooming(zoomRect, lineChart);
 		// 04/23 zoom test
-
 
 
 		buttonZoom.setOnAction(new EventHandler<ActionEvent>() {
@@ -414,6 +435,10 @@ public class TabController extends Tab implements Initializable {
 					.add(new XYChart.Data<>(source.getData().get(i).getXValue(), source.getData().get(i).getYValue()));
 
 		return destination;
+
+	}
+
+	public void refresh(){
 
 	}
 

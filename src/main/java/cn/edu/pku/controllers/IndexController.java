@@ -66,7 +66,7 @@ public class IndexController implements Initializable {
 			// Create TabController and then add Tab
 			fileDao = new FileDao(sourceFile);
 			XYChart.Series<Number, Number> series = fileDao.read();
-			TabController tab = new TabController(series);
+			TabController tab = new TabController(series,tabPane);
 			tab.setText(sourceFile.getName());
 			tabPane.getTabs().add(tab);
 			fileDao.setTabPane(tabPane);  // set THE tabpane to dao package
@@ -102,15 +102,9 @@ public class IndexController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		/*
-		Button addButton = new Button("ADD");
-		addButton.setOnAction((e) -> {
-			FilterSelector fs = new FilterSelector(stage);
-			fs.setTabPane(tabPane);
-			fs.show();
-		});
-		filterBox.getChildren().add(addButton);
-		*/
+
+
+
 
 
 		//refreshFilterBox();
@@ -122,8 +116,7 @@ public class IndexController implements Initializable {
 
 	void refreshFilterBox(){
 		System.out.println("RefreshFilterPane");
-		//filterController.refresh();
-    	//System.out.println("IndexFilterBox:" + filterBox.getChildren());
+		getCurrentTab().refresh();
     }
 
     TabController getCurrentTab(){

@@ -26,16 +26,6 @@
 									<VBox fx:id="filterBox" prefHeight="200.0" prefWidth="100.0" />
 								</content>
 							</TitledPane>
-							<TitledPane animated="true" text="硬件控制">
-								<content>
-									<VBox prefHeight="200.0" prefWidth="100.0" />
-								</content>
-							</TitledPane>
-							<TitledPane animated="true" text="其他">
-								<content>
-									<VBox prefHeight="200.0" prefWidth="100.0" />
-								</content>
-							</TitledPane>
 						</panes>
 					</Accordion>
 				</children>
