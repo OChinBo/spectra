@@ -1,36 +1,21 @@
 package cn.edu.pku.controllers;
 
 import cn.edu.pku.dao.FileDao;
-import cn.edu.pku.service.BasicFilter;
 import cn.edu.pku.ui.AboutDialog;
-import cn.edu.pku.ui.FilterSelector;
 import cn.edu.pku.controllers.TabController;
 import cn.edu.pku.util.OpenFileUtils;
 
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
-public class IndexController implements Initializable {
+public class IndexController {
 
 	@FXML
 	private javafx.scene.layout.VBox root;
@@ -96,27 +81,6 @@ public class IndexController implements Initializable {
     void about(ActionEvent event) {
         AboutDialog aboutDialog = new AboutDialog(stage);
         aboutDialog.showAbout();
-    }
-
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-
-
-
-
-
-
-		//refreshFilterBox();
-
-		tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
-			refreshFilterBox();
-		});
-	}
-
-	void refreshFilterBox(){
-		System.out.println("RefreshFilterPane");
-		getCurrentTab().refresh();
     }
 
     TabController getCurrentTab(){

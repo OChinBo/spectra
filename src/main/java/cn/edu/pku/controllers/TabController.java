@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.lang.Object;
 
 import cn.edu.pku.entity.tableViewContentEntity;
 import cn.edu.pku.service.*;
@@ -33,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -89,6 +89,8 @@ public class TabController extends Tab implements Initializable {
 
 	public ArrayList<BasicFilter> filterList;
 
+	private int filterID = 0;
+
 	// Constructor
 	public TabController(XYChart.Series<Number, Number> series, TabPane tabPane) {
 
@@ -113,11 +115,12 @@ public class TabController extends Tab implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
+		// Set Add Filter button
 		Button addButton = new Button("ADD");
 		addButton.setOnAction((e) -> {
-			System.out.println("TabController Tab:"+tabPane);
 			FilterSelector fs = new FilterSelector(stage);
-			fs.setTabPane(tabPane);
+			//fs.setTabPane(tabPane);
+			fs.setTabController(this);
 			fs.show();
 		});
 		filterBox.getChildren().add(addButton);
@@ -296,7 +299,6 @@ public class TabController extends Tab implements Initializable {
 
 					zoomRect.setWidth(0);
 					zoomRect.setHeight(0);
-
 				}
 			}
 		});
@@ -339,7 +341,6 @@ public class TabController extends Tab implements Initializable {
 					// zoomWindow();
 				}
 			}
-
 		});
 	}
 
@@ -427,31 +428,79 @@ public class TabController extends Tab implements Initializable {
 	 * @return XYChart.Series<Number, Number>
 	 */
 	private XYChart.Series<Number, Number> cloneSeries(XYChart.Series<Number, Number> source) {
-
 		XYChart.Series<Number, Number> destination = new XYChart.Series<Number, Number>();
-
-		for (int i = 0; i < source.getData().size(); i++)
-			destination.getData()
-					.add(new XYChart.Data<>(source.getData().get(i).getXValue(), source.getData().get(i).getYValue()));
-
+		for (int i = 0; i < source.getData().size(); i++){
+			destination.getData().add(new XYChart.Data<>(source.getData().get(i).getXValue(), source.getData().get(i).getYValue()));
+		}
 		return destination;
-
 	}
 
-	public void refresh(){
 
+	/*
+	 * @FXML Add button listener : add filter *** Make sure connect to the
+	 * correct tab(linechart) 1. Show all filters we have already implemented 2.
+	 * Choose what filter that user wants to add 3. Add THE CHOOSEN FILTER into
+	 * filter list, its type and its default parameters
+	 *
+	 * DETAILS 1. 2. 3. Get filter list from THE tabcontroller Check the list is
+	 * empty or not if the list contains items, then list them and show the
+	 * status(type of filters and parameters and values of filters) if not do
+	 * nothing then add the filter type and the parameters into the filter list
+	 * check the filter list to call each filter to calculate
+	 */
+	public void addFilter(BasicFilter filter) {
+		filterList.add(filter);
+		addFilterUI(filter.getClass().getSimpleName());
+	}
+
+	private void addFilterUI(String str){
+
+		// Use if-else or switch to implement
+		switch(str) {
+			case "DifferenceFilter":
+				VBox vb = new VBox();
+				Label title = new Label("Filter " + filterID + ": " + str);
+				Button close = new Button("Del filter:" + filterID);
+
+				close.setOnAction((e) -> {
+					//System.out.println("SizeOfArray:" + filterList.size());
+					//System.out.println("DeleteID:" + Integer.parseInt(vb.getId()));
+					removeFilter(Integer.parseInt(vb.getId()));
+				});
+				vb.setId(String.valueOf(filterID));
+				vb.getChildren().addAll(title,close);
+				filterBox.getChildren().add(vb);
+				break;
+			case "SmoothingSMAFilter":
+				//
+				break;
+			default:
+				// do nothing
+		}
+
+
+		filterID++;
+	}
+
+	/*
+	 * @FXML Delete button listener : delete filter 1. Choose the filter which
+	 * the user what to delete 2. re-calculate output, which is restart the
+	 * filters of the linechart by order
+	 *
+	 * DETAILS 1. Choose the right filter to deleter from the filter list 2.
+	 * Re-calculate and order by filter list
+	 */
+	public void removeFilter(int index) {
+		filterList.remove(index);
+		removeFilterUI(index);
+	}
+
+	private void removeFilterUI(int index){
+		filterBox.getChildren().remove(index+1);
 	}
 
 	public ArrayList<BasicFilter> getFilterList(){
 		return this.filterList;
-	}
-
-	public void addFilter(BasicFilter filter){
-		this.filterList.add(filter);
-	}
-
-	public void removeFilter(int index){
-		this.filterList.remove(index);
 	}
 
 	public LineChart<Number, Number> getLineChart() {
