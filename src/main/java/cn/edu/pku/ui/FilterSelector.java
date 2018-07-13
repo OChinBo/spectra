@@ -81,12 +81,6 @@ public class FilterSelector {
 		this.tab = tab;
 	}
 
-	public void test(){
-		// test
-		ArrayList<BasicFilter> tp = tab.getFilterList();
-		for (BasicFilter bf : tp) {
-			System.out.println(bf.getClass());
-		}
-	}
+
 
 }

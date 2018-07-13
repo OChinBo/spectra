@@ -437,10 +437,10 @@ public class TabController extends Tab implements Initializable {
 
 
 	/*
-	 * @FXML Add button listener : add filter *** Make sure connect to the
-	 * correct tab(linechart) 1. Show all filters we have already implemented 2.
-	 * Choose what filter that user wants to add 3. Add THE CHOOSEN FILTER into
-	 * filter list, its type and its default parameters
+	 * @FXML Add button listener : add filter *** Make sure connect to the correct tab(linechart)
+	 * 1. Show all filters we have already implemented
+	 * 2. Choose what filter that user wants to add
+	 * 3. Add THE CHOOSEN FILTER into filter list, its type and its default parameters
 	 *
 	 * DETAILS 1. 2. 3. Get filter list from THE tabcontroller Check the list is
 	 * empty or not if the list contains items, then list them and show the
@@ -450,54 +450,55 @@ public class TabController extends Tab implements Initializable {
 	 */
 	public void addFilter(BasicFilter filter) {
 		filterList.add(filter);
-		addFilterUI(filter.getClass().getSimpleName());
-	}
+		String filterClassName = filter.getClass().getSimpleName();
 
-	private void addFilterUI(String str){
+		// Add filter UI
+		VBox vb = new VBox();
+		Label title = new Label("Filter " + filterID + ": " + filterClassName);
+		Button close = new Button("Del filter:" + filterID);
 
-		// Use if-else or switch to implement
-		switch(str) {
+		close.setOnAction((e) -> {
+			//System.out.println("SizeOfArray:" + filterList.size());
+			//System.out.println("DeleteID:" + Integer.parseInt(vb.getId()));
+			removeFilter(Integer.parseInt(vb.getId()));
+		});
+		vb.setId(String.valueOf(filterID));
+
+		// Set parameter controls
+		switch(filterClassName) {
 			case "DifferenceFilter":
-				VBox vb = new VBox();
-				Label title = new Label("Filter " + filterID + ": " + str);
-				Button close = new Button("Del filter:" + filterID);
-
-				close.setOnAction((e) -> {
-					//System.out.println("SizeOfArray:" + filterList.size());
-					//System.out.println("DeleteID:" + Integer.parseInt(vb.getId()));
-					removeFilter(Integer.parseInt(vb.getId()));
-				});
-				vb.setId(String.valueOf(filterID));
 				vb.getChildren().addAll(title,close);
-				filterBox.getChildren().add(vb);
 				break;
 			case "SmoothingSMAFilter":
-				//
+				// TODO not done yet
+				vb.getChildren().addAll(title,close);
 				break;
 			default:
 				// do nothing
 		}
 
-
+		filterBox.getChildren().add(vb);
 		filterID++;
+		test();
 	}
+
 
 	/*
-	 * @FXML Delete button listener : delete filter 1. Choose the filter which
-	 * the user what to delete 2. re-calculate output, which is restart the
-	 * filters of the linechart by order
+	 * @FXML Delete button listener : delete filter
+	 * 1. Choose the filter which the user what to delete
+	 * 2. re-calculate output, which is restart the filters of the linechart by order
 	 *
-	 * DETAILS 1. Choose the right filter to deleter from the filter list 2.
-	 * Re-calculate and order by filter list
+	 * DETAILS
+	 * 1. Choose the right filter to deleter from the filter list
+	 * 2. Re-calculate and order by filter list
 	 */
 	public void removeFilter(int index) {
+		// We can't use index to remove, complete later
 		filterList.remove(index);
-		removeFilterUI(index);
+		filterBox.getChildren().remove(index+1); // index+1 skip add button
+		test();
 	}
 
-	private void removeFilterUI(int index){
-		filterBox.getChildren().remove(index+1);
-	}
 
 	public ArrayList<BasicFilter> getFilterList(){
 		return this.filterList;
@@ -521,6 +522,15 @@ public class TabController extends Tab implements Initializable {
 
 	public Series<Number, Number> getSeries(){
 		return series;
+	}
+
+	public void test(){
+		// filter test
+		System.out.println("---------------------");
+		for (BasicFilter bf : filterList) {
+			System.out.println(bf.getClass());
+		}
+		System.out.println("---------------------");
 	}
 
 }
