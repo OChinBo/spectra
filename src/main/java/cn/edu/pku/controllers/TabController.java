@@ -449,8 +449,12 @@ public class TabController extends Tab implements Initializable {
 	 * check the filter list to call each filter to calculate
 	 */
 	public void addFilter(BasicFilter filter) {
-		filterList.add(filter);
+
+		String strID = String.valueOf(filterID);
 		String filterClassName = filter.getClass().getSimpleName();
+
+		filter.setId(strID);
+		filterList.add(filter);
 
 		// Add filter UI
 		VBox vb = new VBox();
@@ -462,7 +466,7 @@ public class TabController extends Tab implements Initializable {
 			//System.out.println("DeleteID:" + Integer.parseInt(vb.getId()));
 			removeFilter(Integer.parseInt(vb.getId()));
 		});
-		vb.setId(String.valueOf(filterID));
+		vb.setId(strID);
 
 		// Set parameter controls
 		switch(filterClassName) {
@@ -492,8 +496,17 @@ public class TabController extends Tab implements Initializable {
 	 * 1. Choose the right filter to deleter from the filter list
 	 * 2. Re-calculate and order by filter list
 	 */
-	public void removeFilter(int index) {
-		// We can't use index to remove, complete later
+	public void removeFilter(int id) {
+		// Use id to get index number
+		String strID = String.valueOf(id);
+		int index = 0;
+		for(int i=0; i < filterList.size(); i++){
+			if(filterList.get(i).getId().equals(strID)){
+				index = i;
+				break;
+			}
+		}
+
 		filterList.remove(index);
 		filterBox.getChildren().remove(index+1); // index+1 skip add button
 		test();

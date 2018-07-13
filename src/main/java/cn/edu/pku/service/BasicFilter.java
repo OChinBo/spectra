@@ -8,16 +8,12 @@ import javafx.scene.chart.XYChart.Series;
 
 public abstract class BasicFilter {
 
-	public int parameter1 ;
-	public int parameter2 ;
-	public Type type ;
+	private String id;
 	private Series<Number, Number> series;
 	protected ArrayList<tableViewContentEntity> input = null ;
 	protected ArrayList<tableViewContentEntity> output = null ;
 
 	public BasicFilter(XYChart.Series<Number, Number> series){
-		this.parameter1 = 0 ;
-		this.parameter2 = 0 ;
 		this.series = cloneSeries(series) ;
 		this.input  = new ArrayList<tableViewContentEntity>() ;
 		this.output = new ArrayList<tableViewContentEntity>() ;
@@ -61,5 +57,12 @@ public abstract class BasicFilter {
 		return destination;
 	}
 
+	public String getId(){
+		return id;
+	}
+
+	public void setId(String id){
+		this.id = id;
+	}
 
 }
