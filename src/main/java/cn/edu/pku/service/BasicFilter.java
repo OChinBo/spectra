@@ -13,13 +13,12 @@ public abstract class BasicFilter {
 	protected ArrayList<tableViewContentEntity> input = null ;
 	protected ArrayList<tableViewContentEntity> output = null ;
 
-	public BasicFilter(XYChart.Series<Number, Number> series){
-		this.series = cloneSeries(series) ;
+	public BasicFilter(){
 		this.input  = new ArrayList<tableViewContentEntity>() ;
 		this.output = new ArrayList<tableViewContentEntity>() ;
 	}
 
-	abstract Series<Number, Number> launch();
+	abstract public Series<Number, Number> launch(Series<Number, Number> series);
 
 	public void fillData() {
 		for (int j = 0; j < series.getData().size(); j++) {

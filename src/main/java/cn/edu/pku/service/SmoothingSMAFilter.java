@@ -7,9 +7,8 @@ public class SmoothingSMAFilter extends BasicFilter {
 
 	private int points = 5;
 
-	public SmoothingSMAFilter(Series<Number, Number> series) {
-		super(series);
-		// TODO Auto-generated constructor stub
+	public SmoothingSMAFilter() {
+		super();
 	}
 
 
@@ -18,7 +17,7 @@ public class SmoothingSMAFilter extends BasicFilter {
 	}
 
 	@Override
-	public Series<Number, Number> launch(){
+	public Series<Number, Number> launch(Series<Number, Number> series){
 
 		Series<Number, Number> outputseries = new XYChart.Series<Number, Number>();
 		Double x = 0.0 ;

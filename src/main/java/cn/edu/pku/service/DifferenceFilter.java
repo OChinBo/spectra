@@ -5,11 +5,12 @@ import javafx.scene.chart.XYChart.Series;
 
 public class DifferenceFilter extends BasicFilter {
 
-	public DifferenceFilter(Series<Number, Number> series) {
-		super(series);
+	public DifferenceFilter() {
+		super();
 	}
 
-	public Series<Number, Number> launch() {
+	@Override
+	public Series<Number, Number> launch(Series<Number, Number> series) {
 
 		Series<Number, Number> outputseries = new XYChart.Series<Number, Number>();
 		Double x = 0.0 ;
@@ -21,11 +22,9 @@ public class DifferenceFilter extends BasicFilter {
 			y = y + (Double.parseDouble(input.get(i+1).getY()) - Double.parseDouble(input.get(i).getX()));
 
 			outputseries.getData().add(new XYChart.Data<>(x,y));
-
 		}
-
 		return outputseries ;
-
 	}
+
 
 }

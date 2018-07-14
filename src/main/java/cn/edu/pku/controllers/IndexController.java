@@ -48,9 +48,11 @@ public class IndexController {
 			// Update the latest directory as defaultDirectory
 			defaultDirectory = sourceFile.toString() + "/..";
 
-			// Create TabController and then add Tab
+			// Get series from file
 			fileDao = new FileDao(sourceFile);
 			XYChart.Series<Number, Number> series = fileDao.read();
+
+			// Create TabController and then add Tab
 			TabController tab = new TabController(series,tabPane);
 			tab.setText(sourceFile.getName());
 			tabPane.getTabs().add(tab);

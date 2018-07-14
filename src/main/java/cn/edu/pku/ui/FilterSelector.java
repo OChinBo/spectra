@@ -50,13 +50,13 @@ public class FilterSelector {
 		// Define button action
 		Button diff = new Button("差分");
 		diff.setOnAction((e) -> {
-			tab.addFilter(new DifferenceFilter(tab.getSeries()));
+			tab.addFilter(new DifferenceFilter());
 			stage.close();
 		});
 
 		Button smoothSMA = new Button("Smoothing_SMA");
 		smoothSMA.setOnAction((e) -> {
-			tab.addFilter(new SmoothingSMAFilter(tab.getSeries()));
+			tab.addFilter(new SmoothingSMAFilter());
 			stage.close();
 		});
 

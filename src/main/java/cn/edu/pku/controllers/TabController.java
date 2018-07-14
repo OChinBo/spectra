@@ -87,7 +87,7 @@ public class TabController extends Tab implements Initializable {
 
 	final Rectangle zoomRect = new Rectangle();
 
-	public ArrayList<BasicFilter> filterList;
+	private ArrayList<BasicFilter> filterList;
 
 	private int filterID = 0;
 
@@ -112,6 +112,10 @@ public class TabController extends Tab implements Initializable {
 
 	}
 
+	/**
+	 * Save File's data is from LineChart
+	 * TableView's data is from LineChart
+	 * */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -129,10 +133,9 @@ public class TabController extends Tab implements Initializable {
 		// final NumberAxis yAxisy = new NumberAxis(0,1000,0.5);
 		// lineChart = new LineChart<>(xAxisx, yAxisy);
 
+		// Setup lineChart
 		lineChart.getData().add(series);
 		lineChart.setLegendVisible(false);
-
-		// ChartZoomManager tmp;
 
 		NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
 		NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
@@ -155,32 +158,10 @@ public class TabController extends Tab implements Initializable {
 		// Get data from specific linechart
 		xColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity, String>("x"));
 		yColumn.setCellValueFactory(new PropertyValueFactory<tableViewContentEntity, String>("y"));
-		tableView.setItems(getTableContent());
+		tableView.setItems(generateTableContent(lineChart));
 
 
-
-
-		// Set filter
-		// Store original data
-		Series<Number, Number> org = this.series ;
-
-		DifferenceFilter filter = new DifferenceFilter(series);
-		filter.fillData();
-
-
-		// Smoothing moving average
-//		this.series = filter.smoothing_MovingAvg(100);
-//		lineChart.getData().clear();
-//		lineChart.getData().add(series);
-//		filter.printOutput();
-//		tableView.setItems(getTableContent());
-
-		// different
-//		this.series = filter.launch();
-//		lineChart.getData().clear();
-//		lineChart.getData().add(series);
-//		tableView.setItems(getTableContent());
-
+		handleFilters();
 
 
 
@@ -190,8 +171,6 @@ public class TabController extends Tab implements Initializable {
 		anchorPane.getChildren().add(zoomRect);
 
 		setUpZooming(zoomRect, lineChart);
-		// 04/23 zoom test
-
 
 		buttonZoom.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -215,7 +194,6 @@ public class TabController extends Tab implements Initializable {
 				zoomRect.setHeight(0);
 			}
 		});
-
 
 		final BooleanBinding disableControls = zoomRect.widthProperty().lessThan(5)
 				.or(zoomRect.heightProperty().lessThan(5));
@@ -246,37 +224,27 @@ public class TabController extends Tab implements Initializable {
 	}
 
 	/**
-	 * 1. Get data from THE linechart 2. return THE data
-	 *
+	 * 1. Get data from THE linechart
+	 * 2. return THE data
 	 * @return ObservableList<tableViewContent>
 	 */
-	public ObservableList<tableViewContentEntity> getTableContent() {
-
+	public ObservableList<tableViewContentEntity> generateTableContent(LineChart<Number, Number> sourceLineChart) {
 		ObservableList<tableViewContentEntity> tvdata = FXCollections.observableArrayList();
-
-		// get data from series linechart
-		for (int i = 0; i < lineChart.getData().size(); i++) {
-
-			XYChart.Series<Number, Number> series = lineChart.getData().get(i);
-
+		for (int i = 0; i < sourceLineChart.getData().size(); i++) {
+			XYChart.Series<Number, Number> series = sourceLineChart.getData().get(i);
 			for (int j = 0; j < series.getData().size(); j++) {
-
-				// add data into tableViewContent
-				tableViewContentEntity tmp = new tableViewContentEntity(series.getData().get(j).getXValue().toString(),
-						series.getData().get(j).getYValue().toString());
-				// Add tableViewContent into ObservableList<>
+				tableViewContentEntity tmp = new tableViewContentEntity(
+						series.getData().get(j).getXValue().toString(),
+						series.getData().get(j).getYValue().toString()
+				);
 				tvdata.add(tmp);
-
 			}
-
 		}
-
 		return tvdata;
 	}
 
 	/**
 	 * 04/23 zoom test
-	 *
 	 * @param rect
 	 * @param zoomingNode
 	 */
@@ -423,7 +391,6 @@ public class TabController extends Tab implements Initializable {
 
 	/**
 	 * clone series, in order not to change the original series
-	 *
 	 * @param source
 	 * @return XYChart.Series<Number, Number>
 	 */
@@ -462,8 +429,6 @@ public class TabController extends Tab implements Initializable {
 		Button close = new Button("Del filter:" + filterID);
 
 		close.setOnAction((e) -> {
-			//System.out.println("SizeOfArray:" + filterList.size());
-			//System.out.println("DeleteID:" + Integer.parseInt(vb.getId()));
 			removeFilter(Integer.parseInt(vb.getId()));
 		});
 		vb.setId(strID);
@@ -483,7 +448,7 @@ public class TabController extends Tab implements Initializable {
 
 		filterBox.getChildren().add(vb);
 		filterID++;
-		test();
+		handleFilters();
 	}
 
 
@@ -509,9 +474,25 @@ public class TabController extends Tab implements Initializable {
 
 		filterList.remove(index);
 		filterBox.getChildren().remove(index+1); // index+1 skip add button
-		test();
+		handleFilters();
 	}
 
+	private void refreshChartTable(Series<Number, Number> s){
+		lineChart.getData().clear();
+		lineChart.getData().add(s);
+		tableView.setItems(generateTableContent(lineChart));
+	}
+
+	private void handleFilters(){
+		Series<Number, Number> tmp = cloneSeries(series);
+		if(filterList.size() != 0){
+			for(BasicFilter bf : filterList) {
+				tmp = bf.launch(tmp);
+			}
+		}
+
+		refreshChartTable(tmp);
+	}
 
 	public ArrayList<BasicFilter> getFilterList(){
 		return this.filterList;
@@ -536,6 +517,8 @@ public class TabController extends Tab implements Initializable {
 	public Series<Number, Number> getSeries(){
 		return series;
 	}
+
+
 
 	public void test(){
 		// filter test
