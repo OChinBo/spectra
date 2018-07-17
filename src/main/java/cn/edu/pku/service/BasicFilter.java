@@ -9,7 +9,7 @@ import javafx.scene.chart.XYChart.Series;
 public abstract class BasicFilter {
 
 	private String id;
-	private Series<Number, Number> series;
+	protected Series<Number, Number> series;
 	protected ArrayList<tableViewContentEntity> input = null ;
 	protected ArrayList<tableViewContentEntity> output = null ;
 

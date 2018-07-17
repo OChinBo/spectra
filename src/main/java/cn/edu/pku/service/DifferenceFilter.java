@@ -11,10 +11,13 @@ public class DifferenceFilter extends BasicFilter {
 
 	@Override
 	public Series<Number, Number> launch(Series<Number, Number> series) {
-
 		Series<Number, Number> outputseries = new XYChart.Series<Number, Number>();
+		outputseries.setName("Difference series");
 		Double x = 0.0 ;
 		Double y = 0.0 ;
+
+		this.series = series;
+		fillData();
 
 		for ( int i = 0 ; i < input.size()-1 ; i++ ) {
 
