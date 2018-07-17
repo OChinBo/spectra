@@ -1,14 +1,11 @@
 package cn.edu.pku.ui;
 
-import java.util.ArrayList;
-
 import cn.edu.pku.controllers.TabController;
 import cn.edu.pku.service.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;

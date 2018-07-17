@@ -30,9 +30,12 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -437,11 +440,50 @@ public class TabController extends Tab implements Initializable {
 		// Set parameter controls
 		switch(filterClassName) {
 			case "DifferenceFilter":
-				vb.getChildren().addAll(title,close);
+				vb.getChildren().addAll(title, close);
 				break;
 			case "SmoothingSMAFilter":
-				// TODO not done yet
-				vb.getChildren().addAll(title,close);
+				Spinner<Integer> spinner = new Spinner<Integer>();
+
+				spinner.getEditor().setOnKeyPressed(event -> {
+			        switch (event.getCode()) {
+			            case UP:
+			                spinner.increment(1);
+			                break;
+			            case DOWN:
+			                spinner.decrement(1);
+			                break;
+						default:
+							break;
+			        }
+			    });
+			    spinner.setOnScroll(e -> {
+			        spinner.increment((int) (e.getDeltaY() / e.getMultiplierY()));
+			    });
+
+			    SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
+			    factory.valueProperty().addListener((observable, oldValue, newValue) -> {
+			    	int index = 0;
+					for(int i=0; i < filterList.size(); i++){
+						if(filterList.get(i).getId().equals(vb.getId())){
+							index = i;
+							break;
+						}
+					}
+					((SmoothingSMAFilter)filterList.get(index)).setPoints(newValue);
+					handleFilters();
+				});
+			    spinner.setValueFactory(factory);
+			    spinner.setEditable(true);
+
+			    TextFormatter<Integer> formatter = new TextFormatter<>(factory.getConverter(), factory.getValue());
+			    spinner.getEditor().setTextFormatter(formatter);
+			    factory.valueProperty().bindBidirectional(formatter.valueProperty());
+
+
+
+
+				vb.getChildren().addAll(title, close, spinner);
 				break;
 			default:
 				// do nothing
@@ -525,17 +567,6 @@ public class TabController extends Tab implements Initializable {
 
 	public Series<Number, Number> getSeries(){
 		return series;
-	}
-
-
-
-	public void test(){
-		// filter test
-		System.out.println("---------------------");
-		for (BasicFilter bf : filterList) {
-			System.out.println(bf.getClass());
-		}
-		System.out.println("---------------------");
 	}
 
 }
