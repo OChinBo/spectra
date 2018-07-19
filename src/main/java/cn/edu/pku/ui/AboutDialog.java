@@ -51,7 +51,7 @@ public class AboutDialog {
 		name.setId("header1");
 		Label version = new Label(PropertiesUtils.readDetails().get("version"));
 		version.setId("version");
-		link.setText("Click here to visit us");
+		link.setText("https://github.com/OChinBo/spectra");
 		link.setId("link");
 		stageBox.getChildren().addAll(closeBox, name, version, link);
 		Scene scene = new Scene(stageBox, 400, 150);

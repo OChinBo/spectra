@@ -22,19 +22,19 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#importAction" text="Open Project" />
+                  <MenuItem mnemonicParsing="false" onAction="#openFileAction" text="Open File" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#saveAction" text="Save Project" />
-                  <MenuItem mnemonicParsing="false" onAction="#saveAsAction" text="Save Project As" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAction" text="Save File" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAsAction" text="Save File As" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#importAction" text="Import" />
-                  <MenuItem mnemonicParsing="false" onAction="#saveAsAction" text="Export" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <!--
                   <MenuItem mnemonicParsing="false" text="Settings" />
                   <SeparatorMenuItem mnemonicParsing="false" />
+                   -->
                   <MenuItem mnemonicParsing="false" onAction="#closeWindowsAction" text="Close" />
                </items>
             </Menu>
+            <!--
             <Menu mnemonicParsing="false" text="View">
                <items>
                   <CheckMenuItem mnemonicParsing="false" text="Toolbar" />
@@ -61,6 +61,7 @@
                   <MenuItem mnemonicParsing="false" text="寻峰" />
                </items>
             </Menu>
+             -->
             <Menu mnemonicParsing="false" text="Help">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
@@ -75,7 +76,7 @@
                   <Tooltip text="New" />
                </tooltip>
          	</Button>
-            <Button fx:id="buttonOfOpenFile" mnemonicParsing="false" onAction="#importAction" prefHeight="32.0" prefWidth="32.0">
+            <Button fx:id="buttonOfOpenFile" mnemonicParsing="false" onAction="#openFileAction" prefHeight="32.0" prefWidth="32.0">
             	<tooltip>
                   <Tooltip text="Open Project" />
                </tooltip>

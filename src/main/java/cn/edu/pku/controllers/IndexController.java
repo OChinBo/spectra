@@ -37,7 +37,7 @@ public class IndexController {
 	}
 
 	@FXML
-	private void importAction(ActionEvent ae) {
+	private void openFileAction(ActionEvent ae) {
 
 		Window window = (Stage)root.getScene().getWindow();
 

@@ -13,7 +13,6 @@ public class SmoothingSMAFilter extends BasicFilter {
 
 
 	public void setPoints(int p){
-		System.out.println("set p:" + p);
 		this.points = p;
 	}
 
