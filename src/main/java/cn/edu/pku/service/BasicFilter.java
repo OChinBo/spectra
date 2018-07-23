@@ -21,6 +21,9 @@ public abstract class BasicFilter {
 	abstract public Series<Number, Number> launch(Series<Number, Number> series);
 
 	public void fillData() {
+
+		cleanIOData();
+
 		for (int j = 0; j < series.getData().size(); j++) {
 			// add data into tableViewContent
 			tableViewContentEntity tmp = new tableViewContentEntity(series.getData().get(j).getXValue().toString(),
@@ -28,6 +31,11 @@ public abstract class BasicFilter {
 			// Add tableViewContent into ObservableList<>
 			input.add(tmp);
 		}
+	}
+
+	private void cleanIOData(){
+		input.clear();
+		output.clear();
 	}
 
 	public void printInput() {

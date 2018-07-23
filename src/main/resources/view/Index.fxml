@@ -71,11 +71,13 @@
       </MenuBar>
       <ToolBar prefHeight="42.0" prefWidth="1000.0">
         <items>
+        	<!--
          	<Button fx:id="buttonOfNewFile" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
          		<tooltip>
                   <Tooltip text="New" />
                </tooltip>
          	</Button>
+         	 -->
             <Button fx:id="buttonOfOpenFile" mnemonicParsing="false" onAction="#openFileAction" prefHeight="32.0" prefWidth="32.0">
             	<tooltip>
                   <Tooltip text="Open Project" />
@@ -91,12 +93,14 @@
                   <Tooltip text="Save Project As" />
                </tooltip>
             </Button>
+            <!--
             <Separator orientation="VERTICAL" />
             <Button fx:id="buttonOfSettings" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0">
             	<tooltip>
                   <Tooltip text="Settings" />
                </tooltip>
             </Button>
+             -->
         </items>
       </ToolBar>
 

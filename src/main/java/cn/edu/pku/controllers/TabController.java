@@ -75,10 +75,10 @@ public class TabController extends Tab implements Initializable {
 	private TableView<tableViewContentEntity> tableView = new TableView<>();
 
 	@FXML
-	private TableColumn xColumn;
+	private TableColumn<tableViewContentEntity, String> xColumn;
 
 	@FXML
-	private TableColumn yColumn;
+	private TableColumn<tableViewContentEntity, String> yColumn;
 
 	private Series<Number, Number> series;
 	private Double xAxisLowerBound;
@@ -132,29 +132,23 @@ public class TabController extends Tab implements Initializable {
 		});
 		filterBox.getChildren().add(addButton);
 
+
+
 		// final NumberAxis xAxisx = new NumberAxis(0,1000,0.5);
 		// final NumberAxis yAxisy = new NumberAxis(0,1000,0.5);
 		// lineChart = new LineChart<>(xAxisx, yAxisy);
 
 		// Setup lineChart
-		lineChart.getData().add(series);
+		//lineChart.getData().add(series);
 		lineChart.setLegendVisible(false);
-
-		NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
-		NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
+		lineChart.autosize();
 
 		// xAxis.setUpperBound(3000);
 		// xAxis.setLowerBound(0);
 		// yAxis.setUpperBound(2000);
 		// yAxis.setLowerBound(-2000);
 
-		xAxisLowerBound = xAxis.getLowerBound();
-		xAxisUpperBound = xAxis.getUpperBound();
-		yAxisLowerBound = yAxis.getLowerBound();
-		yAxisUpperBound = yAxis.getUpperBound();
 
-		System.out.println("xAxisLowerBound:" + xAxisLowerBound + "xAxisUpperBound:" + xAxisUpperBound);
-		System.out.println("yAxisLowerBound:" + yAxisLowerBound + "yAxisUpperBound:" + yAxisUpperBound);
 
 		// Complete, 03/26
 		// Fill data to tableview
@@ -179,7 +173,6 @@ public class TabController extends Tab implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				doZoom(zoomRect, lineChart);
-				// zoomWindow() ;
 			}
 		});
 
@@ -195,6 +188,7 @@ public class TabController extends Tab implements Initializable {
 
 				zoomRect.setWidth(0);
 				zoomRect.setHeight(0);
+				handleFilters();
 			}
 		});
 
@@ -306,10 +300,9 @@ public class TabController extends Tab implements Initializable {
 			@Override
 			public void handle(MouseEvent event) {
 				MouseButton button = event.getButton();
-
 				if(button==MouseButton.PRIMARY){
-					// doZoom(rect, linechart);
-					// zoomWindow();
+					 //doZoom(rect, lineChart);
+					 //zoomWindow();
 				}
 			}
 		});
@@ -337,60 +330,6 @@ public class TabController extends Tab implements Initializable {
 		zoomRect.setHeight(0);
 	}
 
-	private void zoomWindow() {
-		Stage zoomStage = new Stage();
-		final LineChart<Number, Number> chart = null;
-		chart.getData().add(cloneSeries(series));
-
-		final StackPane chartContainer = new StackPane();
-		chartContainer.getChildren().add(chart);
-
-		final Rectangle zoomRect = new Rectangle();
-		zoomRect.setManaged(false);
-		zoomRect.setFill(Color.LIGHTSEAGREEN.deriveColor(0, 1, 1, 0.5));
-		chartContainer.getChildren().add(zoomRect);
-
-		setUpZooming(zoomRect, chart);
-
-		final HBox controls = new HBox(10);
-		controls.setPadding(new Insets(10));
-		controls.setAlignment(Pos.CENTER);
-
-		final Button zoomButton = new Button("Zoom");
-		final Button resetButton = new Button("Reset");
-		zoomButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				doZoom(zoomRect, chart);
-			}
-		});
-		resetButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				final NumberAxis xAxis = (NumberAxis) chart.getXAxis();
-				xAxis.setLowerBound(0);
-				xAxis.setUpperBound(1000);
-				final NumberAxis yAxis = (NumberAxis) chart.getYAxis();
-				yAxis.setLowerBound(0);
-				yAxis.setUpperBound(1000);
-
-				zoomRect.setWidth(0);
-				zoomRect.setHeight(0);
-			}
-		});
-		final BooleanBinding disableControls = zoomRect.widthProperty().lessThan(5)
-				.or(zoomRect.heightProperty().lessThan(5));
-		zoomButton.disableProperty().bind(disableControls);
-		controls.getChildren().addAll(zoomButton, resetButton);
-
-		final BorderPane root = new BorderPane();
-		root.setCenter(chartContainer);
-		root.setBottom(controls);
-
-		final Scene scene = new Scene(root, 600, 400);
-		zoomStage.setScene(scene);
-		zoomStage.show();
-	}
 
 	/**
 	 * clone series, in order not to change the original series
@@ -407,7 +346,7 @@ public class TabController extends Tab implements Initializable {
 	}
 
 
-	/*
+	/**
 	 * @FXML Add button listener : add filter *** Make sure connect to the correct tab(linechart)
 	 * 1. Show all filters we have already implemented
 	 * 2. Choose what filter that user wants to add
@@ -442,8 +381,13 @@ public class TabController extends Tab implements Initializable {
 			case "DifferenceFilter":
 				vb.getChildren().addAll(title, close);
 				break;
+
+			// SmoothingSMAFilter only has one spinner to control the parameter
 			case "SmoothingSMAFilter":
 				Spinner<Integer> spinner = new Spinner<Integer>();
+				Integer max = 100;
+				Integer min = 1;
+				Integer init = 5;
 
 				spinner.getEditor().setOnKeyPressed(event -> {
 			        switch (event.getCode()) {
@@ -458,30 +402,30 @@ public class TabController extends Tab implements Initializable {
 			        }
 			    });
 			    spinner.setOnScroll(e -> {
-			        spinner.increment((int) (e.getDeltaY() / e.getMultiplierY()));
+			    	// Prevent overflow
+			    	if(e.getDeltaY()>0 && spinner.getValue()<max){
+			    		spinner.increment(1);
+			    	} else if(e.getDeltaY()<0 && spinner.getValue()>min){
+			    		spinner.decrement(1);
+			    	}
+		    		//spinner.increment((int) (e.getDeltaY() / e.getMultiplierY()));
 			    });
 
-			    SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
+			    // Setup Factory
+			    // Min:1, Max:100, Init:5
+			    SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, init);
 			    factory.valueProperty().addListener((observable, oldValue, newValue) -> {
-			    	int index = 0;
-					for(int i=0; i < filterList.size(); i++){
-						if(filterList.get(i).getId().equals(vb.getId())){
-							index = i;
-							break;
-						}
-					}
+			    	int index = findFilterIndexById(vb.getId());
 					((SmoothingSMAFilter)filterList.get(index)).setPoints(newValue);
 					handleFilters();
 				});
 			    spinner.setValueFactory(factory);
 			    spinner.setEditable(true);
 
-			    TextFormatter<Integer> formatter = new TextFormatter<>(factory.getConverter(), factory.getValue());
-			    spinner.getEditor().setTextFormatter(formatter);
-			    factory.valueProperty().bindBidirectional(formatter.valueProperty());
-
-
-
+			    // This part maybe is useless
+//			    TextFormatter<Integer> formatter = new TextFormatter<>(factory.getConverter(), factory.getValue());
+//			    spinner.getEditor().setTextFormatter(formatter);
+//			    factory.valueProperty().bindBidirectional(formatter.valueProperty());
 
 				vb.getChildren().addAll(title, close, spinner);
 				break;
@@ -495,7 +439,7 @@ public class TabController extends Tab implements Initializable {
 	}
 
 
-	/*
+	/**
 	 * @FXML Delete button listener : delete filter
 	 * 1. Choose the filter which the user what to delete
 	 * 2. re-calculate output, which is restart the filters of the linechart by order
@@ -505,24 +449,27 @@ public class TabController extends Tab implements Initializable {
 	 * 2. Re-calculate and order by filter list
 	 */
 	public void removeFilter(int id) {
-		// Use id to get index number
-		String strID = String.valueOf(id);
-		int index = 0;
-		for(int i=0; i < filterList.size(); i++){
-			if(filterList.get(i).getId().equals(strID)){
-				index = i;
-				break;
-			}
-		}
+		int index = findFilterIndexById(String.valueOf(id));
 
 		filterList.remove(index);
 		filterBox.getChildren().remove(index+1); // index+1 skip add button
 		handleFilters();
 	}
 
+	private int findFilterIndexById(String strID){
+		for(int i=0; i < filterList.size(); i++){
+			if(filterList.get(i).getId().equals(strID)){
+				return i;
+			}
+		}
+		// If Id not found, it would cause IndexOutOfBoundException
+		return -1;
+	}
+
 	private void refreshChartTable(Series<Number, Number> s){
 		lineChart.getData().clear();
 		lineChart.getData().add(s);
+
 
 		NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
 		NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
@@ -539,6 +486,7 @@ public class TabController extends Tab implements Initializable {
 		Series<Number, Number> tmp = cloneSeries(series);
 		if(filterList.size() != 0){
 			for(BasicFilter bf : filterList) {
+				System.out.println(tmp.getData().size());
 				tmp = bf.launch(tmp);
 			}
 		}
