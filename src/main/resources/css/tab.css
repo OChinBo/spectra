@@ -11,6 +11,18 @@
 
 /* LineChart */
 .chart-series-line {
-    -fx-stroke-width: 2px;
+    -fx-stroke-width: 2.0px;
     -fx-effect: null;
+}
+
+#filterBox {
+
+}
+
+/* Close Button in filterBox */
+.close{
+	 -fx-background-color: transparent;
+	 -fx-background-radius: 0.0,0.0,0.0;
+	 -fx-graphic: url("../images/close-icon.gif");
+	 -fx-padding: 0;
 }

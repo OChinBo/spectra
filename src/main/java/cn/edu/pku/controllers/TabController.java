@@ -34,6 +34,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -42,6 +43,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -123,15 +126,19 @@ public class TabController extends Tab implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		// Set Add Filter button
-		Button addButton = new Button("ADD");
+		Button addButton = new Button("Add Filter");
+
+		addButton.setMaxWidth(Double.MAX_VALUE);
+
 		addButton.setOnAction((e) -> {
 			FilterSelector fs = new FilterSelector(stage);
-			//fs.setTabPane(tabPane);
 			fs.setTabController(this);
 			fs.show();
 		});
-		filterBox.getChildren().add(addButton);
 
+
+		filterBox.getChildren().add(addButton);
+		//filterBox.getChildren().add(new Separator());
 
 
 		// final NumberAxis xAxisx = new NumberAxis(0,1000,0.5);
@@ -366,20 +373,36 @@ public class TabController extends Tab implements Initializable {
 		filter.setId(strID);
 		filterList.add(filter);
 
-		// Add filter UI
+		// Set filter UI
 		VBox vb = new VBox();
-		Label title = new Label("Filter " + filterID + ": " + filterClassName);
-		Button close = new Button("Del filter:" + filterID);
+		Separator sep = new Separator();
+		Label title = new Label(filterClassName);
+		Button close = new Button();
+		Pane spacer = new Pane();
+		HBox titleBar = new HBox();
 
 		close.setOnAction((e) -> {
 			removeFilter(Integer.parseInt(vb.getId()));
 		});
+
+		HBox.setHgrow(spacer, Priority.ALWAYS);
+
+		close.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
+
+		close.getStyleClass().add("close");
+
 		vb.setId(strID);
+
+		vb.setSpacing(5);
+
+		titleBar.getChildren().addAll(title, spacer, close);
+
+		titleBar.setPadding(new Insets(0,5,0,5));
 
 		// Set parameter controls
 		switch(filterClassName) {
 			case "DifferenceFilter":
-				vb.getChildren().addAll(title, close);
+				vb.getChildren().addAll(titleBar, sep);
 				break;
 
 			// SmoothingSMAFilter only has one spinner to control the parameter
@@ -408,7 +431,7 @@ public class TabController extends Tab implements Initializable {
 			    	} else if(e.getDeltaY()<0 && spinner.getValue()>min){
 			    		spinner.decrement(1);
 			    	}
-		    		//spinner.increment((int) (e.getDeltaY() / e.getMultiplierY()));
+//		    		spinner.increment((int) (e.getDeltaY() / e.getMultiplierY()));
 			    });
 
 			    // Setup Factory
@@ -423,11 +446,11 @@ public class TabController extends Tab implements Initializable {
 			    spinner.setEditable(true);
 
 			    // This part maybe is useless
-//			    TextFormatter<Integer> formatter = new TextFormatter<>(factory.getConverter(), factory.getValue());
-//			    spinner.getEditor().setTextFormatter(formatter);
-//			    factory.valueProperty().bindBidirectional(formatter.valueProperty());
+			    TextFormatter<Integer> formatter = new TextFormatter<>(factory.getConverter(), factory.getValue());
+			    spinner.getEditor().setTextFormatter(formatter);
+			    factory.valueProperty().bindBidirectional(formatter.valueProperty());
 
-				vb.getChildren().addAll(title, close, spinner);
+				vb.getChildren().addAll(titleBar, spinner, sep);
 				break;
 			default:
 				// do nothing
@@ -449,10 +472,12 @@ public class TabController extends Tab implements Initializable {
 	 * 2. Re-calculate and order by filter list
 	 */
 	public void removeFilter(int id) {
+
 		int index = findFilterIndexById(String.valueOf(id));
 
 		filterList.remove(index);
 		filterBox.getChildren().remove(index+1); // index+1 skip add button
+//		filterBox.getChildren().remove(index+2); // index+2 skip add button and Separator
 		handleFilters();
 	}
 
@@ -486,7 +511,6 @@ public class TabController extends Tab implements Initializable {
 		Series<Number, Number> tmp = cloneSeries(series);
 		if(filterList.size() != 0){
 			for(BasicFilter bf : filterList) {
-				System.out.println(tmp.getData().size());
 				tmp = bf.launch(tmp);
 			}
 		}
