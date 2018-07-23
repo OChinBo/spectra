@@ -85,9 +85,9 @@ public class TabController extends Tab implements Initializable {
 
 	private Series<Number, Number> series;
 	private Double xAxisLowerBound;
-	private Double xAxisUpperBound;
+//	private Double xAxisUpperBound;
 	private Double yAxisLowerBound;
-	private Double yAxisUpperBound;
+//	private Double yAxisUpperBound;
 
 	private Stage stage;
 
@@ -206,6 +206,7 @@ public class TabController extends Tab implements Initializable {
 
 	} // end of initialize()
 
+	@SuppressWarnings("unused")
 	private LineChart<Number, Number> createChart() {
 		final NumberAxis xAxis = createAxis();
 		final NumberAxis yAxis = createAxis();
@@ -494,15 +495,6 @@ public class TabController extends Tab implements Initializable {
 	private void refreshChartTable(Series<Number, Number> s){
 		lineChart.getData().clear();
 		lineChart.getData().add(s);
-
-
-		NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
-		NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
-
-		xAxisLowerBound = xAxis.getLowerBound();
-		xAxisUpperBound = xAxis.getUpperBound();
-		yAxisLowerBound = yAxis.getLowerBound();
-		yAxisUpperBound = yAxis.getUpperBound();
 
 		tableView.setItems(generateTableContent(lineChart));
 	}

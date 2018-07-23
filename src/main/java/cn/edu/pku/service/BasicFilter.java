@@ -56,6 +56,7 @@ public abstract class BasicFilter {
 	 * @param source
 	 * @return XYChart.Series<Number, Number>
 	 */
+	@SuppressWarnings("unused")
 	private XYChart.Series<Number, Number> cloneSeries(XYChart.Series<Number, Number> source) {
 		XYChart.Series<Number, Number> destination = new XYChart.Series<Number, Number>();
 		for (int i = 0; i < source.getData().size(); i++)

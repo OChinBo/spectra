@@ -64,10 +64,7 @@ public class SaveController extends SplitPane implements Initializable {
 						  // x-axis data from xAxisSpinner
 
 	private ArrayList<Double> xAxisDataArrayList; // Store the x-axis data from
-													// linechart(series)
 
-	private boolean spinnerBeginTrigger ;
-	private boolean spinnerEndTrigger ;
 	private static final Double MAXIUM = 100000000000.0 ;
 
 	final Stage stage = new Stage();
@@ -95,10 +92,6 @@ public class SaveController extends SplitPane implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-
-		// Initialize
-		spinnerBeginTrigger = false;
-		spinnerEndTrigger   = false;
 
 		lineChartRange.getData().add(cloneSeries(this.series)); // show original linechart
 		setPreview(0,seriesSize-1); // user-selected linechart
@@ -227,14 +220,12 @@ public class SaveController extends SplitPane implements Initializable {
 		SpinnerBegin.getEditor().setOnKeyPressed(event -> {
 			switch (event.getCode()) {
 				case UP:
-					spinnerBeginTrigger = true ;
-					beginIndex = beginIndex + 1;
+				beginIndex = beginIndex + 1;
 					System.out.println("up");
 					SpinnerBegin.increment(1);
 					break;
 				case DOWN:
-					spinnerBeginTrigger = true ;
-					beginIndex = beginIndex - 1;
+				beginIndex = beginIndex - 1;
 					System.out.println("down");
 					SpinnerBegin.decrement(1);
 					break;
@@ -245,14 +236,12 @@ public class SaveController extends SplitPane implements Initializable {
 		SpinnerEnd.getEditor().setOnKeyPressed(event -> {
 			switch (event.getCode()) {
 				case UP:
-					spinnerEndTrigger = true ;
-					endIndex = endIndex + 1;
+				endIndex = endIndex + 1;
 					SpinnerEnd.increment(1);
 					System.out.println("up");
 					break;
 				case DOWN:
-					spinnerEndTrigger = true ;
-					endIndex = endIndex - 1;
+				endIndex = endIndex - 1;
 					SpinnerEnd.decrement(1);
 					System.out.println("down");
 					break;
@@ -378,11 +367,9 @@ public class SaveController extends SplitPane implements Initializable {
 					// endIndex = end.intValue();
 					endIndex = end ;
 					SliderEnd.setValue(end);
-					spinnerEndTrigger = true ;
 					SpinnerEnd.getValueFactory().setValue(xAxisDataArrayList.get(end));
 				}
 
-				spinnerBeginTrigger = true ;
 				SpinnerBegin.getValueFactory().setValue(xAxisDataArrayList.get(begin));
 
 				setPreview(begin, end);
@@ -407,11 +394,9 @@ public class SaveController extends SplitPane implements Initializable {
 					//beginIndex = begin.intValue();
 					beginIndex = begin ;
 					SliderBegin.setValue(begin);
-					spinnerBeginTrigger = true ;
 					SpinnerBegin.getValueFactory().setValue(xAxisDataArrayList.get(begin));
 				}
 
-				spinnerEndTrigger = true ;
 				SpinnerEnd.getValueFactory().setValue(xAxisDataArrayList.get(end));
 
 				setPreview(begin, end);

@@ -29,6 +29,7 @@ public class ProjectDao extends Dao<ProjectEntity, ProjectEntity, ProjectEntity>
 
 		try {
 
+			@SuppressWarnings("resource")
 			BufferedReader in = new BufferedReader(new FileReader(data));
 			String inputStr = in.toString();
 
@@ -37,6 +38,7 @@ public class ProjectDao extends Dao<ProjectEntity, ProjectEntity, ProjectEntity>
 				inputStr = CryptUtils.Decrypt(inputStr);
 			}
 			jsonObj = new JSONObject(CryptUtils.Decrypt(inputStr));
+			System.out.println(jsonObj);
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
