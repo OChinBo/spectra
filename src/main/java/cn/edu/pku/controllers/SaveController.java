@@ -4,15 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 import java.util.ResourceBundle;
 
 import cn.edu.pku.dao.FileDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
+//import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+//import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,17 +21,17 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
+//import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.SpinnerValueFactory.ListSpinnerValueFactory;
+//import javafx.scene.control.SpinnerValueFactory.ListSpinnerValueFactory;
 import javafx.scene.control.SplitPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.StringConverter;
+//import javafx.util.StringConverter;
 
 public class SaveController extends SplitPane implements Initializable {
 
@@ -65,7 +65,6 @@ public class SaveController extends SplitPane implements Initializable {
 
 	private ArrayList<Double> xAxisDataArrayList; // Store the x-axis data from
 
-	private static final Double MAXIUM = 100000000000.0 ;
 
 	final Stage stage = new Stage();
 
@@ -411,25 +410,25 @@ public class SaveController extends SplitPane implements Initializable {
 	 */
 
 
-	private void doCommit(Spinner<Double> spinner) {
-
-		if (!spinner.isEditable()) return;
-
-	    String text = spinner.getEditor().getText();
-	    SpinnerValueFactory<Double> valueFactory = spinner.getValueFactory();
-
-	    if (valueFactory != null) {
-	        StringConverter<Double> converter = valueFactory.getConverter();
-	        if (converter != null) {
-	            try{
-	                Double value = converter.fromString(text);
-	                valueFactory.setValue(value);
-	            } catch(NumberFormatException nfe){
-	            	spinner.getEditor().setText(converter.toString(valueFactory.getValue()));
-	            }
-	        }
-	    }
-	}
+//	private void doCommit(Spinner<Double> spinner) {
+//
+//		if (!spinner.isEditable()) return;
+//
+//	    String text = spinner.getEditor().getText();
+//	    SpinnerValueFactory<Double> valueFactory = spinner.getValueFactory();
+//
+//	    if (valueFactory != null) {
+//	        StringConverter<Double> converter = valueFactory.getConverter();
+//	        if (converter != null) {
+//	            try{
+//	                Double value = converter.fromString(text);
+//	                valueFactory.setValue(value);
+//	            } catch(NumberFormatException nfe){
+//	            	spinner.getEditor().setText(converter.toString(valueFactory.getValue()));
+//	            }
+//	        }
+//	    }
+//	}
 
 	@FXML
 	private void savefileAsAction(ActionEvent ae) {
@@ -510,35 +509,35 @@ public class SaveController extends SplitPane implements Initializable {
 
 	}
 
-	private int findClosestValue(Double target, int pivotIndex, Double lastDifference, int lastDIndex){
-
-		// count the difference between current value and target value
-		Double difference = Math.abs(target - xAxisDataArrayList.get(pivotIndex));
-		System.out.println("--------------------------------");
-		System.out.println("target:" + target);
-		System.out.println("pivotIndex:" + pivotIndex);
-		System.out.println("lastDifference:" + lastDifference);
-		System.out.println("lastDIndex:" + lastDIndex);
-		System.out.println("Difference:" + difference);
-		System.out.println("--------------------------------");
-		// base case
-		if ( difference > lastDifference ) {
-			//System.out.println("equal difference " + xAxis.get(pivotIndex));
-			return lastDIndex;
-		}
-		else if ( xAxisDataArrayList.get(pivotIndex) == xAxisDataArrayList.get(lastDIndex) ) {
-			//System.out.println("equal value " + xAxis.get(pivotIndex));
-			return lastDIndex ;
-		}
-		else if ( xAxisDataArrayList.get(pivotIndex) < xAxisDataArrayList.get(lastDIndex) ) {
-			//System.out.println("less than");
-			return findClosestValue(target, pivotIndex/2, difference, xAxisDataArrayList.indexOf(xAxisDataArrayList.get(pivotIndex))) ;
-		}
-		else {
-			//System.out.println("more than");
-			return findClosestValue(target, (pivotIndex+xAxisDataArrayList.size())/2, difference, xAxisDataArrayList.indexOf(xAxisDataArrayList.get(pivotIndex))) ;
-		}
-
-	}
+//	private int findClosestValue(Double target, int pivotIndex, Double lastDifference, int lastDIndex){
+//
+//		// count the difference between current value and target value
+//		Double difference = Math.abs(target - xAxisDataArrayList.get(pivotIndex));
+//		System.out.println("--------------------------------");
+//		System.out.println("target:" + target);
+//		System.out.println("pivotIndex:" + pivotIndex);
+//		System.out.println("lastDifference:" + lastDifference);
+//		System.out.println("lastDIndex:" + lastDIndex);
+//		System.out.println("Difference:" + difference);
+//		System.out.println("--------------------------------");
+//		// base case
+//		if ( difference > lastDifference ) {
+//			//System.out.println("equal difference " + xAxis.get(pivotIndex));
+//			return lastDIndex;
+//		}
+//		else if ( xAxisDataArrayList.get(pivotIndex) == xAxisDataArrayList.get(lastDIndex) ) {
+//			//System.out.println("equal value " + xAxis.get(pivotIndex));
+//			return lastDIndex ;
+//		}
+//		else if ( xAxisDataArrayList.get(pivotIndex) < xAxisDataArrayList.get(lastDIndex) ) {
+//			//System.out.println("less than");
+//			return findClosestValue(target, pivotIndex/2, difference, xAxisDataArrayList.indexOf(xAxisDataArrayList.get(pivotIndex))) ;
+//		}
+//		else {
+//			//System.out.println("more than");
+//			return findClosestValue(target, (pivotIndex+xAxisDataArrayList.size())/2, difference, xAxisDataArrayList.indexOf(xAxisDataArrayList.get(pivotIndex))) ;
+//		}
+//
+//	}
 
 }

@@ -4,42 +4,42 @@
 
 /*  */
 #buttonOfNewFile {
-	-fx-background-image: url('../images/newfile.png');
+	-fx-background-image: url('/images/newfile.png');
 	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90.0%;
 }
 
 #buttonOfOpenFile {
-	-fx-background-image: url('../images/openfile.png');
+	-fx-background-image: url('/images/openfile.png');
 	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90.0%;
 }
 
 #buttonOfSave {
-	-fx-background-image: url('../images/save.png');
+	-fx-background-image: url('/images/save.png');
 	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90.0%;
 }
 
 #buttonOfSaveAs {
-	-fx-background-image: url('../images/saveas.png');
+	-fx-background-image: url('/images/saveas.png');
 	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90.0%;
 }
 
 #buttonOfPrint {
-	-fx-background-image: url('../images/print.png');
+	-fx-background-image: url('/images/print.png');
 	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90.0%;
 }
 
 #buttonOfSettings {
-	-fx-background-image: url('../images/settings.png');
+	-fx-background-image: url('/images/settings.png');
 	-fx-background-size: 30.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 90.0%;
@@ -61,7 +61,7 @@
 #close{
 	 -fx-background-color: transparent;
 	 -fx-background-radius: 0.0,0.0,0.0;
-	 -fx-graphic: url("../images/close-icon.gif");
+	 -fx-graphic: url("/images/close-icon.gif");
 
 }
 

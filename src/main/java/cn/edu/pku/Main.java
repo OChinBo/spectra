@@ -1,10 +1,15 @@
 package cn.edu.pku;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
@@ -47,6 +52,9 @@ public class Main extends Application {
 			 *
 			 * */
 
+			// Show start up animation
+//			showStartUp(primaryStage);
+
 			// Resources Paths
 			final String __indexpath = "/view/Index.fxml";
 			final String __iconpath = "/images/chicken.png";
@@ -70,14 +78,42 @@ public class Main extends Application {
 
 		} catch(Exception e) {
 			e.printStackTrace();
-		} // end of try catch
-
-	} // end of start()
+		}
+	}
 
 	public static void main(String[] args) {
 
 		launch(args);
 
-	} // end of main()
+	}
+
+
+	/** Not Finished Yet
+	 * */
+	private void showStartUp(Stage primaryStage){
+		StackPane root = new StackPane();
+
+		// Set collaborators icon
+		Image co1 = new Image(getClass().getResourceAsStream("/images/co1.png"));
+		Image co2 = new Image(getClass().getResourceAsStream("/images/co2.png"));
+		Image co3 = new Image(getClass().getResourceAsStream("/images/co3.png"));
+		ImageView iv1 = new ImageView();
+		ImageView iv2 = new ImageView();
+		ImageView iv3 = new ImageView();
+		iv1.setImage(co1);
+		iv2.setImage(co2);
+		iv3.setImage(co3);
+		root.getChildren().addAll(iv1, iv2, iv3);
+
+		// Prepare animate
+		FadeTransition ft = new FadeTransition(Duration.seconds(10), root);
+		ft.setFromValue(0.0);
+		ft.setToValue(1.0);
+		ft.play();
+
+		Scene scene = new Scene(root, 600, 300);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 
 }
